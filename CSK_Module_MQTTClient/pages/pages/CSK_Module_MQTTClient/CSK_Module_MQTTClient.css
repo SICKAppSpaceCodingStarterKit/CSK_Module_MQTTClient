@@ -1,0 +1,17 @@
+.myCustomFrame_CSK_Module_MQTTClient {
+  border-style: solid;
+  border-width: 1px;
+  border-color: grey;
+  margin: 6px;
+}
+
+.myCustom20pHeight_CSK_Module_MQTTClient {
+  min-height: 20%;
+}
+
+.myCustom10pxHeight_CSK_Module_MQTTClient {
+  min-height: 10px;
+}
+
+.myCustomCssClass_CSK_Module_MQTTClient {
+}

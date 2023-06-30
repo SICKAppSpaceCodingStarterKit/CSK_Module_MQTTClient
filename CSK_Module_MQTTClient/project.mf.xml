@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<manifest>
+    <application name="CSK_Module_MQTTClient">
+        <crown name="CSK_Module_MQTTClient">
+            <desc>This is an automatically generated CROWN (description not necessary).</desc>
+        </crown>
+        <crown name="CSK_MQTTClient">
+            <trait>released</trait>
+            <desc>Module to provide MQTTClient functionality. Please check the MQTTClient API docu of the device regarding further background information... +
+Typically the features of this module are used like this (check also main script of this module): +
+{empty} +
+**1) Setup** +
+At least set MQTT Broker IP ("setBrokerIP") and used port ("setMQTTPort"). Check also further "set"-functions if required. +
+{empty} +
+**2) Connect** +
+Connect to the broker via "connectMQTT". +
+{empty} +
+**3) Subscriptions** +
+Subscribe to MQTT topics by using "addSubscription" (via script) or "addSubscriptionViaUI" (via UI) to use preset values (check "presetSubscription..."-functions) +
+It is possible to forward incoming messages of the configured topics via the event "CSK_MQTTClient.OnReceive" of this module by setting "setForwardReceivedMessages". +
+It is also possible to get the MQTTClient handle via "getMQTTHandle" to use this instance in other modules / apps. +
+{empty} +
+**4) Publish** +
+It is possible to publish MQTT messages via "publish" (via script) or "publishViaUI (via UI) to use preset values (check "presetPublish..."-functions) +
+Additionally it is possible to configure the module to listen / wait for specific events of other modules/apps and to forward their content to predefined topics with predefined QoS/Retain. +
+This can be used e.g. to listen to "OtherModule.OnNewResult"-events and to forward the results via MQTT. +
+To do so make use of "addPublishEvent" (via script) or the "presetPublish"-functions (incl. "presetPublishEvent") and "addPublishEventViaUI". +
+{empty} +
+**5) WillMessage** +
+Configure a WillMessage via "setWillMessageConfig" (via script) or "setWillMessageViaUI (via UI) to use the preset values of the "presetPublish"-functions and activate it via "setWillMessageActivation". +</desc>
+            <enum name="QOS" trait="released">
+                <desc>Quality of MQTT topic service level.</desc>
+                <item desc="Quality of Service level 0." name="QOS0">QOS0</item>
+                <item desc="Quality of Service level 2." name="QOS2">QOS2</item>
+                <item desc="Quality of Service level 1." name="QOS1">QOS1</item>
+            </enum>
+            <enum name="Retain" trait="released">
+                <desc>MQTT message retain type.</desc>
+                <item desc="Do not retain message." name="NO_RETAIN">NO_RETAIN</item>
+                <item desc="Retain message." name="RETAIN">RETAIN</item>
+            </enum>
+            <enum name="TLSVersion" trait="released">
+                <item desc="Deactivate TLS." name="NO_TLS">NO_TLS</item>
+                <item desc="TLS protocol version 1.0" name="TLS_V10">TLS_V10</item>
+                <item desc="TLS protocol version 1.1" name="TLS_V11">TLS_V11</item>
+                <item desc="TLS protocol version 1.2" name="TLS_V12">TLS_V12</item>
+            </enum>
+            <serves>
+                <event name="OnNewStatusLoadParameterOnReboot">
+                    <desc>Notify status if parameters should be loaded on app/device boot up.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnPersistentDataModuleAvailable">
+                    <desc>Notify status if features of CSK_PersistentData module are available.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnDataLoadedOnReboot">
+                    <desc>Event to call if module tried to load parameters and should be ready.</desc>
+                </event>
+                <event name="OnNewParameterName">
+                    <desc>Notify name of persistent data parameter.</desc>
+                    <param desc="Parameter name" multiplicity="1" name="name" type="string"/>
+                </event>
+                <event name="OnUserLevelOperatorActive">
+                    <desc>Status of Operator userlevel. Used internally in combination with the CSK_UserManagement module if available.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnUserLevelMaintenanceActive">
+                    <desc>Status of Maintenance userlevel. Used internally in combination with the CSK_UserManagement module if available.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnUserLevelServiceActive">
+                    <desc>Status of Service userlevel. Used internally in combination with the CSK_UserManagement module if available.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnUserLevelAdminActive">
+                    <desc>Status of Admin userlevel. Used internally in combination with the CSK_UserManagement module if available.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnNewMQTTPort">
+                    <desc>Notify current MQTT port.</desc>
+                    <param desc="Port" multiplicity="1" name="port" type="int"/>
+                </event>
+                <event name="OnNewBrokerIP">
+                    <desc>Notify current broker IP.</desc>
+                    <param desc="IP" multiplicity="1" name="ip" type="string"/>
+                </event>
+                <event name="OnReceive">
+                    <desc>Event to forward received MQTT messages.</desc>
+                    <param desc="The topic the message was posted to." multiplicity="1" name="topic" type="string"/>
+                    <param desc="The payload data that was received." multiplicity="1" name="data" type="binary"/>
+                    <param desc="The quality of service level." multiplicity="?" name="qos" ref="CSK_MQTTClient.QOS" type="enum"/>
+                    <param desc="The message retain flag." multiplicity="?" name="retain" ref="CSK_MQTTClient.Retain" type="enum"/>
+                </event>
+                <event name="OnNewStatusSubscriptionTopic">
+                    <desc>Notify currently selected subscription topic.</desc>
+                    <param desc="Topic" multiplicity="1" name="topic" type="string"/>
+                </event>
+                <event name="OnNewStatusSubscriptionQOS">
+                    <desc>Notify QoS of currently selected subscription topic.</desc>
+                    <param desc="QoS" multiplicity="1" name="qos" type="string"/>
+                </event>
+                <event name="OnNewStatusSubscriptionList">
+                    <desc>Notify list of configured subscriptions.</desc>
+                    <param desc="List" multiplicity="1" name="list" type="string"/>
+                </event>
+                <event name="OnNewLog">
+                    <desc>Notify latest log messages (max. 200).</desc>
+                    <param desc="Logs" multiplicity="1" name="logs" type="string"/>
+                </event>
+                <event name="OnNewStatusPublishTopic">
+                    <desc>Notify topic to publish via "publishViaUI".</desc>
+                    <param desc="Topic" multiplicity="1" name="topic" type="string"/>
+                </event>
+                <event name="OnNewStatusPublishData">
+                    <desc>Notify preset data to publish via "publishViaUI".</desc>
+                    <param desc="Data" multiplicity="1" name="data" type="string"/>
+                </event>
+                <event name="OnNewStatusPublishQOS">
+                    <desc>Notify preset QoS of publish via "publishViaUI".</desc>
+                    <param desc="QoS" multiplicity="1" name="qos" type="string"/>
+                </event>
+                <event name="OnNewStatusPublishRetain">
+                    <desc>Notify preset retain status of message to publish via "publishViaUI".</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="string"/>
+                </event>
+                <event name="OnNewStatusCurrentlyConnected">
+                    <desc>Notify status of current connection.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnNewStatusActivateConnection">
+                    <desc>Notify if connection to MQTT Broker should be activated.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnNewStatusForwardReceivedMsg">
+                    <desc>Notify if received messages should be forwarded via "OnReceive"-event.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnNewStatusPublishEventList">
+                    <desc>Notify list of events to publish content via MQTT.</desc>
+                    <param desc="List" multiplicity="1" name="list" type="string"/>
+                </event>
+                <event name="OnNewStatusPublishEventName">
+                    <desc>Notify preset eventname to publish its content via MQTT.</desc>
+                    <param desc="Name of event" multiplicity="1" name="name" type="string"/>
+                </event>
+                <event name="OnNewStatusClientID">
+                    <desc>Notify Client ID to use.</desc>
+                    <param desc="Client ID" multiplicity="1" name="id" type="string"/>
+                </event>
+                <event name="OnNewStatusHostnameVerification">
+                    <desc>Notify status of hostname verification.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnNewStatusInterface">
+                    <desc>Notify currently configured interface.</desc>
+                    <param desc="Interface" multiplicity="1" name="interface" type="string"/>
+                </event>
+                <event name="OnNewStatusKeepAliveInterval">
+                    <desc>Notify keep alive interval.</desc>
+                    <param desc="Interval time [s]" multiplicity="1" name="time" type="int"/>
+                </event>
+                <event name="OnNewStatusUsername">
+                    <desc>Notify username to use for this MQTTClient instance.</desc>
+                    <param desc="Username" multiplicity="1" name="username" type="string"/>
+                </event>
+                <event name="OnNewStatusConnectionTimeout">
+                    <desc>Notify timeout to wait initially until the client gets connected.</desc>
+                    <param desc="Time [ms]" multiplicity="1" name="time" type="int"/>
+                </event>
+                <event name="OnNewStatusUseCredentials">
+                    <desc>Notify if credentials should be used.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnNewStatusInterfaceList">
+                    <desc>Notify available interfaces.</desc>
+                    <param desc="List of interfaces" multiplicity="1" name="interfaceList" type="string"/>
+                </event>
+                <event name="OnNewStatusWillMessageActive">
+                    <desc>Notify if WillMessage is used.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnNewStatusWillMessageConfig">
+                    <desc>Notify WillMessage config.</desc>
+                    <param desc="Config as text" multiplicity="1" name="config" type="string"/>
+                </event>
+                <event name="OnNewStatusTLS">
+                    <desc>Notify TLS version to use.</desc>
+                    <param desc="TLS Version" multiplicity="1" name="version" type="string"/>
+                </event>
+                <event name="OnNewStatusCleanSession">
+                    <desc>Notify Clean Session flag.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnNewStatusPeerVerification">
+                    <desc>Notify peer verification status.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnNewStatusClientCertificateActive">
+                    <desc>Notify status to use client certificate.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnNewStatusClientCertificatePath">
+                    <desc>Notify path to client certificate.</desc>
+                    <param desc="Path" multiplicity="1" name="path" type="string"/>
+                </event>
+                <event name="OnNewstatusClientCertificateKeyPath">
+                    <desc>Notify path to client certificate key.</desc>
+                    <param desc="Path" multiplicity="1" name="path" type="string"/>
+                </event>
+                <event name="OnNewStatusCABundleActive">
+                    <desc>Notify status to use CA bundle.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnNewStatusCABundlePath">
+                    <desc>Notify path to CA bundle.</desc>
+                    <param desc="Path" multiplicity="1" name="path" type="string"/>
+                </event>
+                <function name="setParameterName">
+                    <desc>Function to set the name of the parameters if saved/loaded via the CSK_PersistentData module.</desc>
+                    <param desc="Name of the parameter" multiplicity="1" name="name" type="string"/>
+                </function>
+                <function name="sendParameters">
+                    <desc>Send parameters to CSK_PersistentData module if possible to save them.</desc>
+                </function>
+                <function name="loadParameters">
+                    <desc>Load parameters for this module from the CSK_PersistentData module if possible and use them.</desc>
+                </function>
+                <function name="setLoadOnReboot">
+                    <desc>Configure if this module should load its saved parameters at app/device boot up.</desc>
+                    <param desc="Set status" multiplicity="1" name="status" type="bool"/>
+                </function>
+                <function name="pageCalled">
+                    <desc>Function to register "OnResume" of the module UI (only as helper function).</desc>
+                    <return desc="Empty string (only needed to simplify binding)." multiplicity="1" name="empty" type="string"/>
+                </function>
+                <function name="connectMQTT">
+                    <desc>Function to connect to MQTT broker.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </function>
+                <function name="setMQTTPort">
+                    <desc>Function to set MQTT port.</desc>
+                    <param desc="Port" multiplicity="1" name="port" type="int"/>
+                </function>
+                <function name="setBrokerIP">
+                    <desc>Function to set the IP of the MQTT broker.</desc>
+                    <param desc="IP" multiplicity="1" name="ip" type="string"/>
+                </function>
+                <function name="publish">
+                    <desc>Function to publish a message on a topic to an MQTT server.</desc>
+                    <param desc="The topic under which to publish the message." multiplicity="1" name="topic" type="string"/>
+                    <param desc="The message payload to publish." multiplicity="1" name="data" type="binary"/>
+                    <param desc="The quality of service level. Default is QOS0." multiplicity="?" name="qos" ref="CSK_MQTTClient.QOS" type="enum"/>
+                    <param desc="Retaining a message means that the server stores the message and sends it to future subscribers of this topic. Default is NO_RETAIN." multiplicity="?" name="retain" ref="CSK_MQTTClient.Retain" type="enum"/>
+                </function>
+                <function name="addSubscription">
+                    <desc>Function to add a MQTT topic to subscribe to.</desc>
+                    <param desc="Topic to subscribe to." multiplicity="1" name="topicFilter" type="string"/>
+                    <param desc="Quality of service level. Default is QOS0." multiplicity="1" name="qos" ref="CSK_MQTTClient.QOS" type="enum"/>
+                </function>
+                <function name="getMQTTHandle">
+                    <desc>Function to get MQTT Client handle (e.g. to register directly on the "OnRecieve" events in other modules).</desc>
+                    <return alias="MQTTClient" desc="Handle of the MQTT Client." multiplicity="1" name="handle" type="handle"/>
+                </function>
+                <function name="presetSubscriptionTopic">
+                    <desc>Function to preset topic to subscribe (see "addSubscriptionViaUI").</desc>
+                    <param desc="Topic" multiplicity="1" name="topic" type="string"/>
+                </function>
+                <function name="presetSubscriptionQOS">
+                    <desc>Function to preset QoS of topic to subscribe (see "addSubscriptionViaUI").</desc>
+                    <param desc="QoS" multiplicity="1" name="qos" ref="CSK_MQTTClient.QOS" type="enum"/>
+                </function>
+                <function name="addSubscriptionViaUI">
+                    <desc>Function to subscribe to preset topic with QoS.</desc>
+                </function>
+                <function name="presetPublishTopic">
+                    <desc>Function to preset a topic to publish to (see "addPublishEventViaUI" or "publishViaUI").</desc>
+                    <param desc="Topic" multiplicity="1" name="topic" type="string"/>
+                </function>
+                <function name="presetPublishData">
+                    <desc>Function to preset the data to publish (see "publishViaUI").</desc>
+                    <param desc="Data" multiplicity="1" name="data" type="string"/>
+                </function>
+                <function name="presetPublishQOS">
+                    <desc>Function to preset the QoS of the preset data to publish (see "addPublishEventViaUI" or "publishViaUI").</desc>
+                    <param desc="QoS" multiplicity="1" name="qos" ref="CSK_MQTTClient.QOS" type="enum"/>
+                </function>
+                <function name="presetPublishRetain">
+                    <desc>Function to preset the retain flag of the data to publish (see "addPublishEventViaUI" or "publishViaUI").</desc>
+                    <param desc="Status" multiplicity="1" name="status" ref="CSK_MQTTClient.Retain" type="enum"/>
+                </function>
+                <function name="publishViaUI">
+                    <desc>Function to publish data with preset configuration (see "preset" functions).</desc>
+                </function>
+                <function name="selectSubscriptionViaUI">
+                    <desc>Function to select subscription via UI.</desc>
+                    <param desc="Selection" multiplicity="1" name="selection" type="string"/>
+                </function>
+                <function name="setForwardReceivedMessages">
+                    <desc>Function to set if received messages of subscribed topics should be forwarded via "OnReceive"-event.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </function>
+                <function name="unsubscribe">
+                    <desc>Function to unsubscribe from a MQTT topic.</desc>
+                    <param desc="Topic" multiplicity="1" name="topic" type="string"/>
+                </function>
+                <function name="unsubscribeViaUI">
+                    <desc>Function to unsubscribe from preselected topic via UI (see "selectSubscriptionViaUI").</desc>
+                </function>
+                <function name="addPublishEvent">
+                    <desc>Function to add an event to listen to and forward content if notified with configured MQTT publish message.</desc>
+                    <param desc="Name of event to register (event with one parameter expected)." multiplicity="1" name="event" type="string"/>
+                    <param desc="Data content of the event will be publsihed to this MQTT topic." multiplicity="1" name="topic" type="string"/>
+                    <param desc="QoS of publish message." multiplicity="1" name="qos" ref="CSK_MQTTClient.QOS" type="enum"/>
+                    <param desc="Retain option of the publish." multiplicity="1" name="retain" ref="CSK_MQTTClient.Retain" type="enum"/>
+                </function>
+                <function name="removePublishEvent">
+                    <desc>Function to remove and deregister of event to not forward content as MQTT publish (anymore).</desc>
+                    <param desc="Name of event" multiplicity="1" name="event" type="string"/>
+                </function>
+                <function name="presetPublishEvent">
+                    <desc>Function to preset eventname to register to and to forward its content via MQTT publish (see "addPublishEventViaUI").</desc>
+                    <param desc="Name of event" multiplicity="1" name="name" type="string"/>
+                </function>
+                <function name="addPublishEventViaUI">
+                    <desc>Function to add a preset event with preset configuration (topic, QoS, Retain) to listen to and to forward content via MQTT publish.</desc>
+                </function>
+                <function name="selectPublishEvent">
+                    <desc>Function to select event of list to publish via UI.</desc>
+                    <param desc="Selection" multiplicity="1" name="selection" type="string"/>
+                </function>
+                <function name="removePublishEventViaUI">
+                    <desc>Function to remove preselected event via UI (see "selectPublishEvent").</desc>
+                </function>
+                <function name="setConnectionTimeout">
+                    <desc>Function to set the timeout to wait initially until the client gets connected.</desc>
+                    <param desc="Timeout in [ms]" multiplicity="1" name="time" type="int"/>
+                </function>
+                <function name="setClientID">
+                    <desc>Function to set the client identifier to be used by this MQTTClient instance.</desc>
+                    <param desc="Client ID" multiplicity="1" name="id" type="string"/>
+                </function>
+                <function name="setHostnameVerification">
+                    <desc>Function to set hostname verification.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </function>
+                <function name="setInterface">
+                    <desc>Function to set interface to use for MQTT connection.</desc>
+                    <param desc="Interface" multiplicity="1" name="interface" type="string"/>
+                </function>
+                <function name="setKeepAliveInterval">
+                    <desc>Function to set keep alive interval.</desc>
+                    <param desc="Seconds after which a PING message should be sent if no other messages have been exchanged in that time. Disable keep alive mechanism with 0." multiplicity="1" name="time" type="int"/>
+                </function>
+                <function name="setUsername">
+                    <desc>Function to set username if credentials should be used (see "setUseCredentials").</desc>
+                    <param desc="Username" multiplicity="1" name="username" type="string"/>
+                </function>
+                <function name="setPassword">
+                    <desc>Function to set password if credentials should be used (see "setUseCredentials").</desc>
+                    <param desc="Password" multiplicity="1" name="password" type="string"/>
+                </function>
+                <function name="setUseCredentials">
+                    <desc>Function to set if credentials should be used for MQTT connection.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </function>
+                <function name="setWillMessageActivation">
+                    <desc>Function to set activation of WillMessage.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </function>
+                <function name="setWillMessageConfig">
+                    <desc>Function to set config of WillMessage.</desc>
+                    <param desc="Topic under which to publish the message." multiplicity="1" name="topic" type="string"/>
+                    <param desc="The message payload to publish." multiplicity="1" name="data" type="string"/>
+                    <param desc="Quality of Service level. Default is QOS0." multiplicity="1" name="qos" ref="CSK_MQTTClient.QOS" type="enum"/>
+                    <param desc="Retaining a message means that the server stores the message and sends it to future subscribers of this topic. Default is NO_RETAIN." multiplicity="1" name="retain" ref="CSK_MQTTClient.Retain" type="enum"/>
+                </function>
+                <function name="setWillMessageConfigViaUI">
+                    <desc>Function to set config of WillMessage via UI with preset configuration (check "presetPublish..."-functions).</desc>
+                </function>
+                <function name="setTLSVersion">
+                    <desc>Function to select if and what TLS version to use.</desc>
+                    <param desc="TLS version" multiplicity="1" name="version" ref="CSK_MQTTClient.TLSVersion" type="enum"/>
+                </function>
+                <function name="setCleanSession">
+                    <desc>Function to set clean session mode.</desc>
+                    <param desc="Status (default is true)" multiplicity="1" name="status" type="bool"/>
+                </function>
+                <function name="setPeerVerification">
+                    <desc>Function to set peer verification.</desc>
+                    <param desc="Status (default is true)" multiplicity="1" name="status" type="bool"/>
+                </function>
+                <function name="setUseClientCertificate">
+                    <desc>Function to set if client certificate should be used.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </function>
+                <function name="setClientCertificatePath">
+                    <desc>Function to set path to client certificate file im PEM/DER/PKCS#12 format (if client authentification is used).</desc>
+                    <param desc="Path" multiplicity="1" name="path" type="string"/>
+                </function>
+                <function name="setClientCertificateKeyPath">
+                    <desc>Function to set path to client private key in PEM/DER format (if client authentification is used).</desc>
+                    <param desc="Path" multiplicity="1" name="path" type="string"/>
+                </function>
+                <function name="setClientCertificateKeyPassword">
+                    <desc>Function to set optional passphrase for client certification private key.</desc>
+                    <param desc="Password (Per default empty to not use passphrase)" multiplicity="1" name="password" type="string"/>
+                </function>
+                <function name="setUseCABundle">
+                    <desc>Function to set if CA bundle should be used.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </function>
+                <function name="setCABundlePath">
+                    <desc>Function to set path to CA bundle if it is activated.</desc>
+                    <param desc="Path" multiplicity="1" name="path" type="string"/>
+                </function>
+            </serves>
+        </crown>
+        <meta key="author">SICK AG</meta>
+        <meta key="version">0.4.0</meta>
+        <meta key="priority">low</meta>
+        <meta key="copy-protected">false</meta>
+        <meta key="read-protected">false</meta>
+        <meta key="crown2-flow-engine">false</meta>
+        <meta key="LuaLoadAllEngineAPI">false</meta>
+        <entry default="CSK_Module_MQTTClient.lua" path="scripts"/>
+    </application>
+</manifest>
