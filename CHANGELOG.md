@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 
 ## Release 0.4.1
 
+### Improvements
+- Updated docu and added "Known issues" in README that data of registered events to be forwarded via MQTT are always published as converted data type "string".
+
 ### Bugfix
 - Did not convert data of registered events to strings before trying to publish them via MQTT
 
