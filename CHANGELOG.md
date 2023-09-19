@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Release 0.4.1
+
+### Bugfix
+- Did not convert data of registered events to strings before trying to publish them via MQTT
+
 ## Release 0.4.0
 
 ### Improvements
