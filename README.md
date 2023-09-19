@@ -8,6 +8,10 @@ Module to provide MQTT client functionality.
 The app includes an intuitive GUI to setup the MQTTClient configuration.  
 For further information check out the [documentation](https://raw.githack.com/SICKAppSpaceCodingStarterKit/CSK_Module_MQTTClient/main/docu/CSK_Module_MQTTClient.html) in the folder "docu".
 
+## Known issues
+
+Data of registered events to be forwarded via MQTT are always published as converted data type "string".
+
 ## Information
 
 Tested on:
