@@ -155,9 +155,9 @@ end
 MQTTClient.register(mqttClient_Model.mqttClient, 'OnReceive', handleOnReceive)
 
 local function publish(topic, data, qos, retain)
-  _G.logger:info(nameOfModule .. ": Publish data '" .. data .. "' to topic '" .. topic .. "' with QoS '" .. qos .. "' and '" .. retain .. "'")
-  addMessageLog("Publish data '" .. data .. "' to topic '" .. topic .. "' with QoS '" .. qos .. "' and '" .. retain .. "'")
-  MQTTClient.publish(mqttClient_Model.mqttClient, topic, data, qos, retain)
+  _G.logger:info(nameOfModule .. ": Publish data '" .. tostring(data) .. "' to topic '" .. topic .. "' with QoS '" .. qos .. "' and '" .. retain .. "'")
+  addMessageLog("Publish data '" .. tostring(data) .. "' to topic '" .. topic .. "' with QoS '" .. qos .. "' and '" .. retain .. "'")
+  MQTTClient.publish(mqttClient_Model.mqttClient, topic, tostring(data), qos, retain)
 end
 Script.serveFunction('CSK_MQTTClient.publish', publish)
 mqttClient_Model.publish = publish
