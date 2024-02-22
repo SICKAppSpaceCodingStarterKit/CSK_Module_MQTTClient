@@ -16,8 +16,8 @@ Data of registered events to be forwarded via MQTT are always published as conve
 
 Tested on:
 
-1. SIM1012        - Firmware 2.2.0
-2. SICK AppEngine - Firmware 1.3.2
+1. SIM1012        - Firmware 2.2.0, 2.4.1
+2. SICK AppEngine - Firmware 1.3.2, 1.5.0
 3. TDC-E          - L4M 2023.1
 
 This module is part of the SICK AppSpace Coding Starter Kit developing approach.  
