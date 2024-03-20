@@ -560,7 +560,7 @@ local function addPublishEvent(event, topic, qos, retain)
 
   Script.notifyEvent("MQTTClient_OnNewStatusPublishEventList", mqttClient_Model.helperFuncs.createJsonListPublishEvents(mqttClient_Model.parameters.publishEvents))
 
-  createInternalPublishFunctions(event, topic, qos, retain)
+  createInternalPublishFunctions(event)
 
 end
 Script.serveFunction('CSK_MQTTClient.addPublishEvent', addPublishEvent)
@@ -677,7 +677,7 @@ local function loadParameters()
 
       -- Configured/activated with new loaded data
       for key in pairs(mqttClient_Model.parameters.publishEvents.topic) do
-        createInternalPublishFunctions(key, mqttClient_Model.parameters.publishEvents.topic[key], mqttClient_Model.parameters.publishEvents.qos[key], mqttClient_Model.parameters.publishEvents.retain[key])
+        createInternalPublishFunctions(key)
       end
       connectMQTT(mqttClient_Model.parameters.connect)
 

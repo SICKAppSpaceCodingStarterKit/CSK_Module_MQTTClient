@@ -9,7 +9,7 @@ All notable changes to this project will be documented in this file.
 - Changed a couple of misleading labels for MQTTS in UI
 
 ### Bugfix
-- Bug of multiple functions call by the same event when topic of the event is changed. Solved by deregistering from event if the topic of the event is changed
+- Bug of multiple function calls by the same event when topic of the event is changed. Solved by deregistering from event if the topic of the event is changed
 - 'passwords' changed to 'password' as the parameter is called mqttClient_Model.parameters.password
 
 ## Release 0.4.1

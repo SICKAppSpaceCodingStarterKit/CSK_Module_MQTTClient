@@ -16,9 +16,13 @@ Data of registered events to be forwarded via MQTT are always published as conve
 
 Tested on:
 
-1. SIM1012        - Firmware 2.2.0, 2.4.1
-2. SICK AppEngine - Firmware 1.3.2, 1.5.0
-3. TDC-E          - L4M 2023.1
+|Device|Firmware version|Module version|
+|--|--|--|
+|SIM1012|V2.4.1|v1.0.0|
+|SIM1012|V2.2.0|v0.4.1|
+|SICK AppEngine|V1.5.0|v1.0.0|
+|SICK AppEngine|V1.3.2|v0.4.1|
+|TDC-E|L4M 2023.1|v0.4.1|
 
 This module is part of the SICK AppSpace Coding Starter Kit developing approach.  
 It is programmed in an object oriented way. Some of these modules use kind of "classes" in Lua to make it possible to reuse code / classes in other projects.  
