@@ -222,7 +222,7 @@ local function connectMQTT(status)
     end
     MQTTClient.setKeepAliveInterval(mqttClient_Model.mqttClient, mqttClient_Model.parameters.keepAliveInterval)
     if mqttClient_Model.parameters.useCredentials then
-      MQTTClient.setUserCredentials(mqttClient_Model.mqttClient, mqttClient_Model.parameters.username, Cipher.AES.decrypt(mqttClient_Model.parameters.passwords, mqttClient_Model.key))
+      MQTTClient.setUserCredentials(mqttClient_Model.mqttClient, mqttClient_Model.parameters.username, Cipher.AES.decrypt(mqttClient_Model.parameters.password, mqttClient_Model.key))
     end
     if mqttClient_Model.parameters.useWillMessage then
       MQTTClient.setWillMessage(mqttClient_Model.mqttClient, mqttClient_Model.parameters.willMessageTopic, mqttClient_Model.parameters.willMessageData, mqttClient_Model.parameters.willMessageQOS, mqttClient_Model.parameters.willMessageRetain)
@@ -249,10 +249,14 @@ local function connectMQTT(status)
         MQTTClient.setCABundle(mqttClient_Model.mqttClient, mqttClient_Model.parameters.caBundlePath)
       end
     end
-
+    mqttClient_Model.reconnectionTimer:start()
     MQTTClient.connect(mqttClient_Model.mqttClient, mqttClient_Model.parameters.connectionTimeout)
+    if mqttClient_Model.mqttClient:isConnected() == false then
+      mqttClient_Model.addMessageLog("Connection failed")
+    end
   else
     MQTTClient.disconnect(mqttClient_Model.mqttClient)
+    mqttClient_Model.reconnectionTimer:stop()
   end
 end
 Script.serveFunction('CSK_MQTTClient.connectMQTT', connectMQTT)
@@ -331,7 +335,7 @@ Script.serveFunction('CSK_MQTTClient.setUsername', setUsername)
 
 local function setPassword(password)
   _G.logger:info(nameOfModule .. ": Set password.")
-  mqttClient_Model.parameters.passwords = Cipher.AES.encrypt(password, mqttClient_Model.key)
+  mqttClient_Model.parameters.password = Cipher.AES.encrypt(password, mqttClient_Model.key)
 end
 Script.serveFunction('CSK_MQTTClient.setPassword', setPassword)
 
@@ -339,7 +343,7 @@ local function setUseCredentials(status)
   _G.logger:info(nameOfModule .. ": Set usage of credentials to " .. tostring(status))
   mqttClient_Model.parameters.useCredentials = status
   if status then
-    MQTTClient.setUserCredentials(mqttClient_Model.mqttClient, mqttClient_Model.parameters.username, Cipher.AES.decrypt(mqttClient_Model.parameters.passwords, mqttClient_Model.key))
+    MQTTClient.setUserCredentials(mqttClient_Model.mqttClient, mqttClient_Model.parameters.username, Cipher.AES.decrypt(mqttClient_Model.parameters.password, mqttClient_Model.key))
   end
 end
 Script.serveFunction('CSK_MQTTClient.setUseCredentials', setUseCredentials)
@@ -522,10 +526,7 @@ Script.serveFunction('CSK_MQTTClient.presetPublishEvent', presetPublishEvent)
 
 --- Function to create internal publish functions
 ---@param event string Name of event to register (event with one parameter expected)
----@param topic string Data content of the event will be publsihed to this MQTT topic
----@param qos string QoS of publish message
----@param retain string Retain option of the publish
-local function createInternalPublishFunctions(event, topic, qos, retain)
+local function createInternalPublishFunctions(event)
 
   local function triggerPublish(event, data)
     if mqttClient_Model.isConnected then
@@ -541,7 +542,7 @@ local function createInternalPublishFunctions(event, topic, qos, retain)
   mqttClient_Model.publishEventsFunctions[event] = forwardContent
 
   if Script.isServedAsEvent(event) then
-    _G.logger:info(nameOfModule .. ": Register to event '" .. event .. "' to forward its content via MQTT publish on topic '" .. topic .. "'")
+    _G.logger:info(nameOfModule .. ": Register to event '" .. event .. "' to forward its content via MQTT publish on topic '" .. mqttClient_Model.parameters.publishEvents.topic[event] .. "'")
     Script.register(event, mqttClient_Model.publishEventsFunctions[event])
   else
     _G.logger:info(nameOfModule .. ": Not possible to register to event '" .. event .. "' as it seems not to be available.")
@@ -549,13 +550,17 @@ local function createInternalPublishFunctions(event, topic, qos, retain)
 end
 
 local function addPublishEvent(event, topic, qos, retain)
+  if mqttClient_Model.publishEventsFunctions[event] then
+    Script.deregister(event, mqttClient_Model.publishEventsFunctions[event])
+    mqttClient_Model.publishEventsFunctions[event] = nil
+  end
   mqttClient_Model.parameters.publishEvents.topic[event] = topic
   mqttClient_Model.parameters.publishEvents.qos[event] = qos
   mqttClient_Model.parameters.publishEvents.retain[event] = retain
 
   Script.notifyEvent("MQTTClient_OnNewStatusPublishEventList", mqttClient_Model.helperFuncs.createJsonListPublishEvents(mqttClient_Model.parameters.publishEvents))
 
-  createInternalPublishFunctions(event, topic, qos, retain)
+  createInternalPublishFunctions(event)
 
 end
 Script.serveFunction('CSK_MQTTClient.addPublishEvent', addPublishEvent)
@@ -672,7 +677,7 @@ local function loadParameters()
 
       -- Configured/activated with new loaded data
       for key in pairs(mqttClient_Model.parameters.publishEvents.topic) do
-        createInternalPublishFunctions(key, mqttClient_Model.parameters.publishEvents.topic[key], mqttClient_Model.parameters.publishEvents.qos[key], mqttClient_Model.parameters.publishEvents.retain[key])
+        createInternalPublishFunctions(key)
       end
       connectMQTT(mqttClient_Model.parameters.connect)
 

@@ -49,6 +49,10 @@ end
 -- Create parameters / instances for this module
 mqttClient_Model.isConnected = false
 
+mqttClient_Model.reconnectionTimer = Timer.create() -- Timer to reconnect in case the connection to the broker is lost
+mqttClient_Model.reconnectionTimer:setExpirationTime(5000)
+mqttClient_Model.reconnectionTimer:setPeriodic(true)
+
 mqttClient_Model.mqttClient = MQTTClient.create()
 
 mqttClient_Model.tempSubscriptionTopic = '' -- temporary preset topic to subscribe
@@ -181,10 +185,9 @@ mqttClient_Model.subscripeToAllTopics = subscripeToAllTopics
 
 --- Function to react on "OnConnected" event of MQTT client
 local function handleOnConnected()
-  _G.logger:info(nameOfModule .. ": Connected to MQQT broker.")
-
-  addMessageLog('Connected to MQQT broker.')
-
+  _G.logger:info(nameOfModule .. ": Connected to MQTT broker.")
+  addMessageLog('Connected to MQTT broker.')
+  mqttClient_Model.reconnectionTimer:stop()
   mqttClient_Model.isConnected = true
   Script.notifyEvent("MQTTClient_OnNewStatusCurrentlyConnected", mqttClient_Model.isConnected)
   subscripeToAllTopics()
@@ -193,18 +196,33 @@ MQTTClient.register(mqttClient_Model.mqttClient, 'OnConnected', handleOnConnecte
 
 --- Function to react on "OnDisconnected" event of MQTT client
 local function handleOnDisconnected()
-  _G.logger:info(nameOfModule .. ": Disconnected from MQQT broker.")
-  addMessageLog('Disconnected from MQQT broker.')
+  _G.logger:info(nameOfModule .. ": Disconnected from MQTT broker.")
+  addMessageLog('Disconnected from MQTT broker.')
+  if mqttClient_Model.parameters.connect == true then
+    mqttClient_Model.reconnectionTimer:start()
+  end
   mqttClient_Model.isConnected = false
   Script.notifyEvent("MQTTClient_OnNewStatusCurrentlyConnected", mqttClient_Model.isConnected)
 end
 MQTTClient.register(mqttClient_Model.mqttClient, 'OnDisconnected', handleOnDisconnected)
 
+--- Function to reconnect to broker if the connection is lost
+local function handleOnReconnectionTimerExpired()
+  if mqttClient_Model.parameters.connect == true then
+    MQTTClient.connect(mqttClient_Model.mqttClient, mqttClient_Model.parameters.connectionTimeout)
+    if mqttClient_Model.mqttClient:isConnected() == false then
+      addMessageLog("Reconnection trial failed")
+    end
+  else
+    mqttClient_Model.reconnectionTimer:stop()
+  end
+end
+mqttClient_Model.reconnectionTimer:register('OnExpired', handleOnReconnectionTimerExpired)
+
 --- Function to reset the MQTTClient
 local function recreateMQTTClient()
   Script.releaseObject(mqttClient_Model.mqttClient)
   mqttClient_Model.mqttClient = MQTTClient.create()
-
   MQTTClient.register(mqttClient_Model.mqttClient, 'OnReceive', handleOnReceive)
   MQTTClient.register(mqttClient_Model.mqttClient, 'OnConnected', handleOnConnected)
   MQTTClient.register(mqttClient_Model.mqttClient, 'OnDisconnected', handleOnDisconnected)  

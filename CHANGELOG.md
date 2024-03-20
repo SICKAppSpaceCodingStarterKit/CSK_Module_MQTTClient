@@ -1,6 +1,17 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Release 1.0.0
+
+### Improvements
+- Reconnection timer of 5 seconds in case the connection is lost (broker is rebooted)
+- Showing in the message log if connection/reconnection failed
+- Changed a couple of misleading labels for MQTTS in UI
+
+### Bugfix
+- Bug of multiple function calls by the same event when topic of the event is changed. Solved by deregistering from event if the topic of the event is changed
+- 'passwords' changed to 'password' as the parameter is called mqttClient_Model.parameters.password
+
 ## Release 0.4.1
 
 ### Improvements

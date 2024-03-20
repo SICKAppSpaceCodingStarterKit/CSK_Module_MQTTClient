@@ -23,7 +23,7 @@ It is also possible to get the MQTTClient handle via "getMQTTHandle" to use this
 **4) Publish** +
 It is possible to publish MQTT messages via "publish" (via script) or "publishViaUI (via UI) to use preset values (check "presetPublish..."-functions) +
 Additionally it is possible to configure the module to listen / wait for specific events of other modules/apps and to forward their content to predefined topics with predefined QoS/Retain. +
-This can be used e.g. to listen to "OtherModule.OnNewResult"-events and to forward the results via MQTT. +
+This can be used e.g. to listen to "OtherModule.OnNewResult"-events and to forward the results via MQTT (data will be forwarded to data type 'string'). +
 To do so make use of "addPublishEvent" (via script) or the "presetPublish"-functions (incl. "presetPublishEvent") and "addPublishEventViaUI". +
 {empty} +
 **5) WillMessage** +
@@ -308,7 +308,7 @@ Configure a WillMessage via "setWillMessageConfig" (via script) or "setWillMessa
                     <desc>Function to unsubscribe from preselected topic via UI (see "selectSubscriptionViaUI").</desc>
                 </function>
                 <function name="addPublishEvent">
-                    <desc>Function to add an event to listen to and forward content if notified with configured MQTT publish message.</desc>
+                    <desc>Function to add an event to listen to and forward content (as string) if notified with configured MQTT publish message.</desc>
                     <param desc="Name of event to register (event with one parameter expected)." multiplicity="1" name="event" type="string"/>
                     <param desc="Data content of the event will be publsihed to this MQTT topic." multiplicity="1" name="topic" type="string"/>
                     <param desc="QoS of publish message." multiplicity="1" name="qos" ref="CSK_MQTTClient.QOS" type="enum"/>
@@ -323,7 +323,7 @@ Configure a WillMessage via "setWillMessageConfig" (via script) or "setWillMessa
                     <param desc="Name of event" multiplicity="1" name="name" type="string"/>
                 </function>
                 <function name="addPublishEventViaUI">
-                    <desc>Function to add a preset event with preset configuration (topic, QoS, Retain) to listen to and to forward content via MQTT publish.</desc>
+                    <desc>Function to add a preset event with preset configuration (topic, QoS, Retain) to listen to and to forward content (as string) via MQTT publish.</desc>
                 </function>
                 <function name="selectPublishEvent">
                     <desc>Function to select event of list to publish via UI.</desc>
@@ -417,7 +417,7 @@ Configure a WillMessage via "setWillMessageConfig" (via script) or "setWillMessa
             </serves>
         </crown>
         <meta key="author">SICK AG</meta>
-        <meta key="version">0.4.1</meta>
+        <meta key="version">1.0.0</meta>
         <meta key="priority">low</meta>
         <meta key="copy-protected">false</meta>
         <meta key="read-protected">false</meta>
