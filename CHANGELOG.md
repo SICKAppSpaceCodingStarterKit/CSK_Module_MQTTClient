@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## Release 1.0.1
+## Release 1.1.0
 
 ### Improvements
 - Added option to send Will Message also when disconnecting normally.
