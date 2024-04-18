@@ -248,6 +248,37 @@
 												</layout-row>
 												</layout-column>
 												</layout-row>
+												<layout-row id="Placeholder12"
+													class="myCustom10pxHeight_CSK_Module_MQTTClient">
+												</layout-row>
+												<layout-row id="RowLayout31">
+												<layout-column id="ColumnLayout58" style="align-items: stretch">
+												<davinci-value-display id="VD_SendWillMessageByClosing"
+													value="Disconnect with WillMessage:">
+												</davinci-value-display>
+												</layout-column>
+												<layout-column id="ColumnLayout59" style="align-items: stretch">
+												<layout-row id="RowLayout45" style="justify-content: flex-end">
+												<davinci-toggle-switch id="TS_WillMessageOnDisconnect">
+												<crown-edpws-binding property="checked"
+													name="CSK_MQTTClient/OnNewStatusDisconnectWithWillMessage"
+													update-on-resume>
+												</crown-edpws-binding>
+												<crown-set event="change"
+													crown-function="CSK_MQTTClient/setDisconnectWithWillMessage"
+													protocol="crownMSGPACK" crown-path="status">
+												</crown-set>
+												<crown-edpws-binding property="disabled"
+													name="CSK_MQTTClient/OnNewStatusWillMessageActive"
+													update-on-resume converter="function(value) {return !value;}">
+												</crown-edpws-binding>
+												</davinci-toggle-switch>
+												</layout-row>
+												</layout-column>
+												</layout-row>
+												<layout-row id="Placeholder13"
+													class="myCustom10pxHeight_CSK_Module_MQTTClient">
+												</layout-row>
 												<davinci-value-display id="VD_WillMessageConfig">
 												<crown-on property="value"
 													crown-event="CSK_MQTTClient/OnNewStatusWillMessageConfig">

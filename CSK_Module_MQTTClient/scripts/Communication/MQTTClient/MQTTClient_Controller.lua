@@ -62,6 +62,7 @@ Script.serveEvent('CSK_MQTTClient.OnNewStatusSubscriptionList', 'MQTTClient_OnNe
 Script.serveEvent('CSK_MQTTClient.OnNewStatusPublishEventList', 'MQTTClient_OnNewStatusPublishEventList')
 Script.serveEvent('CSK_MQTTClient.OnNewStatusWillMessageActive', 'MQTTClient_OnNewStatusWillMessageActive')
 Script.serveEvent('CSK_MQTTClient.OnNewStatusWillMessageConfig', 'MQTTClient_OnNewStatusWillMessageConfig')
+Script.serveEvent('CSK_MQTTClient.OnNewStatusDisconnectWithWillMessage', 'MQTTClient_OnNewStatusDisconnectWithWillMessage')
 
 Script.serveEvent("CSK_MQTTClient.OnNewStatusLoadParameterOnReboot", "MQTTClient_OnNewStatusLoadParameterOnReboot")
 Script.serveEvent("CSK_MQTTClient.OnPersistentDataModuleAvailable", "MQTTClient_OnPersistentDataModuleAvailable")
@@ -178,6 +179,7 @@ local function handleOnExpiredTmrMQTTClient()
   Script.notifyEvent("MQTTClient_OnNewStatusPublishRetain", mqttClient_Model.tempPublishRetain)
 
   Script.notifyEvent("MQTTClient_OnNewStatusWillMessageActive", mqttClient_Model.parameters.useWillMessage)
+  Script.notifyEvent("MQTTClient_OnNewStatusDisconnectWithWillMessage", mqttClient_Model.parameters.disconnectWithWillMessage)
   Script.notifyEvent("MQTTClient_OnNewStatusWillMessageConfig", "Topic = '" .. mqttClient_Model.parameters.willMessageTopic ..
                                                                 "', Data = '" .. mqttClient_Model.parameters.willMessageData ..
                                                                 "', QoS = '" .. mqttClient_Model.parameters.willMessageQOS ..
@@ -255,6 +257,9 @@ local function connectMQTT(status)
       mqttClient_Model.addMessageLog("Connection failed")
     end
   else
+    if mqttClient_Model.parameters.disconnectWithWillMessage == true and mqttClient_Model.parameters.useWillMessage == true then
+      mqttClient_Model.publish(mqttClient_Model.parameters.willMessageTopic, mqttClient_Model.parameters.willMessageData, mqttClient_Model.parameters.willMessageQOS, mqttClient_Model.parameters.willMessageRetain)
+    end
     MQTTClient.disconnect(mqttClient_Model.mqttClient)
     mqttClient_Model.reconnectionTimer:stop()
   end
@@ -615,8 +620,15 @@ Script.serveFunction('CSK_MQTTClient.selectPublishEvent', selectPublishEvent)
 local function setWillMessageActivation(status)
   _G.logger:info(nameOfModule .. ": Set WillMessage activation to " .. tostring(status))
   mqttClient_Model.parameters.useWillMessage = status
+  Script.notifyEvent("MQTTClient_OnNewStatusWillMessageActive", status)
 end
 Script.serveFunction('CSK_MQTTClient.setWillMessageActivation', setWillMessageActivation)
+
+local function setDisconnectWithWillMessage(status)
+  _G.logger:info(nameOfModule .. ": Set DisconnectWithWillMessage to " .. tostring(status))
+  mqttClient_Model.parameters.disconnectWithWillMessage = status
+end
+Script.serveFunction('CSK_MQTTClient.setDisconnectWithWillMessage', setDisconnectWithWillMessage)
 
 local function setWillMessageConfig(topic, data, qos, retain)
   _G.logger:info(nameOfModule .. ": Set WillMessage config with data '" .. data .. "' to topic '" .. topic .. "' with QoS '" .. qos .. "' and '" .. retain .. "'")
