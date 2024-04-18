@@ -414,10 +414,14 @@ Configure a WillMessage via "setWillMessageConfig" (via script) or "setWillMessa
                     <desc>Function to set path to CA bundle if it is activated.</desc>
                     <param desc="Path" multiplicity="1" name="path" type="string"/>
                 </function>
+                <function name="setDisconnectWithWillMessage">
+                    <desc>Function to set if WillMessage should be sent when disconnecting from MQTT broker normally.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </function>
             </serves>
         </crown>
         <meta key="author">SICK AG</meta>
-        <meta key="version">1.0.0</meta>
+        <meta key="version">1.0.1</meta>
         <meta key="priority">low</meta>
         <meta key="copy-protected">false</meta>
         <meta key="read-protected">false</meta>

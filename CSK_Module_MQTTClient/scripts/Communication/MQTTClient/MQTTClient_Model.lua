@@ -95,6 +95,7 @@ mqttClient_Model.parameters.caBundleActive = false -- Enables/disables to use ce
 mqttClient_Model.parameters.caBundlePath = 'public/CA.pem' -- Path to a certificate bundle in PEM format.
 
 mqttClient_Model.parameters.useWillMessage = false -- Enables/disables to use a will message
+mqttClient_Model.parameters.disconnectWithWillMessage = false -- Enables/disables sending a will message before intentionally disconnecting
 mqttClient_Model.parameters.willMessageTopic = '' -- Topic under which to publish the will message
 mqttClient_Model.parameters.willMessageData = '' -- The message payload to publish
 mqttClient_Model.parameters.willMessageQOS = 'QOS0' -- Quality of Service level
