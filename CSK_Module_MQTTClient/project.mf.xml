@@ -27,7 +27,8 @@ This can be used e.g. to listen to "OtherModule.OnNewResult"-events and to forwa
 To do so make use of "addPublishEvent" (via script) or the "presetPublish"-functions (incl. "presetPublishEvent") and "addPublishEventViaUI". +
 {empty} +
 **5) WillMessage** +
-Configure a WillMessage via "setWillMessageConfig" (via script) or "setWillMessageViaUI (via UI) to use the preset values of the "presetPublish"-functions and activate it via "setWillMessageActivation". +</desc>
+Configure a WillMessage via "setWillMessageConfig" (via script) or "setWillMessageViaUI (via UI) to use the preset values of the "presetPublish"-functions and activate it via "setWillMessageActivation". +
+Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage should be sent when disconnecting from MQTT broker normally. +</desc>
             <enum name="QOS" trait="released">
                 <desc>Quality of MQTT topic service level.</desc>
                 <item desc="Quality of Service level 0." name="QOS0">QOS0</item>
@@ -215,6 +216,10 @@ Configure a WillMessage via "setWillMessageConfig" (via script) or "setWillMessa
                 <event name="OnNewStatusCABundlePath">
                     <desc>Notify path to CA bundle.</desc>
                     <param desc="Path" multiplicity="1" name="path" type="string"/>
+                </event>
+                <event name="OnNewStatusDisconnectWithWillMessage">
+                    <desc>Notify status if WillMessage should be send before disconnecting.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
                 </event>
                 <function name="setParameterName">
                     <desc>Function to set the name of the parameters if saved/loaded via the CSK_PersistentData module.</desc>
@@ -421,7 +426,7 @@ Configure a WillMessage via "setWillMessageConfig" (via script) or "setWillMessa
             </serves>
         </crown>
         <meta key="author">SICK AG</meta>
-        <meta key="version">1.0.1</meta>
+        <meta key="version">1.1.0</meta>
         <meta key="priority">low</meta>
         <meta key="copy-protected">false</meta>
         <meta key="read-protected">false</meta>
