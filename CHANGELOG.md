@@ -1,6 +1,28 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Release 2.0.0
+
+### New features
+- Supports FlowConfig feature to provide incoming MQTT messages / push messages to MQTT broker
+- Provide version of module via 'OnNewStatusModuleVersion'
+- Check if features of module can be used on device and provide this via 'OnNewStatusModuleIsActive' event / 'getStatusModuleActive' function
+- New event 'OnNewConnectionStatus'
+- Function 'getParameters' to provide PersistentData parameters
+- Function to 'resetModule' to default setup
+
+### Improvements
+- New UI design available (e.g. selectable via CSK_Module_PersistentData v4.1.0 or higher), see 'OnNewStatusCSKStyle'
+- 'loadParameters' returns its success
+- 'sendParameters' can control if sent data should be saved directly by CSK_Module_PersistentData
+- Changed log level of some messages from 'info' to 'fine'
+- Added UI icon and browser tab information
+
+### Bugfix
+- Module tried to reconnect to MQTT broker every 5sec after a disconnection even it already reconnected succesfully
+- Typo in code regarding password variable for credentials
+- Typo in code regarding client certificate key path
+
 ## Release 1.1.0
 
 ### Improvements

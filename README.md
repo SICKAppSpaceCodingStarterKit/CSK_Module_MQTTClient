@@ -14,14 +14,16 @@ Data of registered events to be forwarded via MQTT are always published as conve
 
 ## Information
 
-Tested on:
+Tested on  
 
 |Device|Firmware version|Module version|
 |--|--|--|
+|SIM1012|V2.4.2|v2.0.0|
 |SIM1012|V2.4.1|v1.0.0|
 |SIM1012|V2.2.0|v0.4.1|
 |SIM2500|V1.6.0|v1.1.0|
 |Inspector 85x|V3.6.0|v1.1.0|
+|SICK AppEngine|V1.7.0|v2.0.0|
 |SICK AppEngine|V1.5.0|v1.0.0, v1.1.0|
 |SICK AppEngine|V1.3.2|v0.4.1|
 |TDC-E|L4M 2023.1|v0.4.1|

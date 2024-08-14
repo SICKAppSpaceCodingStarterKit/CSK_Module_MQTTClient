@@ -43,6 +43,11 @@ _G.logHandle:applyConfig()
 -- Loading script regarding MQTTClient_Model
 -- Check this script regarding MQTTClient_Model parameters and functions
 _G.mqttClient_Model = require('Communication/MQTTClient/MQTTClient_Model')
+require('Communication/MQTTClient/FlowConfig/MQTTClient_FlowConfig')
+
+if _G.availableAPIs.default == false or _G.availableAPIs.specific == false then
+  _G.logger:warning("CSK_MQTTClient: Relevant CROWN(s) not available on device. Module is not supported...")
+end
 
 --**************************************************************************
 --**********************End Global Scope ***********************************
@@ -97,11 +102,6 @@ local function main()
 
 end
 Script.register("Engine.OnStarted", main)
-
---OR
-
--- Call function after persistent data was loaded
---Script.register("CSK_MQTTClient.OnDataLoadedOnReboot", main)
 
 --**************************************************************************
 --**********************End Function Scope *********************************
