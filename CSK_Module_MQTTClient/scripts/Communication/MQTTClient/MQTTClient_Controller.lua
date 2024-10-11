@@ -148,7 +148,7 @@ local function handleOnExpiredTmrMQTTClient()
 
   updateUserLevel()
 
-  Script.notifyEvent("MQTTClient_OnNewStatusModuleVersion", mqttClient_Model.version)
+  Script.notifyEvent("MQTTClient_OnNewStatusModuleVersion", 'v' .. mqttClient_Model.version)
   Script.notifyEvent("MQTTClient_OnNewStatusCSKStyle", mqttClient_Model.styleForUI)
   Script.notifyEvent("MQTTClient_OnNewStatusModuleIsActive", _G.availableAPIs.default and _G.availableAPIs.specific)
 
@@ -274,7 +274,9 @@ local function connectMQTT(status)
     if mqttClient_Model.parameters.disconnectWithWillMessage == true and mqttClient_Model.parameters.useWillMessage == true then
       mqttClient_Model.publish(mqttClient_Model.parameters.willMessageTopic, mqttClient_Model.parameters.willMessageData, mqttClient_Model.parameters.willMessageQOS, mqttClient_Model.parameters.willMessageRetain)
     end
-    MQTTClient.disconnect(mqttClient_Model.mqttClient)
+    if mqttClient_Model.mqttClient:isConnected() == true then
+      MQTTClient.disconnect(mqttClient_Model.mqttClient)
+    end
     mqttClient_Model.reconnectionTimer:stop()
   end
 end
