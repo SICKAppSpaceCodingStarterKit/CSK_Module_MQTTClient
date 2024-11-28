@@ -1,10 +1,3 @@
-.myCustomFrame_CSK_Module_MQTTClient {
-  border-style: solid;
-  border-width: 1px;
-  border-color: grey;
-  margin: 6px;
-}
-
 .myCustom20pHeight_CSK_Module_MQTTClient {
   min-height: 20%;
 }
@@ -13,5 +6,89 @@
   min-height: 10px;
 }
 
-.myCustomCssClass_CSK_Module_MQTTClient {
+.myCustomSpacerVert10_CSK_Module_MQTTClient {
+  min-height: 10px;
+}
+
+.myCustomSpacerVert20_CSK_Module_MQTTClient {
+  min-height: 20px;
+}
+
+.myCustomFrameNoColor_CSK_Module_MQTTClient {
+  margin: 6px;
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 0px;
+  border-color: 007CC1;
+  background-color: white;
+}
+
+.myCustomFrame_CSK_Module_MQTTClient {
+  margin: 6px;
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #007CC1;
+  background-color: white;
+}
+
+.myCustomLabel_CSK_Module_MQTTClient {
+  font-size:30px;
+  color: grey;
+  margin-top: 10px;
+}
+
+.myCustomFrameLabel_CSK_Module_MQTTClient {
+  background: white;
+  position:relative;
+  top: calc(-1.2rem);
+  left: calc(1rem);
+  font-size: medium;
+}
+
+.myCustomPersistentDataMargin_CSK_Module_MQTTClient {
+  margin-top: -53px;
+  margin-left: 130px;
+}
+
+.myCustomPersistentDataMarginBack_CSK_Module_MQTTClient {
+  margin-left: -127px;
+}
+
+.myCustomBorderLeft_CSK_Module_MQTTClient {
+  border-left: 1px solid lightgray;
+}
+
+.myCustomMarginFirstRow_CSK_Module_MQTTClient {
+  margin-top: -49px;
+}
+
+.myCustomMarginLeft7PX_CSK_Module_MQTTClient {
+  margin-left: -7px;
+}
+
+.myCustomMarginLeft15PX_CSK_Module_MQTTClient {
+  margin-left: 15px;
+}
+
+.myCustomMarginInline1Rem_CSK_Module_MQTTClient {
+  margin-inline: calc(0.5rem);
+}
+
+.myCustomBorderBottom_CSK_Module_MQTTClient {
+  border-bottom: 1px solid lightgray;
+  margin-inline: calc(1rem);
+  min-height: 10px;
+}
+
+.myCustomMarginTop7PX_CSK_Module_MQTTClient {
+  margin-top: 7px;
+}
+
+.myCustomBackground_CSK_Module_MQTTClient {
+}
+
+.myCustomButton_CSK_Module_MQTTClient {
+  border-radius: 30px;
+  padding-right: 0px;
 }

@@ -8,10 +8,6 @@
 --**********************Start Global Scope *********************************
 --**************************************************************************
 
-local tmr = Timer.create()
-tmr:setExpirationTime(1000)
-tmr:setPeriodic(true)
-
 local nameOfModule = 'CSK_MQTTClient'
 
 local mqttClient_Model = {}
@@ -51,9 +47,11 @@ mqttClient_Model.isConnected = false
 
 mqttClient_Model.reconnectionTimer = Timer.create() -- Timer to reconnect in case the connection to the broker is lost
 mqttClient_Model.reconnectionTimer:setExpirationTime(5000)
-mqttClient_Model.reconnectionTimer:setPeriodic(true)
+mqttClient_Model.reconnectionTimer:setPeriodic(false)
 
-mqttClient_Model.mqttClient = MQTTClient.create()
+if _G.availableAPIs.specific == true then
+  mqttClient_Model.mqttClient = MQTTClient.create()
+end
 
 mqttClient_Model.tempSubscriptionTopic = '' -- temporary preset topic to subscribe
 mqttClient_Model.tempSubscriptionQOS = 'QOS0' -- temporary preset qos of topic to subscribe
@@ -70,8 +68,12 @@ mqttClient_Model.key = '1234567890123456' -- key to encrypt passwords, should be
 
 mqttClient_Model.messageLog = {} -- keep the latest 100 received messages
 
+mqttClient_Model.styleForUI = 'None' -- Optional parameter to set UI style
+mqttClient_Model.version = Engine.getCurrentAppVersion() -- Version of module
+
 -- Parameters to be saved permanently if wanted
 mqttClient_Model.parameters = {}
+mqttClient_Model.parameters.flowConfigPriority = CSK_FlowConfig ~= nil or false -- Status if FlowConfig should have priority for FlowConfig relevant configurations
 
 mqttClient_Model.parameters.connect = false -- Config if connection should be active
 mqttClient_Model.parameters.brokerIP = '192.168.1.100' -- IP of the MQTT broker
@@ -84,7 +86,9 @@ mqttClient_Model.parameters.peerVerification = true -- Enables/disables peer ver
 mqttClient_Model.parameters.hostnameVerification = false -- Enables/disables hostname verification
 mqttClient_Model.parameters.useCredentials = false -- Enables/disables to use user credentials
 mqttClient_Model.parameters.username = 'user' -- Username if using user credentials
-mqttClient_Model.parameters.password = Cipher.AES.encrypt('password', mqttClient_Model.key) -- Password if using user credentials
+if _G.availableAPIs.specific == true then
+  mqttClient_Model.parameters.password = Cipher.AES.encrypt('password', mqttClient_Model.key) -- Password if using user credentials
+end
 
 mqttClient_Model.parameters.clientCertificateActive = false -- Enables/disables client certification
 mqttClient_Model.parameters.clientCertificatePath = 'public/cert.pem' -- Path to a certificate file in PEM/DER/PKCS#12 format.
@@ -123,6 +127,13 @@ mqttClient_Model.parameters.subscriptions = {} -- Topics to subscribe incl. QoS
 --**********************Start Function Scope *******************************
 --**************************************************************************
 
+--- Function to react on UI style change
+local function handleOnStyleChanged(theme)
+  mqttClient_Model.styleForUI = theme
+  Script.notifyEvent("MQTTClient_OnNewStatusCSKStyle", mqttClient_Model.styleForUI)
+end
+Script.register('CSK_PersistentData.OnNewStatusCSKStyle', handleOnStyleChanged)
+
 --- Function to create and notify internal MQTT log messages
 local function sendLog()
   local tempLog2Send = ''
@@ -155,12 +166,15 @@ local function handleOnReceive(topic, data, qos, retain)
 
   if mqttClient_Model.parameters.forwardReceives then
     Script.notifyEvent('MQTTClient_OnReceive', topic, data, qos, retain)
+    Script.notifyEvent('MQTTClient_OnReceiveFullString', topic .. ';' .. tostring(data) .. ';' .. qos .. ';' .. retain)
   end
 end
-MQTTClient.register(mqttClient_Model.mqttClient, 'OnReceive', handleOnReceive)
+if _G.availableAPIs.default and _G.availableAPIs.specific == true then
+  MQTTClient.register(mqttClient_Model.mqttClient, 'OnReceive', handleOnReceive)
+end
 
 local function publish(topic, data, qos, retain)
-  _G.logger:info(nameOfModule .. ": Publish data '" .. tostring(data) .. "' to topic '" .. topic .. "' with QoS '" .. qos .. "' and '" .. retain .. "'")
+  _G.logger:fine(nameOfModule .. ": Publish data '" .. tostring(data) .. "' to topic '" .. topic .. "' with QoS '" .. qos .. "' and '" .. retain .. "'")
   addMessageLog("Publish data '" .. tostring(data) .. "' to topic '" .. topic .. "' with QoS '" .. qos .. "' and '" .. retain .. "'")
   MQTTClient.publish(mqttClient_Model.mqttClient, topic, tostring(data), qos, retain)
 end
@@ -171,7 +185,7 @@ mqttClient_Model.publish = publish
 ---@param topicFilter string The topic which to subscribe to.
 ---@param qos string Quality of Service level. Default is QOS0
 local function subscribe(topicFilter, qos)
-  _G.logger:info(nameOfModule .. ": Subscribe to topic '" .. topicFilter .. "' with QOS '" .. tostring(qos) .. "'")
+  _G.logger:fine(nameOfModule .. ": Subscribe to topic '" .. topicFilter .. "' with QOS '" .. tostring(qos) .. "'")
   MQTTClient.subscribe(mqttClient_Model.mqttClient, topicFilter, qos)
 end
 mqttClient_Model.subscribe = subscribe
@@ -187,35 +201,46 @@ mqttClient_Model.subscripeToAllTopics = subscripeToAllTopics
 --- Function to react on "OnConnected" event of MQTT client
 local function handleOnConnected()
   _G.logger:info(nameOfModule .. ": Connected to MQTT broker.")
+  Script.notifyEvent('MQTTClient_OnNewConnectionStatus', "Connected to MQTT Broker")
   addMessageLog('Connected to MQTT broker.')
   mqttClient_Model.reconnectionTimer:stop()
   mqttClient_Model.isConnected = true
   Script.notifyEvent("MQTTClient_OnNewStatusCurrentlyConnected", mqttClient_Model.isConnected)
   subscripeToAllTopics()
 end
-MQTTClient.register(mqttClient_Model.mqttClient, 'OnConnected', handleOnConnected)
+if _G.availableAPIs.default and  _G.availableAPIs.specific == true then
+  MQTTClient.register(mqttClient_Model.mqttClient, 'OnConnected', handleOnConnected)
+end
 
 --- Function to react on "OnDisconnected" event of MQTT client
 local function handleOnDisconnected()
   _G.logger:info(nameOfModule .. ": Disconnected from MQTT broker.")
+  Script.notifyEvent('MQTTClient_OnNewConnectionStatus', 'Disabled')
   addMessageLog('Disconnected from MQTT broker.')
   if mqttClient_Model.parameters.connect == true then
-    mqttClient_Model.reconnectionTimer:start()
+    MQTTClient.connect(mqttClient_Model.mqttClient, mqttClient_Model.parameters.connectionTimeout)
+    if mqttClient_Model.mqttClient:isConnected() == false then
+      addMessageLog("Disconnected from MQTT broker, starting reconnection timer")
+      mqttClient_Model.reconnectionTimer:start()
+    end
   end
   mqttClient_Model.isConnected = false
   Script.notifyEvent("MQTTClient_OnNewStatusCurrentlyConnected", mqttClient_Model.isConnected)
 end
-MQTTClient.register(mqttClient_Model.mqttClient, 'OnDisconnected', handleOnDisconnected)
+if _G.availableAPIs.default and _G.availableAPIs.specific == true then
+  MQTTClient.register(mqttClient_Model.mqttClient, 'OnDisconnected', handleOnDisconnected)
+end
 
 --- Function to reconnect to broker if the connection is lost
 local function handleOnReconnectionTimerExpired()
   if mqttClient_Model.parameters.connect == true then
     MQTTClient.connect(mqttClient_Model.mqttClient, mqttClient_Model.parameters.connectionTimeout)
     if mqttClient_Model.mqttClient:isConnected() == false then
-      addMessageLog("Reconnection trial failed")
+      _G.logger:info(nameOfModule .. ": Reconnection trial to MQTT Broker failed.")
+      Script.notifyEvent('MQTTClient_OnNewConnectionStatus', "Reconnection trial failed, trying again in 5s")
+      addMessageLog("Reconnection trial failed, trying again in 5s")
+      mqttClient_Model.reconnectionTimer:start()
     end
-  else
-    mqttClient_Model.reconnectionTimer:stop()
   end
 end
 mqttClient_Model.reconnectionTimer:register('OnExpired', handleOnReconnectionTimerExpired)
@@ -226,7 +251,7 @@ local function recreateMQTTClient()
   mqttClient_Model.mqttClient = MQTTClient.create()
   MQTTClient.register(mqttClient_Model.mqttClient, 'OnReceive', handleOnReceive)
   MQTTClient.register(mqttClient_Model.mqttClient, 'OnConnected', handleOnConnected)
-  MQTTClient.register(mqttClient_Model.mqttClient, 'OnDisconnected', handleOnDisconnected)  
+  MQTTClient.register(mqttClient_Model.mqttClient, 'OnDisconnected', handleOnDisconnected)
 end
 mqttClient_Model.recreateMQTTClient = recreateMQTTClient
 

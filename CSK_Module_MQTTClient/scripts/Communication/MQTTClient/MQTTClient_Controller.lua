@@ -19,7 +19,14 @@ tmrMQTTClient:setPeriodic(false)
 local mqttClient_Model
 
 -- ************************ UI Events Start ********************************
+
+Script.serveEvent('CSK_MQTTClient.OnNewStatusModuleVersion', 'MQTTClient_OnNewStatusModuleVersion')
+Script.serveEvent('CSK_MQTTClient.OnNewStatusCSKStyle', 'MQTTClient_OnNewStatusCSKStyle')
+Script.serveEvent('CSK_MQTTClient.OnNewStatusModuleIsActive', 'MQTTClient_OnNewStatusModuleIsActive')
+
 Script.serveEvent('CSK_MQTTClient.OnReceive', 'MQTTClient_OnReceive')
+Script.serveEvent('CSK_MQTTClient.OnReceiveFullString', 'MQTTClient_OnReceiveFullString')
+Script.serveEvent('CSK_MQTTClient.OnNewConnectionStatus', 'MQTTClient_OnNewConnectionStatus')
 
 Script.serveEvent('CSK_MQTTClient.OnNewStatusCurrentlyConnected', 'MQTTClient_OnNewStatusCurrentlyConnected')
 Script.serveEvent('CSK_MQTTClient.OnNewStatusActivateConnection', 'MQTTClient_OnNewStatusActivateConnection')
@@ -64,6 +71,7 @@ Script.serveEvent('CSK_MQTTClient.OnNewStatusWillMessageActive', 'MQTTClient_OnN
 Script.serveEvent('CSK_MQTTClient.OnNewStatusWillMessageConfig', 'MQTTClient_OnNewStatusWillMessageConfig')
 Script.serveEvent('CSK_MQTTClient.OnNewStatusDisconnectWithWillMessage', 'MQTTClient_OnNewStatusDisconnectWithWillMessage')
 
+Script.serveEvent('CSK_MQTTClient.OnNewStatusFlowConfigPriority', 'MQTTClient_OnNewStatusFlowConfigPriority')
 Script.serveEvent("CSK_MQTTClient.OnNewStatusLoadParameterOnReboot", "MQTTClient_OnNewStatusLoadParameterOnReboot")
 Script.serveEvent("CSK_MQTTClient.OnPersistentDataModuleAvailable", "MQTTClient_OnPersistentDataModuleAvailable")
 Script.serveEvent("CSK_MQTTClient.OnNewParameterName", "MQTTClient_OnNewParameterName")
@@ -140,6 +148,10 @@ local function handleOnExpiredTmrMQTTClient()
 
   updateUserLevel()
 
+  Script.notifyEvent("MQTTClient_OnNewStatusModuleVersion", 'v' .. mqttClient_Model.version)
+  Script.notifyEvent("MQTTClient_OnNewStatusCSKStyle", mqttClient_Model.styleForUI)
+  Script.notifyEvent("MQTTClient_OnNewStatusModuleIsActive", _G.availableAPIs.default and _G.availableAPIs.specific)
+
   Script.notifyEvent("MQTTClient_OnNewStatusCurrentlyConnected", mqttClient_Model.isConnected)
   Script.notifyEvent("MQTTClient_OnNewStatusActivateConnection", mqttClient_Model.parameters.connect)
 
@@ -187,6 +199,7 @@ local function handleOnExpiredTmrMQTTClient()
 
   mqttClient_Model.sendLog()
 
+  Script.notifyEvent("MQTTClient_OnNewStatusFlowConfigPriority", mqttClient_Model.parameters.flowConfigPriority)
   Script.notifyEvent("MQTTClient_OnNewStatusLoadParameterOnReboot", mqttClient_Model.parameterLoadOnReboot)
   Script.notifyEvent("MQTTClient_OnPersistentDataModuleAvailable", mqttClient_Model.persistentModuleAvailable)
   Script.notifyEvent("MQTTClient_OnNewParameterName", mqttClient_Model.parametersName)
@@ -208,7 +221,7 @@ end
 Script.serveFunction('CSK_MQTTClient.getMQTTHandle', getMQTTHandle)
 
 local function connectMQTT(status)
-  _G.logger:info(nameOfModule .. ": Set connection status to " .. tostring(status))
+  _G.logger:fine(nameOfModule .. ": Set connection status to " .. tostring(status))
 
   mqttClient_Model.parameters.connect = status
 
@@ -251,53 +264,56 @@ local function connectMQTT(status)
         MQTTClient.setCABundle(mqttClient_Model.mqttClient, mqttClient_Model.parameters.caBundlePath)
       end
     end
-    mqttClient_Model.reconnectionTimer:start()
     MQTTClient.connect(mqttClient_Model.mqttClient, mqttClient_Model.parameters.connectionTimeout)
     if mqttClient_Model.mqttClient:isConnected() == false then
       mqttClient_Model.addMessageLog("Connection failed")
+      Script.notifyEvent('MQTTClient_OnNewConnectionStatus', 'Connection failed, starting reconnection timer')
+      mqttClient_Model.reconnectionTimer:start()
     end
   else
     if mqttClient_Model.parameters.disconnectWithWillMessage == true and mqttClient_Model.parameters.useWillMessage == true then
       mqttClient_Model.publish(mqttClient_Model.parameters.willMessageTopic, mqttClient_Model.parameters.willMessageData, mqttClient_Model.parameters.willMessageQOS, mqttClient_Model.parameters.willMessageRetain)
     end
-    MQTTClient.disconnect(mqttClient_Model.mqttClient)
+    if mqttClient_Model.mqttClient:isConnected() == true then
+      MQTTClient.disconnect(mqttClient_Model.mqttClient)
+    end
     mqttClient_Model.reconnectionTimer:stop()
   end
 end
 Script.serveFunction('CSK_MQTTClient.connectMQTT', connectMQTT)
 
 local function setBrokerIP(ip)
-  _G.logger:info(nameOfModule .. ": Set IP to " .. ip)
+  _G.logger:fine(nameOfModule .. ": Set IP to " .. ip)
   mqttClient_Model.parameters.brokerIP = ip
 end
 Script.serveFunction('CSK_MQTTClient.setBrokerIP', setBrokerIP)
 
 local function setMQTTPort(port)
-  _G.logger:info(nameOfModule .. ": Set port to " .. tostring(port))
+  _G.logger:fine(nameOfModule .. ": Set port to " .. tostring(port))
   mqttClient_Model.parameters.brokerPort = port
 end
 Script.serveFunction('CSK_MQTTClient.setMQTTPort', setMQTTPort)
 
 local function setForwardReceivedMessages(status)
-  _G.logger:info(nameOfModule .. ": Set status to forward received messages to " .. tostring(status))
+  _G.logger:fine(nameOfModule .. ": Set status to forward received messages to " .. tostring(status))
   mqttClient_Model.parameters.forwardReceives = status
 end
 Script.serveFunction('CSK_MQTTClient.setForwardReceivedMessages', setForwardReceivedMessages)
 
 local function setConnectionTimeout(time)
-  _G.logger:info(nameOfModule .. ": Set connection timeout to " .. tostring(time) .. "ms.")
+  _G.logger:fine(nameOfModule .. ": Set connection timeout to " .. tostring(time) .. "ms.")
   mqttClient_Model.parameters.connectionTimeout = time
 end
 Script.serveFunction('CSK_MQTTClient.setConnectionTimeout', setConnectionTimeout)
 
 local function setClientID(id)
-  _G.logger:info(nameOfModule .. ": Set client ID to '" .. id .. "'")
+  _G.logger:fine(nameOfModule .. ": Set client ID to '" .. id .. "'")
   mqttClient_Model.parameters.mqttClientID = id
 end
 Script.serveFunction('CSK_MQTTClient.setClientID', setClientID)
 
 local function setTLSVersion(version)
-  _G.logger:info(nameOfModule .. ": Set TLS version to '" .. version .. "'")
+  _G.logger:fine(nameOfModule .. ": Set TLS version to '" .. version .. "'")
   mqttClient_Model.parameters.tlsVersion = version
 end
 Script.serveFunction('CSK_MQTTClient.setTLSVersion', setTLSVersion)
@@ -312,7 +328,7 @@ local function checkTLS()
 end
 
 local function setHostnameVerification(status)
-  _G.logger:info(nameOfModule .. ": Set hostname verification to " .. tostring(status))
+  _G.logger:fine(nameOfModule .. ": Set hostname verification to " .. tostring(status))
   mqttClient_Model.parameters.hostnameVerification = status
   if status == true then
     checkTLS()
@@ -321,46 +337,46 @@ end
 Script.serveFunction('CSK_MQTTClient.setHostnameVerification', setHostnameVerification)
 
 local function setInterface(interface)
-  _G.logger:info(nameOfModule .. ": Set interface to " .. interface)
+  _G.logger:fine(nameOfModule .. ": Set interface to " .. interface)
   mqttClient_Model.parameters.interface = interface
 end
 Script.serveFunction('CSK_MQTTClient.setInterface', setInterface)
 
 local function setKeepAliveInterval(time)
-  _G.logger:info(nameOfModule .. ": Set keep alive interval to " .. tostring(time))
+  _G.logger:fine(nameOfModule .. ": Set keep alive interval to " .. tostring(time))
   mqttClient_Model.parameters.keepAliveInterval = time
 end
 Script.serveFunction('CSK_MQTTClient.setKeepAliveInterval', setKeepAliveInterval)
 
 local function setUsername(username)
-  _G.logger:info(nameOfModule .. ": Set username to '" .. username .. "'")
+  _G.logger:fine(nameOfModule .. ": Set username to '" .. username .. "'")
   mqttClient_Model.parameters.username = username
 end
 Script.serveFunction('CSK_MQTTClient.setUsername', setUsername)
 
 local function setPassword(password)
-  _G.logger:info(nameOfModule .. ": Set password.")
-  mqttClient_Model.parameters.password = Cipher.AES.encrypt(password, mqttClient_Model.key)
+  _G.logger:fine(nameOfModule .. ": Set password.")
+  mqttClient_Model.parameters.passwords = Cipher.AES.encrypt(password, mqttClient_Model.key)
 end
 Script.serveFunction('CSK_MQTTClient.setPassword', setPassword)
 
 local function setUseCredentials(status)
-  _G.logger:info(nameOfModule .. ": Set usage of credentials to " .. tostring(status))
+  _G.logger:fine(nameOfModule .. ": Set usage of credentials to " .. tostring(status))
   mqttClient_Model.parameters.useCredentials = status
   if status then
-    MQTTClient.setUserCredentials(mqttClient_Model.mqttClient, mqttClient_Model.parameters.username, Cipher.AES.decrypt(mqttClient_Model.parameters.password, mqttClient_Model.key))
+    MQTTClient.setUserCredentials(mqttClient_Model.mqttClient, mqttClient_Model.parameters.username, Cipher.AES.decrypt(mqttClient_Model.parameters.passwords, mqttClient_Model.key))
   end
 end
 Script.serveFunction('CSK_MQTTClient.setUseCredentials', setUseCredentials)
 
 local function setCleanSession(status)
-  _G.logger:info(nameOfModule .. ": Set status of Clean Session to " .. tostring(status))
+  _G.logger:fine(nameOfModule .. ": Set status of Clean Session to " .. tostring(status))
   mqttClient_Model.parameters.cleanSession = status
 end
 Script.serveFunction('CSK_MQTTClient.setCleanSession', setCleanSession)
 
 local function setPeerVerification(status)
-  _G.logger:info(nameOfModule .. ": Set peer verification to " .. tostring(status))
+  _G.logger:fine(nameOfModule .. ": Set peer verification to " .. tostring(status))
   mqttClient_Model.parameters.peerVerification = status
   if status == true then
     checkTLS()
@@ -369,7 +385,7 @@ end
 Script.serveFunction('CSK_MQTTClient.setPeerVerification', setPeerVerification)
 
 local function setUseClientCertificate(status)
-  _G.logger:info(nameOfModule .. ": Set status to use client certificate to " .. tostring(status))
+  _G.logger:fine(nameOfModule .. ": Set status to use client certificate to " .. tostring(status))
   mqttClient_Model.parameters.clientCertificateActive = status
   if status == true then
     checkTLS()
@@ -378,19 +394,19 @@ end
 Script.serveFunction('CSK_MQTTClient.setUseClientCertificate', setUseClientCertificate)
 
 local function setClientCertificatePath(path)
-  _G.logger:info(nameOfModule .. ": Set path to client certificate to '" .. path .. "'")
+  _G.logger:fine(nameOfModule .. ": Set path to client certificate to '" .. path .. "'")
   mqttClient_Model.parameters.clientCertificatePath = path
 end
 Script.serveFunction('CSK_MQTTClient.setClientCertificatePath', setClientCertificatePath)
 
 local function setClientCertificateKeyPath(path)
-  _G.logger:info(nameOfModule .. ": Set path to client certificate key to '" .. path .. "'")
-  mqttClient_Model.parameters.clientCertificatePath = path
+  _G.logger:fine(nameOfModule .. ": Set path to client certificate key to '" .. path .. "'")
+  mqttClient_Model.parameters.clientCertificateKeyPath = path
 end
 Script.serveFunction('CSK_MQTTClient.setClientCertificateKeyPath', setClientCertificateKeyPath)
 
 local function setClientCertificateKeyPassword(password)
-  _G.logger:info(nameOfModule .. ": Set password for client certificate key.")
+  _G.logger:fine(nameOfModule .. ": Set password for client certificate key.")
   if password == '' then
     mqttClient_Model.parameters.clientCertificateKeyPassword = ''
   else
@@ -400,7 +416,7 @@ end
 Script.serveFunction('CSK_MQTTClient.setClientCertificateKeyPassword', setClientCertificateKeyPassword)
 
 local function setUseCABundle(status)
-  _G.logger:info(nameOfModule .. ": Set status to use CA bundle to " .. tostring(status))
+  _G.logger:fine(nameOfModule .. ": Set status to use CA bundle to " .. tostring(status))
   mqttClient_Model.parameters.caBundleActive = status
   if status == true then
     checkTLS()
@@ -409,7 +425,7 @@ end
 Script.serveFunction('CSK_MQTTClient.setUseCABundle', setUseCABundle)
 
 local function setCABundlePath(path)
-  _G.logger:info(nameOfModule .. ": Set path to CA bundle to '" .. path .. "'")
+  _G.logger:fine(nameOfModule .. ": Set path to CA bundle to '" .. path .. "'")
   mqttClient_Model.parameters.caBundlePath = path
 end
 Script.serveFunction('CSK_MQTTClient.setCABundlePath', setCABundlePath)
@@ -429,7 +445,7 @@ end
 Script.serveFunction('CSK_MQTTClient.presetSubscriptionQOS', presetSubscriptionQOS)
 
 local function addSubscription(topicFilter, qos)
-  _G.logger:info(nameOfModule .. ": Add subcription to topic '" .. tostring(topicFilter) .. "' with QoS of '" .. tostring(qos) .. "'")
+  _G.logger:fine(nameOfModule .. ": Add subcription to topic '" .. tostring(topicFilter) .. "' with QoS of '" .. tostring(qos) .. "'")
   mqttClient_Model.parameters.subscriptions[topicFilter] = qos
   Script.notifyEvent("MQTTClient_OnNewStatusSubscriptionList", mqttClient_Model.helperFuncs.createJsonListSubscriptions(mqttClient_Model.parameters.subscriptions))
   if mqttClient_Model.isConnected then
@@ -475,7 +491,7 @@ Script.serveFunction('CSK_MQTTClient.selectSubscriptionViaUI', selectSubscriptio
 
 local function unsubscribe(topic)
   if mqttClient_Model.parameters.subscriptions[topic] then
-    _G.logger:info(nameOfModule .. ": Unsubscribe from topic '" .. topic .. "'")
+    _G.logger:fine(nameOfModule .. ": Unsubscribe from topic '" .. topic .. "'")
     mqttClient_Model.parameters.subscriptions[topic] = nil
     Script.notifyEvent("MQTTClient_OnNewStatusSubscriptionList", mqttClient_Model.helperFuncs.createJsonListSubscriptions(mqttClient_Model.parameters.subscriptions))
 
@@ -546,12 +562,9 @@ local function createInternalPublishFunctions(event)
   end
   mqttClient_Model.publishEventsFunctions[event] = forwardContent
 
-  if Script.isServedAsEvent(event) then
-    _G.logger:info(nameOfModule .. ": Register to event '" .. event .. "' to forward its content via MQTT publish on topic '" .. mqttClient_Model.parameters.publishEvents.topic[event] .. "'")
-    Script.register(event, mqttClient_Model.publishEventsFunctions[event])
-  else
-    _G.logger:info(nameOfModule .. ": Not possible to register to event '" .. event .. "' as it seems not to be available.")
-  end
+  _G.logger:fine(nameOfModule .. ": Register to event '" .. event .. "' to forward its content via MQTT publish on topic '" .. mqttClient_Model.parameters.publishEvents.topic[event] .. "'")
+  Script.register(event, mqttClient_Model.publishEventsFunctions[event])
+
 end
 
 local function addPublishEvent(event, topic, qos, retain)
@@ -580,7 +593,7 @@ Script.serveFunction('CSK_MQTTClient.addPublishEventViaUI', addPublishEventViaUI
 local function removePublishEvent(event)
   if mqttClient_Model.parameters.publishEvents.topic[event] then
 
-    _G.logger:info(nameOfModule .. ": Deregister from event '" .. event .. "' and remove this from the list.")
+    _G.logger:fine(nameOfModule .. ": Deregister from event '" .. event .. "' and remove this from the list.")
     mqttClient_Model.parameters.publishEvents.topic[event] = nil
     mqttClient_Model.parameters.publishEvents.qos[event] = nil
     mqttClient_Model.parameters.publishEvents.retain[event] = nil
@@ -618,9 +631,8 @@ end
 Script.serveFunction('CSK_MQTTClient.selectPublishEvent', selectPublishEvent)
 
 local function setWillMessageActivation(status)
-  _G.logger:info(nameOfModule .. ": Set WillMessage activation to " .. tostring(status))
+  _G.logger:fine(nameOfModule .. ": Set WillMessage activation to " .. tostring(status))
   mqttClient_Model.parameters.useWillMessage = status
-  Script.notifyEvent("MQTTClient_OnNewStatusWillMessageActive", status)
 end
 Script.serveFunction('CSK_MQTTClient.setWillMessageActivation', setWillMessageActivation)
 
@@ -631,7 +643,7 @@ end
 Script.serveFunction('CSK_MQTTClient.setDisconnectWithWillMessage', setDisconnectWithWillMessage)
 
 local function setWillMessageConfig(topic, data, qos, retain)
-  _G.logger:info(nameOfModule .. ": Set WillMessage config with data '" .. data .. "' to topic '" .. topic .. "' with QoS '" .. qos .. "' and '" .. retain .. "'")
+  _G.logger:fine(nameOfModule .. ": Set WillMessage config with data '" .. data .. "' to topic '" .. topic .. "' with QoS '" .. qos .. "' and '" .. retain .. "'")
   mqttClient_Model.parameters.willMessageTopic = topic
   mqttClient_Model.parameters.willMessageData = data
   mqttClient_Model.parameters.willMessageQOS = qos
@@ -650,6 +662,23 @@ local function setWillMessageConfigViaUI()
 end
 Script.serveFunction('CSK_MQTTClient.setWillMessageConfigViaUI', setWillMessageConfigViaUI)
 
+local function getStatusModuleActive()
+  return _G.availableAPIs.default and _G.availableAPIs.specific
+end
+Script.serveFunction('CSK_MQTTClient.getStatusModuleActive', getStatusModuleActive)
+
+local function clearFlowConfigRelevantConfiguration()
+  for key, value in pairs(mqttClient_Model.parameters.publishEvents.topic) do
+    removePublishEvent(key)
+  end
+end
+Script.serveFunction('CSK_MQTTClient.clearFlowConfigRelevantConfiguration', clearFlowConfigRelevantConfiguration)
+
+local function getParameters()
+  return mqttClient_Model.helperFuncs.json.encode(mqttClient_Model.parameters)
+end
+Script.serveFunction('CSK_MQTTClient.getParameters', getParameters)
+
 ------------------------------------------------------
 
 -- *****************************************************************
@@ -657,17 +686,19 @@ Script.serveFunction('CSK_MQTTClient.setWillMessageConfigViaUI', setWillMessageC
 -- *****************************************************************
 
 local function setParameterName(name)
-  _G.logger:info(nameOfModule .. ": Set parameter name: " .. tostring(name))
+  _G.logger:fine(nameOfModule .. ": Set parameter name: " .. tostring(name))
   mqttClient_Model.parametersName = name
 end
 Script.serveFunction("CSK_MQTTClient.setParameterName", setParameterName)
 
-local function sendParameters()
+local function sendParameters(noDataSave)
   if mqttClient_Model.persistentModuleAvailable then
     CSK_PersistentData.addParameter(mqttClient_Model.helperFuncs.convertTable2Container(mqttClient_Model.parameters), mqttClient_Model.parametersName)
     CSK_PersistentData.setModuleParameterName(nameOfModule, mqttClient_Model.parametersName, mqttClient_Model.parameterLoadOnReboot)
-    _G.logger:info(nameOfModule .. ": Send MQTTClient parameters with name '" .. mqttClient_Model.parametersName .. "' to CSK_PersistentData module.")
-    CSK_PersistentData.saveData()
+    _G.logger:fine(nameOfModule .. ": Send MQTTClient parameters with name '" .. mqttClient_Model.parametersName .. "' to CSK_PersistentData module.")
+    if not noDataSave then
+      CSK_PersistentData.saveData()
+    end
   else
     _G.logger:warning(nameOfModule .. ": CSK_PersistentData module not available.")
   end
@@ -694,45 +725,70 @@ local function loadParameters()
       connectMQTT(mqttClient_Model.parameters.connect)
 
       CSK_MQTTClient.pageCalled()
+      return true
     else
       _G.logger:warning(nameOfModule .. ": Loading parameters from CSK_PersistentData module did not work.")
+      return false
     end
   else
     _G.logger:warning(nameOfModule .. ": CSK_PersistentData module not available.")
+    return false
   end
 end
 Script.serveFunction("CSK_MQTTClient.loadParameters", loadParameters)
 
 local function setLoadOnReboot(status)
   mqttClient_Model.parameterLoadOnReboot = status
-  _G.logger:info(nameOfModule .. ": Set new status to load setting on reboot: " .. tostring(status))
+  _G.logger:fine(nameOfModule .. ": Set new status to load setting on reboot: " .. tostring(status))
+  Script.notifyEvent("MQTTClient_OnNewStatusLoadParameterOnReboot", status)
 end
 Script.serveFunction("CSK_MQTTClient.setLoadOnReboot", setLoadOnReboot)
+
+local function setFlowConfigPriority(status)
+  mqttClient_Model.parameters.flowConfigPriority = status
+  _G.logger:fine(nameOfModule .. ": Set new status of FlowConfig priority: " .. tostring(status))
+  Script.notifyEvent("MQTTClient_OnNewStatusFlowConfigPriority", mqttClient_Model.parameters.flowConfigPriority)
+end
+Script.serveFunction('CSK_MQTTClient.setFlowConfigPriority', setFlowConfigPriority)
 
 --- Function to react on initial load of persistent parameters
 local function handleOnInitialDataLoaded()
 
-  if string.sub(CSK_PersistentData.getVersion(), 1, 1) == '1' then
+  if _G.availableAPIs.default and  _G.availableAPIs.specific then
+    if string.sub(CSK_PersistentData.getVersion(), 1, 1) == '1' then
 
-    _G.logger:warning(nameOfModule .. ': CSK_PersistentData module is too old and will not work. Please update CSK_PersistentData module.')
+      _G.logger:warning(nameOfModule .. ': CSK_PersistentData module is too old and will not work. Please update CSK_PersistentData module.')
 
-    mqttClient_Model.persistentModuleAvailable = false
-  else
+      mqttClient_Model.persistentModuleAvailable = false
+    else
 
-    local parameterName, loadOnReboot = CSK_PersistentData.getModuleParameterName(nameOfModule)
+      local parameterName, loadOnReboot = CSK_PersistentData.getModuleParameterName(nameOfModule)
 
-    if parameterName then
-      mqttClient_Model.parametersName = parameterName
-      mqttClient_Model.parameterLoadOnReboot = loadOnReboot
+      if parameterName then
+        mqttClient_Model.parametersName = parameterName
+        mqttClient_Model.parameterLoadOnReboot = loadOnReboot
+      end
+
+      if mqttClient_Model.parameterLoadOnReboot then
+        loadParameters()
+      end
+      Script.notifyEvent('MQTTClient_OnDataLoadedOnReboot')
     end
-
-    if mqttClient_Model.parameterLoadOnReboot then
-      loadParameters()
-    end
-    Script.notifyEvent('MQTTClient_OnDataLoadedOnReboot')
   end
 end
 Script.register("CSK_PersistentData.OnInitialDataLoaded", handleOnInitialDataLoaded)
+
+local function resetModule()
+  if _G.availableAPIs.default and _G.availableAPIs.specific then
+    clearFlowConfigRelevantConfiguration()
+    if mqttClient_Model.isConnected then
+      connectMQTT(false)
+    end
+    pageCalled()
+  end
+end
+Script.serveFunction('CSK_MQTTClient.resetModule', resetModule)
+Script.register("CSK_PersistentData.OnResetAllModules", resetModule)
 
 -- *************************************************
 -- END of functions for CSK_PersistentData module usage
