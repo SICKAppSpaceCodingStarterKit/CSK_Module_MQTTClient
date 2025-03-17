@@ -73,53 +73,12 @@ mqttClient_Model.version = Engine.getCurrentAppVersion() -- Version of module
 
 -- Parameters to be saved permanently if wanted
 mqttClient_Model.parameters = {}
-mqttClient_Model.parameters.flowConfigPriority = CSK_FlowConfig ~= nil or false -- Status if FlowConfig should have priority for FlowConfig relevant configurations
+mqttClient_Model.parameters = mqttClient_Model.helperFuncs.defaultParameters.getParameters() -- Load default parameters
+mqttClient_Model.parameters.interface = mqttClient_Model.ethernetPorts[1] -- Select first of available ethernet interfaces
 
-mqttClient_Model.parameters.connect = false -- Config if connection should be active
-mqttClient_Model.parameters.brokerIP = '192.168.1.100' -- IP of the MQTT broker
-mqttClient_Model.parameters.brokerPort = 1883 -- Default port for MQTT. If using TLS it should be 8883
-mqttClient_Model.parameters.connectionTimeout = 5000 -- The timeout to wait initially until the client gets connected
-mqttClient_Model.parameters.cleanSession = true -- Clean session flag. See MQTTClient docu of AppEngine
-mqttClient_Model.parameters.mqttClientID = 'CSK_MQTTClient' -- Sets the Client identifier of this MQTTClient instance.
-mqttClient_Model.parameters.tlsVersion = 'NO_TLS' -- TLS version to use
-mqttClient_Model.parameters.peerVerification = true -- Enables/disables peer verification
-mqttClient_Model.parameters.hostnameVerification = false -- Enables/disables hostname verification
-mqttClient_Model.parameters.useCredentials = false -- Enables/disables to use user credentials
-mqttClient_Model.parameters.username = 'user' -- Username if using user credentials
 if _G.availableAPIs.specific == true then
   mqttClient_Model.parameters.password = Cipher.AES.encrypt('password', mqttClient_Model.key) -- Password if using user credentials
 end
-
-mqttClient_Model.parameters.clientCertificateActive = false -- Enables/disables client certification
-mqttClient_Model.parameters.clientCertificatePath = 'public/cert.pem' -- Path to a certificate file in PEM/DER/PKCS#12 format.
-mqttClient_Model.parameters.clientCertificateKeyPath = 'public/privateKey.pem' -- Path to file containing the client’s private key in PEM/DER format.
-mqttClient_Model.parameters.clientCertificateKeyPassword = '' -- Optional passphrase for the private key. If empty, it will be ignored
-
-mqttClient_Model.parameters.caBundleActive = false -- Enables/disables to use certificate authority bundle
-mqttClient_Model.parameters.caBundlePath = 'public/CA.pem' -- Path to a certificate bundle in PEM format.
-
-mqttClient_Model.parameters.useWillMessage = false -- Enables/disables to use a will message
-mqttClient_Model.parameters.disconnectWithWillMessage = false -- Enables/disables sending a will message before intentionally disconnecting
-mqttClient_Model.parameters.willMessageTopic = '' -- Topic under which to publish the will message
-mqttClient_Model.parameters.willMessageData = '' -- The message payload to publish
-mqttClient_Model.parameters.willMessageQOS = 'QOS0' -- Quality of Service level
-mqttClient_Model.parameters.willMessageRetain = 'NO_RETAIN' -- Retaining a message means that the server stores the message and sends it to future subscribers of this topic.
-
-mqttClient_Model.parameters.keepAliveInterval = 60 -- The number of seconds after which a PING message should be sent if no other messages have been exchanged in that time. Disable keep alive mechanism with 0.
-mqttClient_Model.parameters.forwardReceives = false -- Enables/disables if module should forward incoming receives via event 'CSK_MQTTClient.OnReceive'
-
-mqttClient_Model.parameters.publishEvents = {} -- Register to these events to publish their content, see "addPublishEvent"
-mqttClient_Model.parameters.publishEvents.topic = {} -- Topic to publish to if event was notified
-mqttClient_Model.parameters.publishEvents.qos = {} -- QoS to publish if event was notified
-mqttClient_Model.parameters.publishEvents.retain = {} -- Retain option of publish if event was notified
--- mqttClient_Model.parameters.publishEvents.topic[eventname] = 'topic/test' -- example
--- mqttClient_Model.parameters.publishEvents.qos[eventname] = 'QOS0' -- example
--- mqttClient_Model.parameters.publishEvents.retain[eventname] = 'NO_REATAIN' -- example
-
-mqttClient_Model.parameters.interface = mqttClient_Model.ethernetPorts[1] -- Select first of available ethernet interfaces
-
-mqttClient_Model.parameters.subscriptions = {} -- Topics to subscribe incl. QoS
--- mqttClient_Model.parameters.subscriptions[topic] = QoS -- example for entries
 
 --**************************************************************************
 --********************** End Global Scope **********************************
@@ -162,7 +121,9 @@ mqttClient_Model.addMessageLog = addMessageLog
 ---@param retain MQTTClient.Retain The message retain flag
 local function handleOnReceive(topic, data, qos, retain)
 
-  addMessageLog('[Topic]: ' .. topic .. ', [Data]: ' .. tostring(data) .. ', [QoS]: ' .. qos .. ', [Retain]: ' .. retain)
+  if mqttClient_Model.parameters.logAllMessages then
+    addMessageLog('[Topic]: ' .. topic .. ', [Data]: ' .. tostring(data) .. ', [QoS]: ' .. qos .. ', [Retain]: ' .. retain)
+  end
 
   if mqttClient_Model.parameters.forwardReceives then
     Script.notifyEvent('MQTTClient_OnReceive', topic, data, qos, retain)
@@ -174,9 +135,17 @@ if _G.availableAPIs.default and _G.availableAPIs.specific == true then
 end
 
 local function publish(topic, data, qos, retain)
-  _G.logger:fine(nameOfModule .. ": Publish data '" .. tostring(data) .. "' to topic '" .. topic .. "' with QoS '" .. qos .. "' and '" .. retain .. "'")
-  addMessageLog("Publish data '" .. tostring(data) .. "' to topic '" .. topic .. "' with QoS '" .. qos .. "' and '" .. retain .. "'")
-  MQTTClient.publish(mqttClient_Model.mqttClient, topic, tostring(data), qos, retain)
+  if mqttClient_Model.isConnected then
+    local suc = MQTTClient.publish(mqttClient_Model.mqttClient, mqttClient_Model.parameters.topicPrefix .. topic, tostring(data), qos, retain)
+    if suc then
+      _G.logger:fine(nameOfModule .. ": Publish data '" .. tostring(data) .. "' to topic '" .. mqttClient_Model.parameters.topicPrefix .. topic .. "' with QoS '" .. qos .. "' and '" .. retain .. "'")
+      if mqttClient_Model.parameters.logAllMessages then
+        addMessageLog("Publish data '" .. tostring(data) .. "' to topic '" .. mqttClient_Model.parameters.topicPrefix .. topic .. "' with QoS '" .. qos .. "' and '" .. retain .. "'")
+      end
+    end
+  else
+    _G.logger:info(nameOfModule .. ": Not able to publish data as broker is not connected.")
+  end
 end
 Script.serveFunction('CSK_MQTTClient.publish', publish)
 mqttClient_Model.publish = publish

@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Release 2.1.0
+
+### New features
+- Optionally set global prefix for all topics
+- Optionally deactivate logging of communication to reduce CPU load
+- Check if persistent data to load provides all relevant parameters. Otherwise add default values
+
+### Improvements
+- Check if client is connected to broker before trying to publish
+
 ## Release 2.0.0
 
 ### New features

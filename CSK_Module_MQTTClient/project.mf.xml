@@ -246,6 +246,14 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
                     <desc>Event notified with the connection status.</desc>
                     <param desc="Connection status message." multiplicity="1" name="status" type="string"/>
                 </event>
+                <event name="OnNewStatusTopicPrefix">
+                    <desc>Notify prefix to use for all topics.</desc>
+                    <param desc="Prefix for all topics." multiplicity="1" name="prefix" type="string"/>
+                </event>
+                <event name="OnNewStatusLogAllMessages">
+                    <desc>Notify if all messages regarding received / send data should be logged in UI.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
                 <function name="setParameterName">
                     <desc>Function to set the name of the parameters if saved/loaded via the CSK_PersistentData module.</desc>
                     <param desc="Name of the parameter" multiplicity="1" name="name" type="string"/>
@@ -469,6 +477,14 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
                 <function name="resetModule">
                     <desc>Function to reset main configuration of module.</desc>
                 </function>
+                <function name="setTopicPrefix">
+                    <desc>Function to set prefix for all topics.</desc>
+                    <param desc="Prefix to use for all topics." multiplicity="1" name="prefix" type="string"/>
+                </function>
+                <function name="setLogAllMessages">
+                    <desc>Function to set if all messages regarding send/received data should be logged in UI.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </function>
             </serves>
         </crown>
         <crown name="MQTTClient_FC">
@@ -528,7 +544,7 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
             </crown>
         </crown>
         <meta key="author">SICK AG</meta>
-        <meta key="version">2.0.0</meta>
+        <meta key="version">2.1.0</meta>
         <meta key="priority">low</meta>
         <meta key="copy-protected">false</meta>
         <meta key="read-protected">false</meta>

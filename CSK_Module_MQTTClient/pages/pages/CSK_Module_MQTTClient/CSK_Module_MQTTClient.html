@@ -195,9 +195,23 @@
                                     <layout-column id="ColumnLayout3"
                                         class="myCustomMarginInline1Rem_CSK_Module_MQTTClient"
                                         style="align-items: stretch">
-                                        <davinci-value-display id="VD_LogMessages" value="Messages">
-                                        </davinci-value-display>
-                                        <davinci-text-area id="TA_Logs" style="height: 500px; flex-grow: 1">
+                                        <layout-row id="RowLayout63"
+                                            style="flex-grow: 0; flex-shrink: 0; justify-content: flex-end; align-items: center">
+                                            <davinci-value-display id="VD_Log" value="Log all messages:"
+                                                title="Activate to see messages for published and received data.">
+                                            </davinci-value-display>
+                                            <davinci-toggle-switch id="TS_Log"
+                                                title="Activate to see messages for published and received data.">
+                                                <crown-edpws-binding property="checked"
+                                                    name="CSK_MQTTClient/OnNewStatusLogAllMessages" update-on-resume>
+                                                </crown-edpws-binding>
+                                                <crown-binding event="change" name="CSK_MQTTClient/setLogAllMessages"
+                                                    path="param/args/status" auto-commit>
+                                                </crown-binding>
+                                            </davinci-toggle-switch>
+                                        </layout-row>
+                                        <davinci-text-area id="TA_Logs" label="Messages"
+                                            style="height: 500px; flex-grow: 1">
                                             <crown-edpws-binding property="value" name="CSK_MQTTClient/OnNewLog"
                                                 update-on-resume>
                                             </crown-edpws-binding>
@@ -808,6 +822,26 @@
                                                             class="myCustomFrameLabel_CSK_Module_MQTTClient"
                                                             label="Publish" style="align-self: flex-start">
                                                         </davinci-value-display>
+                                                        <layout-row id="RowLayout58">
+                                                            <layout-column id="ColumnLayout56"
+                                                                style="align-items: stretch; flex-grow: 3">
+                                                                <davinci-text-field id="TF_TopicPrefix" type="text"
+                                                                    title="Optional prefix to use for all topics"
+                                                                    label="Topic prefix (optional)">
+                                                                    <crown-edpws-binding property="value"
+                                                                        name="CSK_MQTTClient/OnNewStatusTopicPrefix"
+                                                                        update-on-resume>
+                                                                    </crown-edpws-binding>
+                                                                    <crown-binding event="change"
+                                                                        name="CSK_MQTTClient/setTopicPrefix"
+                                                                        path="param/args/prefix" auto-commit>
+                                                                    </crown-binding>
+                                                                </davinci-text-field>
+                                                            </layout-column>
+                                                            <layout-column id="ColumnLayout58"
+                                                                style="align-items: stretch; flex-grow: 4">
+                                                            </layout-column>
+                                                        </layout-row>
                                                         <layout-row id="RowLayout13">
                                                             <layout-column id="ColumnLayout17"
                                                                 style="align-items: stretch; flex-grow: 3">

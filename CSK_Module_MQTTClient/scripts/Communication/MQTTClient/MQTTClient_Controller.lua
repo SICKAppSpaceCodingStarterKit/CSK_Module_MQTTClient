@@ -31,6 +31,8 @@ Script.serveEvent('CSK_MQTTClient.OnNewConnectionStatus', 'MQTTClient_OnNewConne
 Script.serveEvent('CSK_MQTTClient.OnNewStatusCurrentlyConnected', 'MQTTClient_OnNewStatusCurrentlyConnected')
 Script.serveEvent('CSK_MQTTClient.OnNewStatusActivateConnection', 'MQTTClient_OnNewStatusActivateConnection')
 
+Script.serveEvent('CSK_MQTTClient.OnNewStatusLogAllMessages', 'MQTTClient_OnNewStatusLogAllMessages')
+
 Script.serveEvent('CSK_MQTTClient.OnNewMQTTPort', 'MQTTClient_OnNewMQTTPort')
 Script.serveEvent('CSK_MQTTClient.OnNewBrokerIP', 'MQTTClient_OnNewBrokerIP')
 Script.serveEvent('CSK_MQTTClient.OnNewStatusForwardReceivedMsg', 'MQTTClient_OnNewStatusForwardReceivedMsg')
@@ -58,6 +60,8 @@ Script.serveEvent('CSK_MQTTClient.OnNewLog', 'MQTTClient_OnNewLog')
 
 Script.serveEvent('CSK_MQTTClient.OnNewStatusSubscriptionTopic', 'MQTTClient_OnNewStatusSubscriptionTopic')
 Script.serveEvent('CSK_MQTTClient.OnNewStatusSubscriptionQOS', 'MQTTClient_OnNewStatusSubscriptionQOS')
+
+Script.serveEvent('CSK_MQTTClient.OnNewStatusTopicPrefix', 'MQTTClient_OnNewStatusTopicPrefix')
 
 Script.serveEvent('CSK_MQTTClient.OnNewStatusPublishEventName', 'MQTTClient_OnNewStatusPublishEventName')
 Script.serveEvent('CSK_MQTTClient.OnNewStatusPublishTopic', 'MQTTClient_OnNewStatusPublishTopic')
@@ -152,6 +156,8 @@ local function handleOnExpiredTmrMQTTClient()
   Script.notifyEvent("MQTTClient_OnNewStatusCSKStyle", mqttClient_Model.styleForUI)
   Script.notifyEvent("MQTTClient_OnNewStatusModuleIsActive", _G.availableAPIs.default and _G.availableAPIs.specific)
 
+  Script.notifyEvent("MQTTClient_OnNewStatusLogAllMessages", mqttClient_Model.parameters.logAllMessages)
+
   Script.notifyEvent("MQTTClient_OnNewStatusCurrentlyConnected", mqttClient_Model.isConnected)
   Script.notifyEvent("MQTTClient_OnNewStatusActivateConnection", mqttClient_Model.parameters.connect)
 
@@ -181,6 +187,8 @@ local function handleOnExpiredTmrMQTTClient()
 
   Script.notifyEvent("MQTTClient_OnNewStatusSubscriptionTopic", mqttClient_Model.tempSubscriptionTopic)
   Script.notifyEvent("MQTTClient_OnNewStatusSubscriptionQOS", mqttClient_Model.tempSubscriptionQOS)
+  Script.notifyEvent("MQTTClient_OnNewStatusTopicPrefix", mqttClient_Model.parameters.topicPrefix)
+
   Script.notifyEvent("MQTTClient_OnNewStatusSubscriptionList", mqttClient_Model.helperFuncs.createJsonListSubscriptions(mqttClient_Model.parameters.subscriptions))
   Script.notifyEvent("MQTTClient_OnNewStatusPublishEventList", mqttClient_Model.helperFuncs.createJsonListPublishEvents(mqttClient_Model.parameters.publishEvents))
 
@@ -219,6 +227,12 @@ local function getMQTTHandle()
   return mqttClient_Model.mqttClient
 end
 Script.serveFunction('CSK_MQTTClient.getMQTTHandle', getMQTTHandle)
+
+local function setLogAllMessages(status)
+  _G.logger:fine(nameOfModule .. ": Set status to log all MQTT messages to " .. tostring(status))
+  mqttClient_Model.parameters.logAllMessages = status
+end
+Script.serveFunction('CSK_MQTTClient.setLogAllMessages', setLogAllMessages)
 
 local function connectMQTT(status)
   _G.logger:fine(nameOfModule .. ": Set connection status to " .. tostring(status))
@@ -515,6 +529,12 @@ Script.serveFunction('CSK_MQTTClient.unsubscribeViaUI', unsubscribeViaUI)
 ------------------ Publish ------------------
 ---------------------------------------------
 
+local function setTopicPrefix(prefix)
+  _G.logger:info(nameOfModule .. ": Set topic prefix to " .. tostring(prefix))
+  mqttClient_Model.parameters.topicPrefix = prefix
+end
+Script.serveFunction('CSK_MQTTClient.setTopicPrefix', setTopicPrefix)
+
 local function presetPublishTopic(topic)
   mqttClient_Model.tempPublishTopic = topic
 end
@@ -717,6 +737,8 @@ local function loadParameters()
 
       mqttClient_Model.parameters = mqttClient_Model.helperFuncs.convertContainer2Table(data)
       mqttClient_Model.publishEventsFunctions = {}
+
+      mqttClient_Model.parameters = mqttClient_Model.helperFuncs.checkParameters(mqttClient_Model.parameters, mqttClient_Model.helperFuncs.defaultParameters.getParameters())
 
       -- Configured/activated with new loaded data
       for key in pairs(mqttClient_Model.parameters.publishEvents.topic) do
