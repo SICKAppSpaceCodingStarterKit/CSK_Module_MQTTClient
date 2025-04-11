@@ -254,6 +254,14 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
                     <desc>Notify if all messages regarding received / send data should be logged in UI.</desc>
                     <param desc="Status" multiplicity="1" name="status" type="bool"/>
                 </event>
+                <event name="OnNewStatusBirthMessageActive">
+                    <desc>Notify if BirthMessage is used.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </event>
+                <event name="OnNewStatusBirthMessageConfig">
+                    <desc>Notify BirthMessage config.</desc>
+                    <param desc="Config as text" multiplicity="1" name="config" type="string"/>
+                </event>
                 <function name="setParameterName">
                     <desc>Function to set the name of the parameters if saved/loaded via the CSK_PersistentData module.</desc>
                     <param desc="Name of the parameter" multiplicity="1" name="name" type="string"/>
@@ -485,6 +493,13 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
                     <desc>Function to set if all messages regarding send/received data should be logged in UI.</desc>
                     <param desc="Status" multiplicity="1" name="status" type="bool"/>
                 </function>
+                <function name="setBirthMessageActivation">
+                    <desc>Function to set activation of BirthMessage.</desc>
+                    <param desc="Status" multiplicity="1" name="status" type="bool"/>
+                </function>
+                <function name="setBirthMessageConfigViaUI">
+                    <desc>Function to set config of BirthMessage via UI with preset configuration (check "presetPublish..."-functions).</desc>
+                </function>
             </serves>
         </crown>
         <crown name="MQTTClient_FC">
@@ -544,7 +559,7 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
             </crown>
         </crown>
         <meta key="author">SICK AG</meta>
-        <meta key="version">2.1.0</meta>
+        <meta key="version">2.2.0</meta>
         <meta key="priority">low</meta>
         <meta key="copy-protected">false</meta>
         <meta key="read-protected">false</meta>

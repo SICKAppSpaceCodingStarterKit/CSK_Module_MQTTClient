@@ -6,13 +6,12 @@
         <layout-row id="RowLayout49" style="flex-grow: 0; flex-shrink: 0">
             <layout-column id="ColumnLayout41" style="align-items: stretch">
                 <layout-row id="RowLayout01" style="align-items: baseline">
-                    <davinci-value-display id="VD_Title" class="myCustomLabel_CSK_Module_MQTTClient"
-                        value="MQTT Client">
-                    </davinci-value-display>
+                    <h1 id="Heading_Title" class="myCustomLabel_CSK_Module_MQTTClient">
+                        MQTT Client
+                    </h1>
                     <davinci-value-display id="VD_Version">
-                        <crown-edpws-binding property="value" name="CSK_MQTTClient/OnNewStatusModuleVersion"
-                            update-on-resume>
-                        </crown-edpws-binding>
+                        <crown-on property="value" crown-event="CSK_MQTTClient/OnNewStatusModuleVersion">
+                        </crown-on>
                     </davinci-value-display>
                 </layout-row>
             </layout-column>
@@ -67,9 +66,10 @@
                                                                     style="justify-content: center; align-items: center">
                                                                     <davinci-button id="B_LoadConfig"
                                                                         class="myCustomButton_CSK_Module_MQTTClient"
-                                                                        type="outline" icon-position="append"
-                                                                        title="Load configured parameters from CSK_PersistentData module."
-                                                                        icon="action/history">
+                                                                        type="outline"
+                                                                        title="Load configured parameters from CSK_PersistentData module.">
+                                                                        <davinci-icon icon="action/history">
+                                                                        </davinci-icon>
                                                                         <span></span>
                                                                         <crown-binding event="submit"
                                                                             name="CSK_MQTTClient/loadParameters"
@@ -83,9 +83,10 @@
                                                                     </davinci-button>
                                                                     <davinci-button id="B_SaveConfig"
                                                                         class="myCustomButton_CSK_Module_MQTTClient"
-                                                                        type="outline" icon-position="append"
-                                                                        title="Save current configured parameters of this module within CSK_PersistentData module."
-                                                                        icon="content/save">
+                                                                        type="outline"
+                                                                        title="Save current configured parameters of this module within CSK_PersistentData module.">
+                                                                        <davinci-icon icon="content/save">
+                                                                        </davinci-icon>
                                                                         <span></span>
                                                                         <crown-binding event="submit"
                                                                             name="CSK_MQTTClient/sendParameters"
@@ -910,9 +911,9 @@
                                                                 style="align-items: center">
                                                                 <davinci-button id="Button_Publish"
                                                                     class="myCustomButton_CSK_Module_MQTTClient"
-                                                                    type="outline" icon-position="append"
-                                                                    title="Publish with preset values..."
-                                                                    icon="content/send">
+                                                                    type="outline"
+                                                                    title="Publish with preset values...">
+                                                                    <davinci-icon icon="content/send"></davinci-icon>
                                                                     <span></span>
                                                                     <crown-binding event="submit"
                                                                         name="CSK_MQTTClient/publishViaUI" auto-commit>
@@ -1002,14 +1003,75 @@
                                                                             style="align-items: center">
                                                                             <davinci-button id="Button_SetWillMessage"
                                                                                 class="myCustomButton_CSK_Module_MQTTClient"
-                                                                                type="outline" icon-position="append"
-                                                                                icon="communication/message"
+                                                                                type="outline"
                                                                                 title="Set current setup as WillMessage">
+                                                                                <davinci-icon
+                                                                                    icon="communication/message">
+                                                                                </davinci-icon>
                                                                                 <span></span>
                                                                                 <crown-binding event="submit"
                                                                                     name="CSK_MQTTClient/setWillMessageConfigViaUI"
                                                                                     auto-commit>
                                                                                 </crown-binding>
+                                                                            </davinci-button>
+                                                                        </layout-column>
+                                                                    </layout-row>
+                                                                </layout-column>
+                                                            </layout-row>
+                                                        </davinci-collapse>
+                                                        <davinci-collapse id="Collapse_BirthMessage"
+                                                            collapsed-title="Show Birth Message" expanded-title="Hide">
+                                                            <layout-row id="RowLayout64">
+                                                                <layout-column id="ColumnLayout59"
+                                                                    style="align-items: stretch">
+                                                                    <layout-row id="RowLayout65"
+                                                                        style="align-items: center">
+                                                                        <layout-column id="ColumnLayout71"
+                                                                            style="align-items: stretch; flex-grow: 6">
+                                                                            <davinci-value-display id="VD_BirthMessage"
+                                                                                value="" label="BirthMessage active">
+                                                                            </davinci-value-display>
+                                                                        </layout-column>
+                                                                        <layout-column id="ColumnLayout64"
+                                                                            style="align-items: center">
+                                                                            <davinci-toggle-switch id="TS_BirthMessage">
+                                                                                <crown-on property="checked"
+                                                                                    crown-event="CSK_MQTTClient/OnNewStatusBirthMessageActive">
+                                                                                </crown-on>
+                                                                                <crown-set event="change"
+                                                                                    crown-function="CSK_MQTTClient/setBirthMessageActivation"
+                                                                                    protocol="crownMSGPACK"
+                                                                                    crown-path="status">
+                                                                                </crown-set>
+                                                                            </davinci-toggle-switch>
+                                                                        </layout-column>
+                                                                    </layout-row>
+                                                                    <layout-row id="RowLayout66"></layout-row>
+                                                                    <layout-row id="RowLayout68"
+                                                                        style="align-items: center">
+                                                                        <layout-column id="ColumnLayout78"
+                                                                            style="align-items: stretch; flex-grow: 6">
+                                                                            <davinci-value-display
+                                                                                id="VD_BirthMessageConfig">
+                                                                                <crown-on property="value"
+                                                                                    crown-event="CSK_MQTTClient/OnNewStatusBirthMessageConfig">
+                                                                                </crown-on>
+                                                                            </davinci-value-display>
+                                                                        </layout-column>
+                                                                        <layout-column id="ColumnLayout80"
+                                                                            style="align-items: center">
+                                                                            <davinci-button id="Button_SetBirthMessage"
+                                                                                class="myCustomButton_CSK_Module_MQTTClient"
+                                                                                type="outline"
+                                                                                title="Set current setup as BirthMessage">
+                                                                                <davinci-icon
+                                                                                    icon="communication/message">
+                                                                                </davinci-icon>
+                                                                                <span></span>
+                                                                                <crown-set event="submit"
+                                                                                    crown-function="CSK_MQTTClient/setBirthMessageConfigViaUI"
+                                                                                    protocol="crownMSGPACK">
+                                                                                </crown-set>
                                                                             </davinci-button>
                                                                         </layout-column>
                                                                     </layout-row>
@@ -1057,9 +1119,10 @@
                                                                         style="align-items: center">
                                                                         <davinci-button id="Button_AddEvent"
                                                                             class="myCustomButton_CSK_Module_MQTTClient"
-                                                                            type="outline" icon-position="append"
-                                                                            title="Add event with above preset configuration (topic, QoS, Retain) to listen to and to forward content via MQTT publish."
-                                                                            icon="content/add">
+                                                                            type="outline"
+                                                                            title="Add event with above preset configuration (topic, QoS, Retain) to listen to and to forward content via MQTT publish.">
+                                                                            <davinci-icon icon="content/add">
+                                                                            </davinci-icon>
                                                                             <span></span>
                                                                             <crown-binding event="submit"
                                                                                 name="CSK_MQTTClient/addPublishEventViaUI"
@@ -1102,9 +1165,10 @@
                                                                         style="align-items: center">
                                                                         <davinci-button id="Button_RemoveEvent"
                                                                             class="myCustomButton_CSK_Module_MQTTClient"
-                                                                            type="outline" icon-position="append"
-                                                                            title="Remove selected event"
-                                                                            icon="action/delete">
+                                                                            type="outline"
+                                                                            title="Remove selected event">
+                                                                            <davinci-icon icon="action/delete">
+                                                                            </davinci-icon>
                                                                             <span></span>
                                                                             <crown-binding event="submit"
                                                                                 name="CSK_MQTTClient/removePublishEventViaUI"
@@ -1183,8 +1247,8 @@
                                                                 style="align-items: center">
                                                                 <davinci-button id="Button_AddSubscription"
                                                                     class="myCustomButton_CSK_Module_MQTTClient"
-                                                                    type="outline" icon-position="append"
-                                                                    title="Add Subscription" icon="content/add">
+                                                                    type="outline" title="Add Subscription">
+                                                                    <davinci-icon icon="content/add"></davinci-icon>
                                                                     <span></span>
                                                                     <crown-binding event="submit"
                                                                         name="CSK_MQTTClient/addSubscriptionViaUI"
@@ -1216,8 +1280,8 @@
                                                                 style="align-items: center">
                                                                 <davinci-button id="Button_UnSubscribe"
                                                                     class="myCustomButton_CSK_Module_MQTTClient"
-                                                                    type="outline" icon-position="append"
-                                                                    icon="action/delete" title="Unsubscribe">
+                                                                    type="outline" title="Unsubscribe">
+                                                                    <davinci-icon icon="action/delete"></davinci-icon>
                                                                     <span></span>
                                                                     <crown-binding event="submit"
                                                                         name="CSK_MQTTClient/unsubscribeViaUI"

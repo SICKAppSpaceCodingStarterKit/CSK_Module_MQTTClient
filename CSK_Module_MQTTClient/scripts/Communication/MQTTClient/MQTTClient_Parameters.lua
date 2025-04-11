@@ -40,6 +40,12 @@ local function getParameters()
   mqttClientParameters.willMessageQOS = 'QOS0' -- Quality of Service level
   mqttClientParameters.willMessageRetain = 'NO_RETAIN' -- Retaining a message means that the server stores the message and sends it to future subscribers of this topic.
 
+  mqttClientParameters.useBirthMessage = false -- Enables/disables use of a birth message
+  mqttClientParameters.birthMessageTopic = '' -- Topic under which to publish the birth message
+  mqttClientParameters.birthMessageData = '' -- The message payload to publish
+  mqttClientParameters.birthMessageQOS = 'QOS0' -- Quality of Service level
+  mqttClientParameters.birthMessageRetain = 'NO_RETAIN' -- Retaining a message means that the server stores the message and sends it to future subscribers of this topic.
+
   mqttClientParameters.keepAliveInterval = 60 -- The number of seconds after which a PING message should be sent if no other messages have been exchanged in that time. Disable keep alive mechanism with 0.
   mqttClientParameters.forwardReceives = false -- Enables/disables if module should forward incoming receives via event 'CSK_MQTTClient.OnReceive'
 

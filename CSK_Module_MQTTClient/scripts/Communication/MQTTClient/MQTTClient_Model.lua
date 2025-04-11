@@ -175,6 +175,10 @@ local function handleOnConnected()
   mqttClient_Model.reconnectionTimer:stop()
   mqttClient_Model.isConnected = true
   Script.notifyEvent("MQTTClient_OnNewStatusCurrentlyConnected", mqttClient_Model.isConnected)
+  if mqttClient_Model.parameters.useBirthMessage then
+    publish(mqttClient_Model.parameters.birthMessageTopic, mqttClient_Model.parameters.birthMessageData, mqttClient_Model.parameters.birthMessageQOS, mqttClient_Model.parameters.birthMessageRetain)
+    _G.logger:info(nameOfModule .. ": Sent birth message to broker")
+  end
   subscripeToAllTopics()
 end
 if _G.availableAPIs.default and  _G.availableAPIs.specific == true then

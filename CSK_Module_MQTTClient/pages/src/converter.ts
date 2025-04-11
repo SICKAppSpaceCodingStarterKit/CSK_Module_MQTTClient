@@ -5,6 +5,14 @@ export function convertToList(value) {
 export function changeStyle(theme) {
   const style: HTMLStyleElement = document.createElement('style');
   style.id ='blub'
+
+  const toggleSW = document.querySelectorAll("davinci-toggle-switch")
+  toggleSW.forEach((userItem) => {
+    const shadowToggle = userItem.shadowRoot
+    const finalToggleSW = shadowToggle?.querySelector('div')
+    finalToggleSW?.classList.add('hasIcon')
+  });
+
   if (theme == 'CSK_Style'){
     var headerToolbar = `.sopasjs-ui-header-toolbar-wrapper { background-color: #FFFFFF; }`
     var uiHeader = `.sopasjs-ui-header>.app-logo { margin-right:0px; }`
@@ -31,6 +39,7 @@ export function changeStyle(theme) {
     style.innerHTML += toolbarButton;
 
     style.innerHTML += customBackground;
+
   }
   else if (theme == 'None'){
     var headerToolbar = `.sopasjs-ui-header-toolbar-wrapper { background-color: #007fc3; }`
@@ -45,7 +54,7 @@ export function changeStyle(theme) {
     var toolbarButton = `.sopasjs-ui-header-toolbar-button>a { color: #cce5f3; }`
 
     var customBackground =  `.CSK_Module_MQTTClient .myCustomBackground_CSK_Module_MQTTClient { background-color: #fff; }` // font-family: "sans-serif"; }`
-  
+
     style.innerHTML = headerToolbar;
     style.innerHTML += uiHeader;
     style.innerHTML += appLogo;
@@ -58,6 +67,7 @@ export function changeStyle(theme) {
     style.innerHTML += toolbarButton;
 
     style.innerHTML += customBackground;
+
   }
   document.head.append(style);
   return theme

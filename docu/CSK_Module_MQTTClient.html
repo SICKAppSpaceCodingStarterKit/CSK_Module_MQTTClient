@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.12">
 <meta name="author" content="SICK AG">
-<title>Documentation - CSK_Module_MQTTClient 2.1.0</title>
+<title>Documentation - CSK_Module_MQTTClient 2.2.0</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 /* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
@@ -615,11 +615,11 @@ h1,h2,h3,h4,h5,h6{color:#007cc1}
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>Documentation - CSK_Module_MQTTClient 2.1.0</h1>
+<h1>Documentation - CSK_Module_MQTTClient 2.2.0</h1>
 <div class="details">
 <span id="author" class="author">SICK AG</span><br>
-<span id="revnumber">version 2.1.0,</span>
-<span id="revdate">2025-03-17</span>
+<span id="revnumber">version 2.2.0,</span>
+<span id="revdate">2025-04-11</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -664,6 +664,8 @@ h1,h2,h3,h4,h5,h6{color:#007cc1}
 <li><a href="#API:Function:CSK_MQTTClient.selectPublishEvent"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">selectPublishEvent()</span></a></li>
 <li><a href="#API:Function:CSK_MQTTClient.selectSubscriptionViaUI"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">selectSubscriptionViaUI()</span></a></li>
 <li><a href="#API:Function:CSK_MQTTClient.sendParameters"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">sendParameters()</span></a></li>
+<li><a href="#API:Function:CSK_MQTTClient.setBirthMessageActivation"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setBirthMessageActivation()</span></a></li>
+<li><a href="#API:Function:CSK_MQTTClient.setBirthMessageConfigViaUI"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setBirthMessageConfigViaUI()</span></a></li>
 <li><a href="#API:Function:CSK_MQTTClient.setBrokerIP"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setBrokerIP()</span></a></li>
 <li><a href="#API:Function:CSK_MQTTClient.setCABundlePath"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setCABundlePath()</span></a></li>
 <li><a href="#API:Function:CSK_MQTTClient.setCleanSession"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setCleanSession()</span></a></li>
@@ -706,6 +708,8 @@ h1,h2,h3,h4,h5,h6{color:#007cc1}
 <li><a href="#API:Event:CSK_MQTTClient.OnNewMQTTPort"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewMQTTPort</span></a></li>
 <li><a href="#API:Event:CSK_MQTTClient.OnNewParameterName"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewParameterName</span></a></li>
 <li><a href="#API:Event:CSK_MQTTClient.OnNewStatusActivateConnection"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusActivateConnection</span></a></li>
+<li><a href="#API:Event:CSK_MQTTClient.OnNewStatusBirthMessageActive"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusBirthMessageActive</span></a></li>
+<li><a href="#API:Event:CSK_MQTTClient.OnNewStatusBirthMessageConfig"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusBirthMessageConfig</span></a></li>
 <li><a href="#API:Event:CSK_MQTTClient.OnNewStatusCABundleActive"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusCABundleActive</span></a></li>
 <li><a href="#API:Event:CSK_MQTTClient.OnNewStatusCABundlePath"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusCABundlePath</span></a></li>
 <li><a href="#API:Event:CSK_MQTTClient.OnNewStatusCleanSession"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusCleanSession</span></a></li>
@@ -756,13 +760,13 @@ h1,h2,h3,h4,h5,h6{color:#007cc1}
 </li>
 <li><a href="#API:Crown:MQTTClient_FC"><span class="api-crown">MQTTClient_FC</span></a>
 <ul class="sectlevel3">
-<li><a href="#_short_description_111">Short description</a></li>
+<li><a href="#_short_description_115">Short description</a></li>
 <li><a href="#_overview_2">Overview</a></li>
 </ul>
 </li>
 <li><a href="#API:Crown:MQTTClient_FC.OnReceive"><span class="api-crown">MQTTClient_FC.OnReceive</span></a>
 <ul class="sectlevel3">
-<li><a href="#_short_description_112">Short description</a></li>
+<li><a href="#_short_description_116">Short description</a></li>
 <li><a href="#_overview_3">Overview</a></li>
 <li><a href="#_functions_2">Functions</a>
 <ul class="sectlevel4">
@@ -779,7 +783,7 @@ h1,h2,h3,h4,h5,h6{color:#007cc1}
 </li>
 <li><a href="#API:Crown:MQTTClient_FC.Publish"><span class="api-crown">MQTTClient_FC.Publish</span></a>
 <ul class="sectlevel3">
-<li><a href="#_short_description_116">Short description</a></li>
+<li><a href="#_short_description_120">Short description</a></li>
 <li><a href="#_overview_4">Overview</a></li>
 <li><a href="#_functions_3">Functions</a>
 <ul class="sectlevel4">
@@ -817,11 +821,11 @@ h1,h2,h3,h4,h5,h6{color:#007cc1}
 </tr>
 <tr>
 <th class="tableblock halign-left valign-top"><p class="tableblock">Version</p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2.1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.2.0</p></td>
 </tr>
 <tr>
 <th class="tableblock halign-left valign-top"><p class="tableblock">Date</p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2025-03-17</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2025-04-11</p></td>
 </tr>
 <tr>
 <th class="tableblock halign-left valign-top"><p class="tableblock">Author</p></th>
@@ -989,6 +993,12 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 <p><a href="#API:Function:CSK_MQTTClient.sendParameters">sendParameters()</a></p>
 </li>
 <li>
+<p><a href="#API:Function:CSK_MQTTClient.setBirthMessageActivation">setBirthMessageActivation()</a></p>
+</li>
+<li>
+<p><a href="#API:Function:CSK_MQTTClient.setBirthMessageConfigViaUI">setBirthMessageConfigViaUI()</a></p>
+</li>
+<li>
 <p><a href="#API:Function:CSK_MQTTClient.setBrokerIP">setBrokerIP()</a></p>
 </li>
 <li>
@@ -1101,6 +1111,12 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 </li>
 <li>
 <p><a href="#API:Event:CSK_MQTTClient.OnNewStatusActivateConnection">OnNewStatusActivateConnection</a></p>
+</li>
+<li>
+<p><a href="#API:Event:CSK_MQTTClient.OnNewStatusBirthMessageActive">OnNewStatusBirthMessageActive</a></p>
+</li>
+<li>
+<p><a href="#API:Event:CSK_MQTTClient.OnNewStatusBirthMessageConfig">OnNewStatusBirthMessageConfig</a></p>
 </li>
 <li>
 <p><a href="#API:Event:CSK_MQTTClient.OnNewStatusCABundleActive">OnNewStatusCABundleActive</a></p>
@@ -2273,15 +2289,76 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Function:CSK_MQTTClient.setBrokerIP"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setBrokerIP()</span></h5>
+<h5 id="API:Function:CSK_MQTTClient.setBirthMessageActivation"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setBirthMessageActivation()</span></h5>
 <div class="sect5">
 <h6 id="_short_description_29">Short description</h6>
+<div class="paragraph">
+<p>Function to set activation of BirthMessage.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_parameters_16">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_27">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setBirthMessageActivation(status)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Function:CSK_MQTTClient.setBirthMessageConfigViaUI"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setBirthMessageConfigViaUI()</span></h5>
+<div class="sect5">
+<h6 id="_short_description_30">Short description</h6>
+<div class="paragraph">
+<p>Function to set config of BirthMessage via UI with preset configuration (check "presetPublish&#8230;&#8203;"-functions).</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_28">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setBirthMessageConfigViaUI()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Function:CSK_MQTTClient.setBrokerIP"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setBrokerIP()</span></h5>
+<div class="sect5">
+<h6 id="_short_description_31">Short description</h6>
 <div class="paragraph">
 <p>Function to set the IP of the MQTT broker.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_16">Parameters</h6>
+<h6 id="_parameters_17">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -2308,7 +2385,7 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_27">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_29">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setBrokerIP(ip)</code></pre>
@@ -2319,13 +2396,13 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 <div class="sect4">
 <h5 id="API:Function:CSK_MQTTClient.setCABundlePath"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setCABundlePath()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_30">Short description</h6>
+<h6 id="_short_description_32">Short description</h6>
 <div class="paragraph">
 <p>Function to set path to CA bundle if it is activated.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_17">Parameters</h6>
+<h6 id="_parameters_18">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -2352,7 +2429,7 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_28">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_30">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setCABundlePath(path)</code></pre>
@@ -2363,13 +2440,13 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 <div class="sect4">
 <h5 id="API:Function:CSK_MQTTClient.setCleanSession"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setCleanSession()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_31">Short description</h6>
+<h6 id="_short_description_33">Short description</h6>
 <div class="paragraph">
 <p>Function to set clean session mode.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_18">Parameters</h6>
+<h6 id="_parameters_19">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -2396,7 +2473,7 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_29">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_31">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setCleanSession(status)</code></pre>
@@ -2407,13 +2484,13 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 <div class="sect4">
 <h5 id="API:Function:CSK_MQTTClient.setClientCertificateKeyPassword"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setClientCertificateKeyPassword()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_32">Short description</h6>
+<h6 id="_short_description_34">Short description</h6>
 <div class="paragraph">
 <p>Function to set optional passphrase for client certification private key.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_19">Parameters</h6>
+<h6 id="_parameters_20">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -2440,7 +2517,7 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_30">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_32">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setClientCertificateKeyPassword(password)</code></pre>
@@ -2451,53 +2528,9 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 <div class="sect4">
 <h5 id="API:Function:CSK_MQTTClient.setClientCertificateKeyPath"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setClientCertificateKeyPath()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_33">Short description</h6>
+<h6 id="_short_description_35">Short description</h6>
 <div class="paragraph">
 <p>Function to set path to client private key in PEM/DER format (if client authentification is used).</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_parameters_20">Parameters</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">path</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Path</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_31">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setClientCertificateKeyPath(path)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Function:CSK_MQTTClient.setClientCertificatePath"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setClientCertificatePath()</span></h5>
-<div class="sect5">
-<h6 id="_short_description_34">Short description</h6>
-<div class="paragraph">
-<p>Function to set path to client certificate file im PEM/DER/PKCS#12 format (if client authentification is used).</p>
 </div>
 </div>
 <div class="sect5">
@@ -2528,7 +2561,51 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_32">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_33">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setClientCertificateKeyPath(path)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Function:CSK_MQTTClient.setClientCertificatePath"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setClientCertificatePath()</span></h5>
+<div class="sect5">
+<h6 id="_short_description_36">Short description</h6>
+<div class="paragraph">
+<p>Function to set path to client certificate file im PEM/DER/PKCS#12 format (if client authentification is used).</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_parameters_22">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_34">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setClientCertificatePath(path)</code></pre>
@@ -2539,13 +2616,13 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 <div class="sect4">
 <h5 id="API:Function:CSK_MQTTClient.setClientID"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setClientID()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_35">Short description</h6>
+<h6 id="_short_description_37">Short description</h6>
 <div class="paragraph">
 <p>Function to set the client identifier to be used by this MQTTClient instance.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_22">Parameters</h6>
+<h6 id="_parameters_23">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -2572,7 +2649,7 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_33">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_35">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setClientID(id)</code></pre>
@@ -2583,13 +2660,13 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 <div class="sect4">
 <h5 id="API:Function:CSK_MQTTClient.setConnectionTimeout"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setConnectionTimeout()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_36">Short description</h6>
+<h6 id="_short_description_38">Short description</h6>
 <div class="paragraph">
 <p>Function to set the timeout to wait initially until the client gets connected.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_23">Parameters</h6>
+<h6 id="_parameters_24">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -2616,7 +2693,7 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_34">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_36">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setConnectionTimeout(time)</code></pre>
@@ -2627,53 +2704,9 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 <div class="sect4">
 <h5 id="API:Function:CSK_MQTTClient.setDisconnectWithWillMessage"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setDisconnectWithWillMessage()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_37">Short description</h6>
+<h6 id="_short_description_39">Short description</h6>
 <div class="paragraph">
 <p>Function to set if WillMessage should be sent when disconnecting from MQTT broker normally.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_parameters_24">Parameters</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_35">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setDisconnectWithWillMessage(status)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Function:CSK_MQTTClient.setFlowConfigPriority"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setFlowConfigPriority()</span></h5>
-<div class="sect5">
-<h6 id="_short_description_38">Short description</h6>
-<div class="paragraph">
-<p>Function to configure if FlowConfig should have priority for FlowConfig relevant configuration.</p>
 </div>
 </div>
 <div class="sect5">
@@ -2704,20 +2737,20 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_36">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_37">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setFlowConfigPriority(status)</code></pre>
+<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setDisconnectWithWillMessage(status)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Function:CSK_MQTTClient.setForwardReceivedMessages"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setForwardReceivedMessages()</span></h5>
+<h5 id="API:Function:CSK_MQTTClient.setFlowConfigPriority"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setFlowConfigPriority()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_39">Short description</h6>
+<h6 id="_short_description_40">Short description</h6>
 <div class="paragraph">
-<p>Function to set if received messages of subscribed topics should be forwarded via "OnReceive"-event.</p>
+<p>Function to configure if FlowConfig should have priority for FlowConfig relevant configuration.</p>
 </div>
 </div>
 <div class="sect5">
@@ -2748,20 +2781,20 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_37">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_38">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setForwardReceivedMessages(status)</code></pre>
+<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setFlowConfigPriority(status)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Function:CSK_MQTTClient.setHostnameVerification"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setHostnameVerification()</span></h5>
+<h5 id="API:Function:CSK_MQTTClient.setForwardReceivedMessages"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setForwardReceivedMessages()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_40">Short description</h6>
+<h6 id="_short_description_41">Short description</h6>
 <div class="paragraph">
-<p>Function to set hostname verification.</p>
+<p>Function to set if received messages of subscribed topics should be forwarded via "OnReceive"-event.</p>
 </div>
 </div>
 <div class="sect5">
@@ -2792,156 +2825,24 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_38">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_39">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setHostnameVerification(status)</code></pre>
+<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setForwardReceivedMessages(status)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Function:CSK_MQTTClient.setInterface"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setInterface()</span></h5>
+<h5 id="API:Function:CSK_MQTTClient.setHostnameVerification"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setHostnameVerification()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_41">Short description</h6>
+<h6 id="_short_description_42">Short description</h6>
 <div class="paragraph">
-<p>Function to set interface to use for MQTT connection.</p>
+<p>Function to set hostname verification.</p>
 </div>
 </div>
 <div class="sect5">
 <h6 id="_parameters_28">Parameters</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">interface</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Interface</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_39">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setInterface(interface)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Function:CSK_MQTTClient.setKeepAliveInterval"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setKeepAliveInterval()</span></h5>
-<div class="sect5">
-<h6 id="_short_description_42">Short description</h6>
-<div class="paragraph">
-<p>Function to set keep alive interval.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_parameters_29">Parameters</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">time</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Seconds after which a PING message should be sent if no other messages have been exchanged in that time. Disable keep alive mechanism with 0.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_40">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setKeepAliveInterval(time)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Function:CSK_MQTTClient.setLoadOnReboot"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setLoadOnReboot()</span></h5>
-<div class="sect5">
-<h6 id="_short_description_43">Short description</h6>
-<div class="paragraph">
-<p>Configure if this module should load its saved parameters at app/device boot up.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_parameters_30">Parameters</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Set status</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_41">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setLoadOnReboot(status)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Function:CSK_MQTTClient.setLogAllMessages"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setLogAllMessages()</span></h5>
-<div class="sect5">
-<h6 id="_short_description_44">Short description</h6>
-<div class="paragraph">
-<p>Function to set if all messages regarding send/received data should be logged in UI.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_parameters_31">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -2968,7 +2869,183 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 </table>
 </div>
 <div class="sect5">
+<h6 id="_sample_auto_generated_40">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setHostnameVerification(status)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Function:CSK_MQTTClient.setInterface"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setInterface()</span></h5>
+<div class="sect5">
+<h6 id="_short_description_43">Short description</h6>
+<div class="paragraph">
+<p>Function to set interface to use for MQTT connection.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_parameters_29">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">interface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interface</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_41">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setInterface(interface)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Function:CSK_MQTTClient.setKeepAliveInterval"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setKeepAliveInterval()</span></h5>
+<div class="sect5">
+<h6 id="_short_description_44">Short description</h6>
+<div class="paragraph">
+<p>Function to set keep alive interval.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_parameters_30">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Seconds after which a PING message should be sent if no other messages have been exchanged in that time. Disable keep alive mechanism with 0.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
 <h6 id="_sample_auto_generated_42">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setKeepAliveInterval(time)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Function:CSK_MQTTClient.setLoadOnReboot"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setLoadOnReboot()</span></h5>
+<div class="sect5">
+<h6 id="_short_description_45">Short description</h6>
+<div class="paragraph">
+<p>Configure if this module should load its saved parameters at app/device boot up.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_parameters_31">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set status</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_43">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setLoadOnReboot(status)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Function:CSK_MQTTClient.setLogAllMessages"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setLogAllMessages()</span></h5>
+<div class="sect5">
+<h6 id="_short_description_46">Short description</h6>
+<div class="paragraph">
+<p>Function to set if all messages regarding send/received data should be logged in UI.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_parameters_32">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_44">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setLogAllMessages(status)</code></pre>
@@ -2979,13 +3056,13 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 <div class="sect4">
 <h5 id="API:Function:CSK_MQTTClient.setMQTTPort"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setMQTTPort()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_45">Short description</h6>
+<h6 id="_short_description_47">Short description</h6>
 <div class="paragraph">
 <p>Function to set MQTT port.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_32">Parameters</h6>
+<h6 id="_parameters_33">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -3012,7 +3089,7 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_43">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_45">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setMQTTPort(port)</code></pre>
@@ -3023,13 +3100,13 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 <div class="sect4">
 <h5 id="API:Function:CSK_MQTTClient.setParameterName"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setParameterName()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_46">Short description</h6>
+<h6 id="_short_description_48">Short description</h6>
 <div class="paragraph">
 <p>Function to set the name of the parameters if saved/loaded via the CSK_PersistentData module.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_33">Parameters</h6>
+<h6 id="_parameters_34">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -3056,7 +3133,7 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_44">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_46">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setParameterName(name)</code></pre>
@@ -3067,13 +3144,13 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 <div class="sect4">
 <h5 id="API:Function:CSK_MQTTClient.setPassword"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setPassword()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_47">Short description</h6>
+<h6 id="_short_description_49">Short description</h6>
 <div class="paragraph">
 <p>Function to set password if credentials should be used (see "setUseCredentials").</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_34">Parameters</h6>
+<h6 id="_parameters_35">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -3100,7 +3177,7 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_45">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_47">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setPassword(password)</code></pre>
@@ -3111,13 +3188,13 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 <div class="sect4">
 <h5 id="API:Function:CSK_MQTTClient.setPeerVerification"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setPeerVerification()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_48">Short description</h6>
+<h6 id="_short_description_50">Short description</h6>
 <div class="paragraph">
 <p>Function to set peer verification.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_35">Parameters</h6>
+<h6 id="_parameters_36">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -3144,7 +3221,7 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_46">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_48">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setPeerVerification(status)</code></pre>
@@ -3155,13 +3232,13 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 <div class="sect4">
 <h5 id="API:Function:CSK_MQTTClient.setTLSVersion"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setTLSVersion()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_49">Short description</h6>
+<h6 id="_short_description_51">Short description</h6>
 <div class="paragraph">
 <p>Function to select if and what TLS version to use.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_36">Parameters</h6>
+<h6 id="_parameters_37">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -3189,7 +3266,7 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_47">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_49">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setTLSVersion(version)</code></pre>
@@ -3200,13 +3277,13 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 <div class="sect4">
 <h5 id="API:Function:CSK_MQTTClient.setTopicPrefix"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setTopicPrefix()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_50">Short description</h6>
+<h6 id="_short_description_52">Short description</h6>
 <div class="paragraph">
 <p>Function to set prefix for all topics.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_37">Parameters</h6>
+<h6 id="_parameters_38">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -3233,7 +3310,7 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_48">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_50">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setTopicPrefix(prefix)</code></pre>
@@ -3244,53 +3321,9 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 <div class="sect4">
 <h5 id="API:Function:CSK_MQTTClient.setUseCABundle"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setUseCABundle()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_51">Short description</h6>
+<h6 id="_short_description_53">Short description</h6>
 <div class="paragraph">
 <p>Function to set if CA bundle should be used.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_parameters_38">Parameters</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_49">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setUseCABundle(status)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Function:CSK_MQTTClient.setUseClientCertificate"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setUseClientCertificate()</span></h5>
-<div class="sect5">
-<h6 id="_short_description_52">Short description</h6>
-<div class="paragraph">
-<p>Function to set if client certificate should be used.</p>
 </div>
 </div>
 <div class="sect5">
@@ -3321,20 +3354,20 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_50">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_51">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setUseClientCertificate(status)</code></pre>
+<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setUseCABundle(status)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Function:CSK_MQTTClient.setUseCredentials"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setUseCredentials()</span></h5>
+<h5 id="API:Function:CSK_MQTTClient.setUseClientCertificate"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setUseClientCertificate()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_53">Short description</h6>
+<h6 id="_short_description_54">Short description</h6>
 <div class="paragraph">
-<p>Function to set if credentials should be used for MQTT connection.</p>
+<p>Function to set if client certificate should be used.</p>
 </div>
 </div>
 <div class="sect5">
@@ -3365,68 +3398,24 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_51">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_52">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setUseCredentials(status)</code></pre>
+<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setUseClientCertificate(status)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Function:CSK_MQTTClient.setUsername"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setUsername()</span></h5>
+<h5 id="API:Function:CSK_MQTTClient.setUseCredentials"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setUseCredentials()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_54">Short description</h6>
+<h6 id="_short_description_55">Short description</h6>
 <div class="paragraph">
-<p>Function to set username if credentials should be used (see "setUseCredentials").</p>
+<p>Function to set if credentials should be used for MQTT connection.</p>
 </div>
 </div>
 <div class="sect5">
 <h6 id="_parameters_41">Parameters</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">username</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Username</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_52">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setUsername(username)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Function:CSK_MQTTClient.setWillMessageActivation"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setWillMessageActivation()</span></h5>
-<div class="sect5">
-<h6 id="_short_description_55">Short description</h6>
-<div class="paragraph">
-<p>Function to set activation of WillMessage.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_parameters_42">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -3456,6 +3445,94 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 <h6 id="_sample_auto_generated_53">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setUseCredentials(status)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Function:CSK_MQTTClient.setUsername"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setUsername()</span></h5>
+<div class="sect5">
+<h6 id="_short_description_56">Short description</h6>
+<div class="paragraph">
+<p>Function to set username if credentials should be used (see "setUseCredentials").</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_parameters_42">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">username</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Username</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_54">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setUsername(username)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Function:CSK_MQTTClient.setWillMessageActivation"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setWillMessageActivation()</span></h5>
+<div class="sect5">
+<h6 id="_short_description_57">Short description</h6>
+<div class="paragraph">
+<p>Function to set activation of WillMessage.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_parameters_43">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_55">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setWillMessageActivation(status)</code></pre>
 </div>
 </div>
@@ -3464,13 +3541,13 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 <div class="sect4">
 <h5 id="API:Function:CSK_MQTTClient.setWillMessageConfig"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setWillMessageConfig()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_56">Short description</h6>
+<h6 id="_short_description_58">Short description</h6>
 <div class="paragraph">
 <p>Function to set config of WillMessage.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_43">Parameters</h6>
+<h6 id="_parameters_44">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -3517,7 +3594,7 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_54">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_56">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setWillMessageConfig(topic, data, qos, retain)</code></pre>
@@ -3528,13 +3605,13 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 <div class="sect4">
 <h5 id="API:Function:CSK_MQTTClient.setWillMessageConfigViaUI"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">setWillMessageConfigViaUI()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_57">Short description</h6>
+<h6 id="_short_description_59">Short description</h6>
 <div class="paragraph">
 <p>Function to set config of WillMessage via UI with preset configuration (check "presetPublish&#8230;&#8203;"-functions).</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_55">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_57">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.setWillMessageConfigViaUI()</code></pre>
@@ -3545,13 +3622,13 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 <div class="sect4">
 <h5 id="API:Function:CSK_MQTTClient.unsubscribe"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">unsubscribe()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_58">Short description</h6>
+<h6 id="_short_description_60">Short description</h6>
 <div class="paragraph">
 <p>Function to unsubscribe from a MQTT topic.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_44">Parameters</h6>
+<h6 id="_parameters_45">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -3578,7 +3655,7 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_56">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_58">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.unsubscribe(topic)</code></pre>
@@ -3589,13 +3666,13 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 <div class="sect4">
 <h5 id="API:Function:CSK_MQTTClient.unsubscribeViaUI"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-function">unsubscribeViaUI()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_59">Short description</h6>
+<h6 id="_short_description_61">Short description</h6>
 <div class="paragraph">
 <p>Function to unsubscribe from preselected topic via UI (see "selectSubscriptionViaUI").</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_57">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_59">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_MQTTClient.unsubscribeViaUI()</code></pre>
@@ -3609,13 +3686,13 @@ Additionally you can set via 'setDisconnectWithWillMessage' if the WillMessage s
 <div class="sect4">
 <h5 id="API:Event:CSK_MQTTClient.OnDataLoadedOnReboot"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnDataLoadedOnReboot</span></h5>
 <div class="sect5">
-<h6 id="_short_description_60">Short description</h6>
+<h6 id="_short_description_62">Short description</h6>
 <div class="paragraph">
 <p>Event to call if module tried to load parameters and should be ready.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_58">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_60">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnDataLoadedOnReboot</span>()
@@ -3630,7 +3707,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MQTTClient.OnNewBrokerIP"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewBrokerIP</span></h5>
 <div class="sect5">
-<h6 id="_short_description_61">Short description</h6>
+<h6 id="_short_description_63">Short description</h6>
 <div class="paragraph">
 <p>Notify current broker IP.</p>
 </div>
@@ -3663,7 +3740,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_59">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_61">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewBrokerIP</span>(ip)
@@ -3678,7 +3755,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MQTTClient.OnNewConnectionStatus"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewConnectionStatus</span></h5>
 <div class="sect5">
-<h6 id="_short_description_62">Short description</h6>
+<h6 id="_short_description_64">Short description</h6>
 <div class="paragraph">
 <p>Event notified with the connection status.</p>
 </div>
@@ -3711,7 +3788,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_60">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_62">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewConnectionStatus</span>(status)
@@ -3726,7 +3803,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MQTTClient.OnNewLog"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewLog</span></h5>
 <div class="sect5">
-<h6 id="_short_description_63">Short description</h6>
+<h6 id="_short_description_65">Short description</h6>
 <div class="paragraph">
 <p>Notify latest log messages (max. 200).</p>
 </div>
@@ -3759,7 +3836,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_61">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_63">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewLog</span>(logs)
@@ -3774,7 +3851,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MQTTClient.OnNewMQTTPort"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewMQTTPort</span></h5>
 <div class="sect5">
-<h6 id="_short_description_64">Short description</h6>
+<h6 id="_short_description_66">Short description</h6>
 <div class="paragraph">
 <p>Notify current MQTT port.</p>
 </div>
@@ -3807,7 +3884,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_62">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_64">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewMQTTPort</span>(port)
@@ -3822,7 +3899,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MQTTClient.OnNewParameterName"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewParameterName</span></h5>
 <div class="sect5">
-<h6 id="_short_description_65">Short description</h6>
+<h6 id="_short_description_67">Short description</h6>
 <div class="paragraph">
 <p>Notify name of persistent data parameter.</p>
 </div>
@@ -3855,7 +3932,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_63">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_65">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewParameterName</span>(name)
@@ -3870,7 +3947,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MQTTClient.OnNewStatusActivateConnection"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusActivateConnection</span></h5>
 <div class="sect5">
-<h6 id="_short_description_66">Short description</h6>
+<h6 id="_short_description_68">Short description</h6>
 <div class="paragraph">
 <p>Notify if connection to MQTT Broker should be activated.</p>
 </div>
@@ -3903,7 +3980,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_64">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_66">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusActivateConnection</span>(status)
@@ -3916,11 +3993,11 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusCABundleActive"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusCABundleActive</span></h5>
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusBirthMessageActive"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusBirthMessageActive</span></h5>
 <div class="sect5">
-<h6 id="_short_description_67">Short description</h6>
+<h6 id="_short_description_69">Short description</h6>
 <div class="paragraph">
-<p>Notify status to use CA bundle.</p>
+<p>Notify if BirthMessage is used.</p>
 </div>
 </div>
 <div class="sect5">
@@ -3951,24 +4028,24 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_65">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_67">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusCABundleActive</span>(status)
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusBirthMessageActive</span>(status)
   <span class="comment">-- Do something</span>
 <span class="keyword">end</span>
 
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusCABundleActive</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusCABundleActive</span><span class="delimiter">&quot;</span></span>)</code></pre>
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusBirthMessageActive</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusBirthMessageActive</span><span class="delimiter">&quot;</span></span>)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusCABundlePath"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusCABundlePath</span></h5>
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusBirthMessageConfig"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusBirthMessageConfig</span></h5>
 <div class="sect5">
-<h6 id="_short_description_68">Short description</h6>
+<h6 id="_short_description_70">Short description</h6>
 <div class="paragraph">
-<p>Notify path to CA bundle.</p>
+<p>Notify BirthMessage config.</p>
 </div>
 </div>
 <div class="sect5">
@@ -3990,33 +4067,33 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">config</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Config as text</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_66">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_68">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusCABundlePath</span>(path)
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusBirthMessageConfig</span>(config)
   <span class="comment">-- Do something</span>
 <span class="keyword">end</span>
 
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusCABundlePath</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusCABundlePath</span><span class="delimiter">&quot;</span></span>)</code></pre>
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusBirthMessageConfig</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusBirthMessageConfig</span><span class="delimiter">&quot;</span></span>)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusCleanSession"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusCleanSession</span></h5>
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusCABundleActive"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusCABundleActive</span></h5>
 <div class="sect5">
-<h6 id="_short_description_69">Short description</h6>
+<h6 id="_short_description_71">Short description</h6>
 <div class="paragraph">
-<p>Notify Clean Session flag.</p>
+<p>Notify status to use CA bundle.</p>
 </div>
 </div>
 <div class="sect5">
@@ -4047,124 +4124,28 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_67">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_69">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusCleanSession</span>(status)
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusCABundleActive</span>(status)
   <span class="comment">-- Do something</span>
 <span class="keyword">end</span>
 
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusCleanSession</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusCleanSession</span><span class="delimiter">&quot;</span></span>)</code></pre>
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusCABundleActive</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusCABundleActive</span><span class="delimiter">&quot;</span></span>)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusClientCertificateActive"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusClientCertificateActive</span></h5>
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusCABundlePath"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusCABundlePath</span></h5>
 <div class="sect5">
-<h6 id="_short_description_70">Short description</h6>
+<h6 id="_short_description_72">Short description</h6>
 <div class="paragraph">
-<p>Notify status to use client certificate.</p>
+<p>Notify path to CA bundle.</p>
 </div>
 </div>
 <div class="sect5">
 <h6 id="_callback_arguments_10">Callback arguments</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_68">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusClientCertificateActive</span>(status)
-  <span class="comment">-- Do something</span>
-<span class="keyword">end</span>
-
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusClientCertificateActive</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusClientCertificateActive</span><span class="delimiter">&quot;</span></span>)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewstatusClientCertificateKeyPath"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewstatusClientCertificateKeyPath</span></h5>
-<div class="sect5">
-<h6 id="_short_description_71">Short description</h6>
-<div class="paragraph">
-<p>Notify path to client certificate key.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_callback_arguments_11">Callback arguments</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">path</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Path</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_69">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewstatusClientCertificateKeyPath</span>(path)
-  <span class="comment">-- Do something</span>
-<span class="keyword">end</span>
-
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewstatusClientCertificateKeyPath</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewstatusClientCertificateKeyPath</span><span class="delimiter">&quot;</span></span>)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusClientCertificatePath"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusClientCertificatePath</span></h5>
-<div class="sect5">
-<h6 id="_short_description_72">Short description</h6>
-<div class="paragraph">
-<p>Notify path to client certificate.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_callback_arguments_12">Callback arguments</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -4194,6 +4175,198 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <h6 id="_sample_auto_generated_70">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusCABundlePath</span>(path)
+  <span class="comment">-- Do something</span>
+<span class="keyword">end</span>
+
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusCABundlePath</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusCABundlePath</span><span class="delimiter">&quot;</span></span>)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusCleanSession"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusCleanSession</span></h5>
+<div class="sect5">
+<h6 id="_short_description_73">Short description</h6>
+<div class="paragraph">
+<p>Notify Clean Session flag.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_callback_arguments_11">Callback arguments</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_71">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusCleanSession</span>(status)
+  <span class="comment">-- Do something</span>
+<span class="keyword">end</span>
+
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusCleanSession</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusCleanSession</span><span class="delimiter">&quot;</span></span>)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusClientCertificateActive"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusClientCertificateActive</span></h5>
+<div class="sect5">
+<h6 id="_short_description_74">Short description</h6>
+<div class="paragraph">
+<p>Notify status to use client certificate.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_callback_arguments_12">Callback arguments</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_72">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusClientCertificateActive</span>(status)
+  <span class="comment">-- Do something</span>
+<span class="keyword">end</span>
+
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusClientCertificateActive</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusClientCertificateActive</span><span class="delimiter">&quot;</span></span>)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Event:CSK_MQTTClient.OnNewstatusClientCertificateKeyPath"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewstatusClientCertificateKeyPath</span></h5>
+<div class="sect5">
+<h6 id="_short_description_75">Short description</h6>
+<div class="paragraph">
+<p>Notify path to client certificate key.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_callback_arguments_13">Callback arguments</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_73">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewstatusClientCertificateKeyPath</span>(path)
+  <span class="comment">-- Do something</span>
+<span class="keyword">end</span>
+
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewstatusClientCertificateKeyPath</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewstatusClientCertificateKeyPath</span><span class="delimiter">&quot;</span></span>)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusClientCertificatePath"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusClientCertificatePath</span></h5>
+<div class="sect5">
+<h6 id="_short_description_76">Short description</h6>
+<div class="paragraph">
+<p>Notify path to client certificate.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_callback_arguments_14">Callback arguments</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_74">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusClientCertificatePath</span>(path)
   <span class="comment">-- Do something</span>
 <span class="keyword">end</span>
@@ -4206,13 +4379,13 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MQTTClient.OnNewStatusClientID"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusClientID</span></h5>
 <div class="sect5">
-<h6 id="_short_description_73">Short description</h6>
+<h6 id="_short_description_77">Short description</h6>
 <div class="paragraph">
 <p>Notify Client ID to use.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_callback_arguments_13">Callback arguments</h6>
+<h6 id="_callback_arguments_15">Callback arguments</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -4239,7 +4412,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_71">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_75">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusClientID</span>(id)
@@ -4254,13 +4427,13 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MQTTClient.OnNewStatusConnectionTimeout"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusConnectionTimeout</span></h5>
 <div class="sect5">
-<h6 id="_short_description_74">Short description</h6>
+<h6 id="_short_description_78">Short description</h6>
 <div class="paragraph">
 <p>Notify timeout to wait initially until the client gets connected.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_callback_arguments_14">Callback arguments</h6>
+<h6 id="_callback_arguments_16">Callback arguments</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -4287,7 +4460,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_72">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_76">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusConnectionTimeout</span>(time)
@@ -4302,13 +4475,13 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MQTTClient.OnNewStatusCSKStyle"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusCSKStyle</span></h5>
 <div class="sect5">
-<h6 id="_short_description_75">Short description</h6>
+<h6 id="_short_description_79">Short description</h6>
 <div class="paragraph">
 <p>Notify UI style to use for CSK modules.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_callback_arguments_15">Callback arguments</h6>
+<h6 id="_callback_arguments_17">Callback arguments</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -4335,7 +4508,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_73">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_77">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusCSKStyle</span>(theme)
@@ -4350,105 +4523,9 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MQTTClient.OnNewStatusCurrentlyConnected"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusCurrentlyConnected</span></h5>
 <div class="sect5">
-<h6 id="_short_description_76">Short description</h6>
+<h6 id="_short_description_80">Short description</h6>
 <div class="paragraph">
 <p>Notify status of current connection.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_callback_arguments_16">Callback arguments</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_74">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusCurrentlyConnected</span>(status)
-  <span class="comment">-- Do something</span>
-<span class="keyword">end</span>
-
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusCurrentlyConnected</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusCurrentlyConnected</span><span class="delimiter">&quot;</span></span>)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusDisconnectWithWillMessage"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusDisconnectWithWillMessage</span></h5>
-<div class="sect5">
-<h6 id="_short_description_77">Short description</h6>
-<div class="paragraph">
-<p>Notify status if WillMessage should be send before disconnecting.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_callback_arguments_17">Callback arguments</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_75">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusDisconnectWithWillMessage</span>(status)
-  <span class="comment">-- Do something</span>
-<span class="keyword">end</span>
-
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusDisconnectWithWillMessage</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusDisconnectWithWillMessage</span><span class="delimiter">&quot;</span></span>)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusFlowConfigPriority"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusFlowConfigPriority</span></h5>
-<div class="sect5">
-<h6 id="_short_description_78">Short description</h6>
-<div class="paragraph">
-<p>Notify if FlowConfig should have priority for FlowConfig relevant configurations.</p>
 </div>
 </div>
 <div class="sect5">
@@ -4479,24 +4556,24 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_76">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_78">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusFlowConfigPriority</span>(status)
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusCurrentlyConnected</span>(status)
   <span class="comment">-- Do something</span>
 <span class="keyword">end</span>
 
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusFlowConfigPriority</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusFlowConfigPriority</span><span class="delimiter">&quot;</span></span>)</code></pre>
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusCurrentlyConnected</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusCurrentlyConnected</span><span class="delimiter">&quot;</span></span>)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusForwardReceivedMsg"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusForwardReceivedMsg</span></h5>
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusDisconnectWithWillMessage"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusDisconnectWithWillMessage</span></h5>
 <div class="sect5">
-<h6 id="_short_description_79">Short description</h6>
+<h6 id="_short_description_81">Short description</h6>
 <div class="paragraph">
-<p>Notify if received messages should be forwarded via "OnReceive"-event.</p>
+<p>Notify status if WillMessage should be send before disconnecting.</p>
 </div>
 </div>
 <div class="sect5">
@@ -4527,24 +4604,24 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_77">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_79">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusForwardReceivedMsg</span>(status)
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusDisconnectWithWillMessage</span>(status)
   <span class="comment">-- Do something</span>
 <span class="keyword">end</span>
 
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusForwardReceivedMsg</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusForwardReceivedMsg</span><span class="delimiter">&quot;</span></span>)</code></pre>
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusDisconnectWithWillMessage</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusDisconnectWithWillMessage</span><span class="delimiter">&quot;</span></span>)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusHostnameVerification"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusHostnameVerification</span></h5>
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusFlowConfigPriority"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusFlowConfigPriority</span></h5>
 <div class="sect5">
-<h6 id="_short_description_80">Short description</h6>
+<h6 id="_short_description_82">Short description</h6>
 <div class="paragraph">
-<p>Notify status of hostname verification.</p>
+<p>Notify if FlowConfig should have priority for FlowConfig relevant configurations.</p>
 </div>
 </div>
 <div class="sect5">
@@ -4575,24 +4652,24 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_78">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_80">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusHostnameVerification</span>(status)
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusFlowConfigPriority</span>(status)
   <span class="comment">-- Do something</span>
 <span class="keyword">end</span>
 
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusHostnameVerification</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusHostnameVerification</span><span class="delimiter">&quot;</span></span>)</code></pre>
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusFlowConfigPriority</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusFlowConfigPriority</span><span class="delimiter">&quot;</span></span>)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusInterface"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusInterface</span></h5>
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusForwardReceivedMsg"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusForwardReceivedMsg</span></h5>
 <div class="sect5">
-<h6 id="_short_description_81">Short description</h6>
+<h6 id="_short_description_83">Short description</h6>
 <div class="paragraph">
-<p>Notify currently configured interface.</p>
+<p>Notify if received messages should be forwarded via "OnReceive"-event.</p>
 </div>
 </div>
 <div class="sect5">
@@ -4614,106 +4691,10 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">interface</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Interface</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_79">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusInterface</span>(interface)
-  <span class="comment">-- Do something</span>
-<span class="keyword">end</span>
-
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusInterface</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusInterface</span><span class="delimiter">&quot;</span></span>)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusInterfaceList"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusInterfaceList</span></h5>
-<div class="sect5">
-<h6 id="_short_description_82">Short description</h6>
-<div class="paragraph">
-<p>Notify available interfaces.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_callback_arguments_22">Callback arguments</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">interfaceList</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">List of interfaces</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_80">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusInterfaceList</span>(interfaceList)
-  <span class="comment">-- Do something</span>
-<span class="keyword">end</span>
-
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusInterfaceList</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusInterfaceList</span><span class="delimiter">&quot;</span></span>)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusKeepAliveInterval"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusKeepAliveInterval</span></h5>
-<div class="sect5">
-<h6 id="_short_description_83">Short description</h6>
-<div class="paragraph">
-<p>Notify keep alive interval.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_callback_arguments_23">Callback arguments</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">time</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Interval time [s]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
 </tr>
 </tbody>
 </table>
@@ -4722,25 +4703,25 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <h6 id="_sample_auto_generated_81">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusKeepAliveInterval</span>(time)
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusForwardReceivedMsg</span>(status)
   <span class="comment">-- Do something</span>
 <span class="keyword">end</span>
 
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusKeepAliveInterval</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusKeepAliveInterval</span><span class="delimiter">&quot;</span></span>)</code></pre>
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusForwardReceivedMsg</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusForwardReceivedMsg</span><span class="delimiter">&quot;</span></span>)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusLoadParameterOnReboot"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusLoadParameterOnReboot</span></h5>
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusHostnameVerification"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusHostnameVerification</span></h5>
 <div class="sect5">
 <h6 id="_short_description_84">Short description</h6>
 <div class="paragraph">
-<p>Notify status if parameters should be loaded on app/device boot up.</p>
+<p>Notify status of hostname verification.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_callback_arguments_24">Callback arguments</h6>
+<h6 id="_callback_arguments_22">Callback arguments</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -4770,21 +4751,117 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <h6 id="_sample_auto_generated_82">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusLoadParameterOnReboot</span>(status)
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusHostnameVerification</span>(status)
   <span class="comment">-- Do something</span>
 <span class="keyword">end</span>
 
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusLoadParameterOnReboot</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusLoadParameterOnReboot</span><span class="delimiter">&quot;</span></span>)</code></pre>
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusHostnameVerification</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusHostnameVerification</span><span class="delimiter">&quot;</span></span>)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusLogAllMessages"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusLogAllMessages</span></h5>
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusInterface"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusInterface</span></h5>
 <div class="sect5">
 <h6 id="_short_description_85">Short description</h6>
 <div class="paragraph">
-<p>Notify if all messages regarding received / send data should be logged in UI.</p>
+<p>Notify currently configured interface.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_callback_arguments_23">Callback arguments</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">interface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interface</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_83">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusInterface</span>(interface)
+  <span class="comment">-- Do something</span>
+<span class="keyword">end</span>
+
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusInterface</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusInterface</span><span class="delimiter">&quot;</span></span>)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusInterfaceList"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusInterfaceList</span></h5>
+<div class="sect5">
+<h6 id="_short_description_86">Short description</h6>
+<div class="paragraph">
+<p>Notify available interfaces.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_callback_arguments_24">Callback arguments</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">interfaceList</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of interfaces</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_84">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusInterfaceList</span>(interfaceList)
+  <span class="comment">-- Do something</span>
+<span class="keyword">end</span>
+
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusInterfaceList</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusInterfaceList</span><span class="delimiter">&quot;</span></span>)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusKeepAliveInterval"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusKeepAliveInterval</span></h5>
+<div class="sect5">
+<h6 id="_short_description_87">Short description</h6>
+<div class="paragraph">
+<p>Notify keep alive interval.</p>
 </div>
 </div>
 <div class="sect5">
@@ -4806,33 +4883,33 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interval time [s]</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_83">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_85">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusLogAllMessages</span>(status)
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusKeepAliveInterval</span>(time)
   <span class="comment">-- Do something</span>
 <span class="keyword">end</span>
 
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusLogAllMessages</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusLogAllMessages</span><span class="delimiter">&quot;</span></span>)</code></pre>
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusKeepAliveInterval</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusKeepAliveInterval</span><span class="delimiter">&quot;</span></span>)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusModuleIsActive"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusModuleIsActive</span></h5>
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusLoadParameterOnReboot"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusLoadParameterOnReboot</span></h5>
 <div class="sect5">
-<h6 id="_short_description_86">Short description</h6>
+<h6 id="_short_description_88">Short description</h6>
 <div class="paragraph">
-<p>Notify if module can be used on device.</p>
+<p>Notify status if parameters should be loaded on app/device boot up.</p>
 </div>
 </div>
 <div class="sect5">
@@ -4863,24 +4940,24 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_84">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_86">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusModuleIsActive</span>(status)
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusLoadParameterOnReboot</span>(status)
   <span class="comment">-- Do something</span>
 <span class="keyword">end</span>
 
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusModuleIsActive</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusModuleIsActive</span><span class="delimiter">&quot;</span></span>)</code></pre>
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusLoadParameterOnReboot</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusLoadParameterOnReboot</span><span class="delimiter">&quot;</span></span>)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusModuleVersion"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusModuleVersion</span></h5>
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusLogAllMessages"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusLogAllMessages</span></h5>
 <div class="sect5">
-<h6 id="_short_description_87">Short description</h6>
+<h6 id="_short_description_89">Short description</h6>
 <div class="paragraph">
-<p>Notify version of module.</p>
+<p>Notify if all messages regarding received / send data should be logged in UI.</p>
 </div>
 </div>
 <div class="sect5">
@@ -4902,33 +4979,33 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">version</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Version</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_85">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_87">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusModuleVersion</span>(version)
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusLogAllMessages</span>(status)
   <span class="comment">-- Do something</span>
 <span class="keyword">end</span>
 
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusModuleVersion</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusModuleVersion</span><span class="delimiter">&quot;</span></span>)</code></pre>
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusLogAllMessages</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusLogAllMessages</span><span class="delimiter">&quot;</span></span>)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusPeerVerification"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusPeerVerification</span></h5>
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusModuleIsActive"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusModuleIsActive</span></h5>
 <div class="sect5">
-<h6 id="_short_description_88">Short description</h6>
+<h6 id="_short_description_90">Short description</h6>
 <div class="paragraph">
-<p>Notify peer verification status.</p>
+<p>Notify if module can be used on device.</p>
 </div>
 </div>
 <div class="sect5">
@@ -4959,7 +5036,103 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_86">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_88">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusModuleIsActive</span>(status)
+  <span class="comment">-- Do something</span>
+<span class="keyword">end</span>
+
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusModuleIsActive</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusModuleIsActive</span><span class="delimiter">&quot;</span></span>)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusModuleVersion"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusModuleVersion</span></h5>
+<div class="sect5">
+<h6 id="_short_description_91">Short description</h6>
+<div class="paragraph">
+<p>Notify version of module.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_callback_arguments_29">Callback arguments</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">version</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Version</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_89">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusModuleVersion</span>(version)
+  <span class="comment">-- Do something</span>
+<span class="keyword">end</span>
+
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusModuleVersion</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusModuleVersion</span><span class="delimiter">&quot;</span></span>)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusPeerVerification"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusPeerVerification</span></h5>
+<div class="sect5">
+<h6 id="_short_description_92">Short description</h6>
+<div class="paragraph">
+<p>Notify peer verification status.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_callback_arguments_30">Callback arguments</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_90">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusPeerVerification</span>(status)
@@ -4974,13 +5147,13 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MQTTClient.OnNewStatusPublishData"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusPublishData</span></h5>
 <div class="sect5">
-<h6 id="_short_description_89">Short description</h6>
+<h6 id="_short_description_93">Short description</h6>
 <div class="paragraph">
 <p>Notify preset data to publish via "publishViaUI".</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_callback_arguments_29">Callback arguments</h6>
+<h6 id="_callback_arguments_31">Callback arguments</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -5007,7 +5180,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_87">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_91">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusPublishData</span>(data)
@@ -5022,13 +5195,13 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MQTTClient.OnNewStatusPublishEventList"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusPublishEventList</span></h5>
 <div class="sect5">
-<h6 id="_short_description_90">Short description</h6>
+<h6 id="_short_description_94">Short description</h6>
 <div class="paragraph">
 <p>Notify list of events to publish content via MQTT.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_callback_arguments_30">Callback arguments</h6>
+<h6 id="_callback_arguments_32">Callback arguments</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -5055,7 +5228,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_88">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_92">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusPublishEventList</span>(list)
@@ -5070,13 +5243,13 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MQTTClient.OnNewStatusPublishEventName"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusPublishEventName</span></h5>
 <div class="sect5">
-<h6 id="_short_description_91">Short description</h6>
+<h6 id="_short_description_95">Short description</h6>
 <div class="paragraph">
 <p>Notify preset eventname to publish its content via MQTT.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_callback_arguments_31">Callback arguments</h6>
+<h6 id="_callback_arguments_33">Callback arguments</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -5103,7 +5276,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_89">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_93">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusPublishEventName</span>(name)
@@ -5118,205 +5291,13 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MQTTClient.OnNewStatusPublishQOS"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusPublishQOS</span></h5>
 <div class="sect5">
-<h6 id="_short_description_92">Short description</h6>
+<h6 id="_short_description_96">Short description</h6>
 <div class="paragraph">
 <p>Notify preset QoS of publish via "publishViaUI".</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_callback_arguments_32">Callback arguments</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">qos</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">QoS</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_90">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusPublishQOS</span>(qos)
-  <span class="comment">-- Do something</span>
-<span class="keyword">end</span>
-
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusPublishQOS</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusPublishQOS</span><span class="delimiter">&quot;</span></span>)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusPublishRetain"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusPublishRetain</span></h5>
-<div class="sect5">
-<h6 id="_short_description_93">Short description</h6>
-<div class="paragraph">
-<p>Notify preset retain status of message to publish via "publishViaUI".</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_callback_arguments_33">Callback arguments</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_91">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusPublishRetain</span>(status)
-  <span class="comment">-- Do something</span>
-<span class="keyword">end</span>
-
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusPublishRetain</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusPublishRetain</span><span class="delimiter">&quot;</span></span>)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusPublishTopic"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusPublishTopic</span></h5>
-<div class="sect5">
-<h6 id="_short_description_94">Short description</h6>
-<div class="paragraph">
-<p>Notify topic to publish via "publishViaUI".</p>
-</div>
-</div>
-<div class="sect5">
 <h6 id="_callback_arguments_34">Callback arguments</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">topic</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Topic</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_92">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusPublishTopic</span>(topic)
-  <span class="comment">-- Do something</span>
-<span class="keyword">end</span>
-
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusPublishTopic</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusPublishTopic</span><span class="delimiter">&quot;</span></span>)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusSubscriptionList"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusSubscriptionList</span></h5>
-<div class="sect5">
-<h6 id="_short_description_95">Short description</h6>
-<div class="paragraph">
-<p>Notify list of configured subscriptions.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_callback_arguments_35">Callback arguments</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">list</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">List</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_93">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusSubscriptionList</span>(list)
-  <span class="comment">-- Do something</span>
-<span class="keyword">end</span>
-
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusSubscriptionList</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusSubscriptionList</span><span class="delimiter">&quot;</span></span>)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusSubscriptionQOS"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusSubscriptionQOS</span></h5>
-<div class="sect5">
-<h6 id="_short_description_96">Short description</h6>
-<div class="paragraph">
-<p>Notify QoS of currently selected subscription topic.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_callback_arguments_36">Callback arguments</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -5346,25 +5327,73 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <h6 id="_sample_auto_generated_94">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusSubscriptionQOS</span>(qos)
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusPublishQOS</span>(qos)
   <span class="comment">-- Do something</span>
 <span class="keyword">end</span>
 
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusSubscriptionQOS</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusSubscriptionQOS</span><span class="delimiter">&quot;</span></span>)</code></pre>
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusPublishQOS</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusPublishQOS</span><span class="delimiter">&quot;</span></span>)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusSubscriptionTopic"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusSubscriptionTopic</span></h5>
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusPublishRetain"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusPublishRetain</span></h5>
 <div class="sect5">
 <h6 id="_short_description_97">Short description</h6>
 <div class="paragraph">
-<p>Notify currently selected subscription topic.</p>
+<p>Notify preset retain status of message to publish via "publishViaUI".</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_callback_arguments_37">Callback arguments</h6>
+<h6 id="_callback_arguments_35">Callback arguments</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_95">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusPublishRetain</span>(status)
+  <span class="comment">-- Do something</span>
+<span class="keyword">end</span>
+
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusPublishRetain</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusPublishRetain</span><span class="delimiter">&quot;</span></span>)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusPublishTopic"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusPublishTopic</span></h5>
+<div class="sect5">
+<h6 id="_short_description_98">Short description</h6>
+<div class="paragraph">
+<p>Notify topic to publish via "publishViaUI".</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_callback_arguments_36">Callback arguments</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -5391,7 +5420,151 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_95">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_96">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusPublishTopic</span>(topic)
+  <span class="comment">-- Do something</span>
+<span class="keyword">end</span>
+
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusPublishTopic</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusPublishTopic</span><span class="delimiter">&quot;</span></span>)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusSubscriptionList"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusSubscriptionList</span></h5>
+<div class="sect5">
+<h6 id="_short_description_99">Short description</h6>
+<div class="paragraph">
+<p>Notify list of configured subscriptions.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_callback_arguments_37">Callback arguments</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">list</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_97">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusSubscriptionList</span>(list)
+  <span class="comment">-- Do something</span>
+<span class="keyword">end</span>
+
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusSubscriptionList</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusSubscriptionList</span><span class="delimiter">&quot;</span></span>)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusSubscriptionQOS"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusSubscriptionQOS</span></h5>
+<div class="sect5">
+<h6 id="_short_description_100">Short description</h6>
+<div class="paragraph">
+<p>Notify QoS of currently selected subscription topic.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_callback_arguments_38">Callback arguments</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">qos</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QoS</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_98">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusSubscriptionQOS</span>(qos)
+  <span class="comment">-- Do something</span>
+<span class="keyword">end</span>
+
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusSubscriptionQOS</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusSubscriptionQOS</span><span class="delimiter">&quot;</span></span>)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusSubscriptionTopic"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusSubscriptionTopic</span></h5>
+<div class="sect5">
+<h6 id="_short_description_101">Short description</h6>
+<div class="paragraph">
+<p>Notify currently selected subscription topic.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_callback_arguments_39">Callback arguments</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">topic</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Topic</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_99">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusSubscriptionTopic</span>(topic)
@@ -5406,13 +5579,13 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MQTTClient.OnNewStatusTLS"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusTLS</span></h5>
 <div class="sect5">
-<h6 id="_short_description_98">Short description</h6>
+<h6 id="_short_description_102">Short description</h6>
 <div class="paragraph">
 <p>Notify TLS version to use.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_callback_arguments_38">Callback arguments</h6>
+<h6 id="_callback_arguments_40">Callback arguments</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -5439,7 +5612,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_96">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_100">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusTLS</span>(version)
@@ -5454,13 +5627,13 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MQTTClient.OnNewStatusTopicPrefix"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusTopicPrefix</span></h5>
 <div class="sect5">
-<h6 id="_short_description_99">Short description</h6>
+<h6 id="_short_description_103">Short description</h6>
 <div class="paragraph">
 <p>Notify prefix to use for all topics.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_callback_arguments_39">Callback arguments</h6>
+<h6 id="_callback_arguments_41">Callback arguments</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -5487,7 +5660,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_97">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_101">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusTopicPrefix</span>(prefix)
@@ -5502,105 +5675,9 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MQTTClient.OnNewStatusUseCredentials"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusUseCredentials</span></h5>
 <div class="sect5">
-<h6 id="_short_description_100">Short description</h6>
+<h6 id="_short_description_104">Short description</h6>
 <div class="paragraph">
 <p>Notify if credentials should be used.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_callback_arguments_40">Callback arguments</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_98">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusUseCredentials</span>(status)
-  <span class="comment">-- Do something</span>
-<span class="keyword">end</span>
-
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusUseCredentials</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusUseCredentials</span><span class="delimiter">&quot;</span></span>)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusUsername"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusUsername</span></h5>
-<div class="sect5">
-<h6 id="_short_description_101">Short description</h6>
-<div class="paragraph">
-<p>Notify username to use for this MQTTClient instance.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_callback_arguments_41">Callback arguments</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">username</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Username</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_99">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusUsername</span>(username)
-  <span class="comment">-- Do something</span>
-<span class="keyword">end</span>
-
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusUsername</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusUsername</span><span class="delimiter">&quot;</span></span>)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusWillMessageActive"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusWillMessageActive</span></h5>
-<div class="sect5">
-<h6 id="_short_description_102">Short description</h6>
-<div class="paragraph">
-<p>Notify if WillMessage is used.</p>
 </div>
 </div>
 <div class="sect5">
@@ -5631,24 +5708,24 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_100">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_102">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusWillMessageActive</span>(status)
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusUseCredentials</span>(status)
   <span class="comment">-- Do something</span>
 <span class="keyword">end</span>
 
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusWillMessageActive</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusWillMessageActive</span><span class="delimiter">&quot;</span></span>)</code></pre>
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusUseCredentials</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusUseCredentials</span><span class="delimiter">&quot;</span></span>)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnNewStatusWillMessageConfig"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusWillMessageConfig</span></h5>
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusUsername"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusUsername</span></h5>
 <div class="sect5">
-<h6 id="_short_description_103">Short description</h6>
+<h6 id="_short_description_105">Short description</h6>
 <div class="paragraph">
-<p>Notify WillMessage config.</p>
+<p>Notify username to use for this MQTTClient instance.</p>
 </div>
 </div>
 <div class="sect5">
@@ -5670,33 +5747,33 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">config</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">username</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Config as text</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Username</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_101">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_103">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusWillMessageConfig</span>(config)
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusUsername</span>(username)
   <span class="comment">-- Do something</span>
 <span class="keyword">end</span>
 
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusWillMessageConfig</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusWillMessageConfig</span><span class="delimiter">&quot;</span></span>)</code></pre>
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusUsername</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusUsername</span><span class="delimiter">&quot;</span></span>)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnPersistentDataModuleAvailable"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnPersistentDataModuleAvailable</span></h5>
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusWillMessageActive"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusWillMessageActive</span></h5>
 <div class="sect5">
-<h6 id="_short_description_104">Short description</h6>
+<h6 id="_short_description_106">Short description</h6>
 <div class="paragraph">
-<p>Notify status if features of CSK_PersistentData module are available.</p>
+<p>Notify if WillMessage is used.</p>
 </div>
 </div>
 <div class="sect5">
@@ -5727,7 +5804,103 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_102">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_104">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusWillMessageActive</span>(status)
+  <span class="comment">-- Do something</span>
+<span class="keyword">end</span>
+
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusWillMessageActive</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusWillMessageActive</span><span class="delimiter">&quot;</span></span>)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Event:CSK_MQTTClient.OnNewStatusWillMessageConfig"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnNewStatusWillMessageConfig</span></h5>
+<div class="sect5">
+<h6 id="_short_description_107">Short description</h6>
+<div class="paragraph">
+<p>Notify WillMessage config.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_callback_arguments_45">Callback arguments</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">config</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Config as text</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_105">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusWillMessageConfig</span>(config)
+  <span class="comment">-- Do something</span>
+<span class="keyword">end</span>
+
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnNewStatusWillMessageConfig</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusWillMessageConfig</span><span class="delimiter">&quot;</span></span>)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Event:CSK_MQTTClient.OnPersistentDataModuleAvailable"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnPersistentDataModuleAvailable</span></h5>
+<div class="sect5">
+<h6 id="_short_description_108">Short description</h6>
+<div class="paragraph">
+<p>Notify status if features of CSK_PersistentData module are available.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_callback_arguments_46">Callback arguments</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_106">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnPersistentDataModuleAvailable</span>(status)
@@ -5742,13 +5915,13 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MQTTClient.OnReceive"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnReceive</span></h5>
 <div class="sect5">
-<h6 id="_short_description_105">Short description</h6>
+<h6 id="_short_description_109">Short description</h6>
 <div class="paragraph">
 <p>Event to forward received MQTT messages.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_callback_arguments_45">Callback arguments</h6>
+<h6 id="_callback_arguments_47">Callback arguments</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -5795,7 +5968,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_103">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_107">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnReceive</span>(topic, data, qos, retain)
@@ -5810,13 +5983,13 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MQTTClient.OnReceiveFullString"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnReceiveFullString</span></h5>
 <div class="sect5">
-<h6 id="_short_description_106">Short description</h6>
+<h6 id="_short_description_110">Short description</h6>
 <div class="paragraph">
 <p>Notify received MQTT messages as string with all relevant infos seperated by ';'..</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_callback_arguments_46">Callback arguments</h6>
+<h6 id="_callback_arguments_48">Callback arguments</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -5843,7 +6016,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_104">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_108">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnReceiveFullString</span>(msg)
@@ -5858,105 +6031,9 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_MQTTClient.OnUserLevelAdminActive"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnUserLevelAdminActive</span></h5>
 <div class="sect5">
-<h6 id="_short_description_107">Short description</h6>
+<h6 id="_short_description_111">Short description</h6>
 <div class="paragraph">
 <p>Status of Admin userlevel. Used internally in combination with the CSK_UserManagement module if available.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_callback_arguments_47">Callback arguments</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_105">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnUserLevelAdminActive</span>(status)
-  <span class="comment">-- Do something</span>
-<span class="keyword">end</span>
-
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnUserLevelAdminActive</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnUserLevelAdminActive</span><span class="delimiter">&quot;</span></span>)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnUserLevelMaintenanceActive"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnUserLevelMaintenanceActive</span></h5>
-<div class="sect5">
-<h6 id="_short_description_108">Short description</h6>
-<div class="paragraph">
-<p>Status of Maintenance userlevel. Used internally in combination with the CSK_UserManagement module if available.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_callback_arguments_48">Callback arguments</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_106">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnUserLevelMaintenanceActive</span>(status)
-  <span class="comment">-- Do something</span>
-<span class="keyword">end</span>
-
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnUserLevelMaintenanceActive</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnUserLevelMaintenanceActive</span><span class="delimiter">&quot;</span></span>)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnUserLevelOperatorActive"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnUserLevelOperatorActive</span></h5>
-<div class="sect5">
-<h6 id="_short_description_109">Short description</h6>
-<div class="paragraph">
-<p>Status of Operator userlevel. Used internally in combination with the CSK_UserManagement module if available.</p>
 </div>
 </div>
 <div class="sect5">
@@ -5987,24 +6064,24 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_107">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_109">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnUserLevelOperatorActive</span>(status)
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnUserLevelAdminActive</span>(status)
   <span class="comment">-- Do something</span>
 <span class="keyword">end</span>
 
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnUserLevelOperatorActive</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnUserLevelOperatorActive</span><span class="delimiter">&quot;</span></span>)</code></pre>
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnUserLevelAdminActive</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnUserLevelAdminActive</span><span class="delimiter">&quot;</span></span>)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Event:CSK_MQTTClient.OnUserLevelServiceActive"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnUserLevelServiceActive</span></h5>
+<h5 id="API:Event:CSK_MQTTClient.OnUserLevelMaintenanceActive"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnUserLevelMaintenanceActive</span></h5>
 <div class="sect5">
-<h6 id="_short_description_110">Short description</h6>
+<h6 id="_short_description_112">Short description</h6>
 <div class="paragraph">
-<p>Status of Service userlevel. Used internally in combination with the CSK_UserManagement module if available.</p>
+<p>Status of Maintenance userlevel. Used internally in combination with the CSK_UserManagement module if available.</p>
 </div>
 </div>
 <div class="sect5">
@@ -6035,7 +6112,103 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_108">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_110">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnUserLevelMaintenanceActive</span>(status)
+  <span class="comment">-- Do something</span>
+<span class="keyword">end</span>
+
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnUserLevelMaintenanceActive</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnUserLevelMaintenanceActive</span><span class="delimiter">&quot;</span></span>)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Event:CSK_MQTTClient.OnUserLevelOperatorActive"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnUserLevelOperatorActive</span></h5>
+<div class="sect5">
+<h6 id="_short_description_113">Short description</h6>
+<div class="paragraph">
+<p>Status of Operator userlevel. Used internally in combination with the CSK_UserManagement module if available.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_callback_arguments_51">Callback arguments</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_111">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnUserLevelOperatorActive</span>(status)
+  <span class="comment">-- Do something</span>
+<span class="keyword">end</span>
+
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_MQTTClient.OnUserLevelOperatorActive</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnUserLevelOperatorActive</span><span class="delimiter">&quot;</span></span>)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Event:CSK_MQTTClient.OnUserLevelServiceActive"><span class="breadcrumb">CSK_MQTTClient.</span><span class="api-event">OnUserLevelServiceActive</span></h5>
+<div class="sect5">
+<h6 id="_short_description_114">Short description</h6>
+<div class="paragraph">
+<p>Status of Service userlevel. Used internally in combination with the CSK_UserManagement module if available.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_callback_arguments_52">Callback arguments</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_112">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnUserLevelServiceActive</span>(status)
@@ -6052,7 +6225,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect2">
 <h3 id="API:Crown:MQTTClient_FC"><span class="api-crown">MQTTClient_FC</span></h3>
 <div class="sect3">
-<h4 id="_short_description_111">Short description</h4>
+<h4 id="_short_description_115">Short description</h4>
 <div class="paragraph">
 <p>Crown to provide CSK_FlowConfig relevant features.</p>
 </div>
@@ -6065,7 +6238,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect2">
 <h3 id="API:Crown:MQTTClient_FC.OnReceive"><span class="api-crown">MQTTClient_FC.OnReceive</span></h3>
 <div class="sect3">
-<h4 id="_short_description_112">Short description</h4>
+<h4 id="_short_description_116">Short description</h4>
 <div class="paragraph">
 <p>Provide received MQTT content.</p>
 </div>
@@ -6091,7 +6264,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Function:MQTTClient_FC.OnReceive.create"><span class="breadcrumb">MQTTClient_FC.OnReceive.</span><span class="api-function">create()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_113">Short description</h6>
+<h6 id="_short_description_117">Short description</h6>
 <div class="paragraph">
 <p>Internally used CSK_FlowConfig create function.</p>
 </div>
@@ -6124,7 +6297,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_109">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_113">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">handle = MQTTClient_FC.OnReceive.create()</code></pre>
@@ -6135,13 +6308,13 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Function:MQTTClient_FC.OnReceive.register"><span class="breadcrumb">MQTTClient_FC.OnReceive.</span><span class="api-function">register()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_114">Short description</h6>
+<h6 id="_short_description_118">Short description</h6>
 <div class="paragraph">
 <p>Internally used CSK_FlowConfig register function.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_45">Parameters</h6>
+<h6 id="_parameters_46">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -6207,7 +6380,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_110">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_114">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">success = MQTTClient_FC.OnReceive.register(handle, eventname, callback)</code></pre>
@@ -6221,13 +6394,13 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:MQTTClient_FC.OnReceive.OnReceive"><span class="breadcrumb">MQTTClient_FC.OnReceive.</span><span class="api-event">OnReceive</span></h5>
 <div class="sect5">
-<h6 id="_short_description_115">Short description</h6>
+<h6 id="_short_description_119">Short description</h6>
 <div class="paragraph">
 <p>Provide received MQTT content.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_callback_arguments_51">Callback arguments</h6>
+<h6 id="_callback_arguments_53">Callback arguments</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -6262,7 +6435,7 @@ Parameter:
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_111">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_115">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnReceive</span>(handle, OnReceive)
@@ -6279,7 +6452,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect2">
 <h3 id="API:Crown:MQTTClient_FC.Publish"><span class="api-crown">MQTTClient_FC.Publish</span></h3>
 <div class="sect3">
-<h4 id="_short_description_116">Short description</h4>
+<h4 id="_short_description_120">Short description</h4>
 <div class="paragraph">
 <p>Set source of incoming data to publish via MQTTClient.</p>
 </div>
@@ -6302,13 +6475,13 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Function:MQTTClient_FC.Publish.create"><span class="breadcrumb">MQTTClient_FC.Publish.</span><span class="api-function">create()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_117">Short description</h6>
+<h6 id="_short_description_121">Short description</h6>
 <div class="paragraph">
 <p>Internally used CSK_FlowConfig create function.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_46">Parameters</h6>
+<h6 id="_parameters_47">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -6376,7 +6549,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_112">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_116">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">handle = MQTTClient_FC.Publish.create(Topic, QoS, Retain)</code></pre>
@@ -6387,13 +6560,13 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Function:MQTTClient_FC.Publish.publish"><span class="breadcrumb">MQTTClient_FC.Publish.</span><span class="api-function">publish()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_118">Short description</h6>
+<h6 id="_short_description_122">Short description</h6>
 <div class="paragraph">
 <p>Set source of incoming data to publish via MQTTClient.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_47">Parameters</h6>
+<h6 id="_parameters_48">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -6452,7 +6625,7 @@ Parameter:
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_113">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_117">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">MQTTClient_FC.Publish.publish(handle, data1, data2, data3, data4)</code></pre>
@@ -6603,8 +6776,8 @@ Parameter:
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.1.0<br>
-Last updated 2025-03-17 14:35:08 +0100
+Version 2.2.0<br>
+Last updated 2025-04-11 09:05:41 +0200
 </div>
 </div>
 <script type="text/javascript">
