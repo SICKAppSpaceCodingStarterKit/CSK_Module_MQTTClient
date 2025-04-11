@@ -1,10 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## Release 2.2.0
+## Release 2.1.0
 
 ### New features
 - Optionally send a BirthMessage if connected to MQTT broker
+- Optionally set global prefix for all topics
+- Optionally deactivate logging of communication to reduce CPU load
+- Check if persistent data to load provides all relevant parameters. Otherwise add default values
+
+### Improvements
+- Check if client is connected to broker before trying to publish
 
 ### Bugfix
 - Did not use topic prefix for WillMessage
@@ -12,16 +18,6 @@ All notable changes to this project will be documented in this file.
 - Legacy bindings of ValueDisplay elements within UI did not work if deployed with VS Code AppSpace SDK
 - UI differs if deployed via Appstudio or VS Code AppSpace SDK
 - Fullscreen icon of iFrame was visible
-
-## Release 2.1.0
-
-### New features
-- Optionally set global prefix for all topics
-- Optionally deactivate logging of communication to reduce CPU load
-- Check if persistent data to load provides all relevant parameters. Otherwise add default values
-
-### Improvements
-- Check if client is connected to broker before trying to publish
 
 ## Release 2.0.0
 
