@@ -365,13 +365,15 @@
                                                                             <layout-column id="ColumnLayout33"
                                                                                 style="align-items: stretch">
                                                                                 <davinci-value-display id="VD_ClientId"
-                                                                                    value="Client ID:">
+                                                                                    value="Client ID:"
+                                                                                    title="If empty, a random client identifier is generated and sent to the server instead.">
                                                                                 </davinci-value-display>
                                                                             </layout-column>
                                                                             <layout-column id="ColumnLayout34"
                                                                                 style="align-items: stretch">
                                                                                 <davinci-text-field id="TF_ClientId"
-                                                                                    type="text">
+                                                                                    type="text"
+                                                                                    title="If empty, a random client identifier is generated and sent to the server instead.">
                                                                                     <crown-edpws-binding
                                                                                         property="value"
                                                                                         name="CSK_MQTTClient/OnNewStatusClientID"
@@ -453,7 +455,8 @@
                                                                                 style="align-items: stretch">
                                                                                 <davinci-value-display
                                                                                     id="VD_CleanSession"
-                                                                                    value="Clean Session:">
+                                                                                    value="Clean Session:"
+                                                                                    title="If disabled, the session becomes persistent, which means that the server stores subscriptions and offline messages for this client (depending on QoS level). Using persistent sessions requires to set the Client identifier. The client itsself does not store anything persistent beyond the lifetime of the MQTTClient instance.">
                                                                                 </davinci-value-display>
                                                                             </layout-column>
                                                                             <layout-column id="ColumnLayout47"
@@ -461,7 +464,8 @@
                                                                                 <layout-row id="RowLayout347"
                                                                                     style="justify-content: flex-end">
                                                                                     <davinci-toggle-switch
-                                                                                        id="TS_CleanSession">
+                                                                                        id="TS_CleanSession"
+                                                                                        title="If disabled, the session becomes persistent, which means that the server stores subscriptions and offline messages for this client (depending on QoS level). Using persistent sessions requires to set the Client identifier. The client itsself does not store anything persistent beyond the lifetime of the MQTTClient instance.">
                                                                                         <crown-edpws-binding
                                                                                             property="checked"
                                                                                             name="CSK_MQTTClient/OnNewStatusCleanSession"
@@ -847,7 +851,7 @@
                                                             <layout-column id="ColumnLayout17"
                                                                 style="align-items: stretch; flex-grow: 3">
                                                                 <davinci-text-field id="TF_PublishTopic" type="text"
-                                                                    label="Topic">
+                                                                    label="Topic" title="Topic to publish to.">
                                                                     <crown-edpws-binding property="value"
                                                                         name="CSK_MQTTClient/OnNewStatusPublishTopic"
                                                                         update-on-resume>
@@ -857,7 +861,8 @@
                                                                         path="param/args/topic" auto-commit>
                                                                     </crown-binding>
                                                                 </davinci-text-field>
-                                                                <davinci-drop-down id="DD_PublishQos" label="QoS">
+                                                                <davinci-drop-down id="DD_PublishQos" label="QoS"
+                                                                    title="Quality of service level.">
                                                                     <davinci-option id="Option1" value="QOS0">
                                                                         <span>QOS0</span>
                                                                     </davinci-option>
@@ -880,7 +885,7 @@
                                                             <layout-column id="ColumnLayout20"
                                                                 style="align-items: stretch; flex-grow: 3">
                                                                 <davinci-text-field id="TF_PublishData" type="text"
-                                                                    label="Data">
+                                                                    label="Data" title="Data to publish">
                                                                     <crown-edpws-binding property="value"
                                                                         name="CSK_MQTTClient/OnNewStatusPublishData"
                                                                         update-on-resume>
@@ -890,7 +895,8 @@
                                                                         path="param/args/data" auto-commit>
                                                                     </crown-binding>
                                                                 </davinci-text-field>
-                                                                <davinci-drop-down id="DD_PublishRetain" label="Retain">
+                                                                <davinci-drop-down id="DD_PublishRetain" label="Retain"
+                                                                    title="Retain">
                                                                     <davinci-option id="Option4" value="NO_RETAIN">
                                                                         <span>NO_RETAIN</span>
                                                                     </davinci-option>
@@ -937,12 +943,14 @@
                                                                         <layout-column id="ColumnLayout65"
                                                                             style="align-items: stretch; flex-grow: 6">
                                                                             <davinci-value-display id="VD_WillMessage"
-                                                                                value="" label="WillMessage active">
+                                                                                value="" label="WillMessage active:"
+                                                                                title="Use WillMessage if connection to the client is interrupted.">
                                                                             </davinci-value-display>
                                                                         </layout-column>
                                                                         <layout-column id="ColumnLayout66"
                                                                             style="align-items: center">
-                                                                            <davinci-toggle-switch id="TS_WillMessage">
+                                                                            <davinci-toggle-switch id="TS_WillMessage"
+                                                                                title="Use WillMessage if connection to the client is interrupted.">
                                                                                 <crown-edpws-binding property="checked"
                                                                                     name="CSK_MQTTClient/OnNewStatusWillMessageActive"
                                                                                     update-on-resume>
@@ -964,13 +972,15 @@
                                                                             style="align-items: stretch; flex-grow: 6">
                                                                             <davinci-value-display
                                                                                 id="VD_SendWillMessageByClosing"
-                                                                                value="Disconnect with WillMessage:">
+                                                                                value="Clean disconnect with WillMessage:"
+                                                                                title="Additionally use WillMessage before clean disconnection.">
                                                                             </davinci-value-display>
                                                                         </layout-column>
                                                                         <layout-column id="ColumnLayout68"
                                                                             style="align-items: center">
                                                                             <davinci-toggle-switch
-                                                                                id="TS_WillMessageOnDisconnect">
+                                                                                id="TS_WillMessageOnDisconnect"
+                                                                                title="Additionally use WillMessage before clean disconnection.">
                                                                                 <crown-edpws-binding property="checked"
                                                                                     name="CSK_MQTTClient/OnNewStatusDisconnectWithWillMessage"
                                                                                     update-on-resume>
@@ -1204,7 +1214,8 @@
                                                                     <layout-column id="ColumnLayout9"
                                                                         style="align-items: stretch">
                                                                         <davinci-text-field id="TF_SubscribeTopic"
-                                                                            type="text" label="Topic">
+                                                                            type="text" label="Topic"
+                                                                            title="Topic to subscripe to.">
                                                                             <crown-edpws-binding property="value"
                                                                                 name="CSK_MQTTClient/OnNewStatusSubscriptionTopic"
                                                                                 update-on-resume>
@@ -1218,7 +1229,8 @@
                                                                     <layout-column id="ColumnLayout10"
                                                                         style="align-items: stretch">
                                                                         <davinci-drop-down id="DD_SubscripeQos"
-                                                                            label="QoS">
+                                                                            label="QoS"
+                                                                            title="Quality of service level.">
                                                                             <davinci-option id="Option_QOS0"
                                                                                 value="QOS0">
                                                                                 <span>QOS0</span>
