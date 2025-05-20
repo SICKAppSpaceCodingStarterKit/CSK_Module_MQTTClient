@@ -31,6 +31,8 @@ Script.serveEvent('CSK_MQTTClient.OnNewConnectionStatus', 'MQTTClient_OnNewConne
 Script.serveEvent('CSK_MQTTClient.OnNewStatusCurrentlyConnected', 'MQTTClient_OnNewStatusCurrentlyConnected')
 Script.serveEvent('CSK_MQTTClient.OnNewStatusActivateConnection', 'MQTTClient_OnNewStatusActivateConnection')
 
+Script.serveEvent('CSK_MQTTClient.OnNewStatusLogAllMessages', 'MQTTClient_OnNewStatusLogAllMessages')
+
 Script.serveEvent('CSK_MQTTClient.OnNewMQTTPort', 'MQTTClient_OnNewMQTTPort')
 Script.serveEvent('CSK_MQTTClient.OnNewBrokerIP', 'MQTTClient_OnNewBrokerIP')
 Script.serveEvent('CSK_MQTTClient.OnNewStatusForwardReceivedMsg', 'MQTTClient_OnNewStatusForwardReceivedMsg')
@@ -59,6 +61,8 @@ Script.serveEvent('CSK_MQTTClient.OnNewLog', 'MQTTClient_OnNewLog')
 Script.serveEvent('CSK_MQTTClient.OnNewStatusSubscriptionTopic', 'MQTTClient_OnNewStatusSubscriptionTopic')
 Script.serveEvent('CSK_MQTTClient.OnNewStatusSubscriptionQOS', 'MQTTClient_OnNewStatusSubscriptionQOS')
 
+Script.serveEvent('CSK_MQTTClient.OnNewStatusTopicPrefix', 'MQTTClient_OnNewStatusTopicPrefix')
+
 Script.serveEvent('CSK_MQTTClient.OnNewStatusPublishEventName', 'MQTTClient_OnNewStatusPublishEventName')
 Script.serveEvent('CSK_MQTTClient.OnNewStatusPublishTopic', 'MQTTClient_OnNewStatusPublishTopic')
 Script.serveEvent('CSK_MQTTClient.OnNewStatusPublishData', 'MQTTClient_OnNewStatusPublishData')
@@ -70,6 +74,9 @@ Script.serveEvent('CSK_MQTTClient.OnNewStatusPublishEventList', 'MQTTClient_OnNe
 Script.serveEvent('CSK_MQTTClient.OnNewStatusWillMessageActive', 'MQTTClient_OnNewStatusWillMessageActive')
 Script.serveEvent('CSK_MQTTClient.OnNewStatusWillMessageConfig', 'MQTTClient_OnNewStatusWillMessageConfig')
 Script.serveEvent('CSK_MQTTClient.OnNewStatusDisconnectWithWillMessage', 'MQTTClient_OnNewStatusDisconnectWithWillMessage')
+
+Script.serveEvent('CSK_MQTTClient.OnNewStatusBirthMessageActive', 'MQTTClient_OnNewStatusBirthMessageActive')
+Script.serveEvent('CSK_MQTTClient.OnNewStatusBirthMessageConfig', 'MQTTClient_OnNewStatusBirthMessageConfig')
 
 Script.serveEvent('CSK_MQTTClient.OnNewStatusFlowConfigPriority', 'MQTTClient_OnNewStatusFlowConfigPriority')
 Script.serveEvent("CSK_MQTTClient.OnNewStatusLoadParameterOnReboot", "MQTTClient_OnNewStatusLoadParameterOnReboot")
@@ -152,6 +159,8 @@ local function handleOnExpiredTmrMQTTClient()
   Script.notifyEvent("MQTTClient_OnNewStatusCSKStyle", mqttClient_Model.styleForUI)
   Script.notifyEvent("MQTTClient_OnNewStatusModuleIsActive", _G.availableAPIs.default and _G.availableAPIs.specific)
 
+  Script.notifyEvent("MQTTClient_OnNewStatusLogAllMessages", mqttClient_Model.parameters.logAllMessages)
+
   Script.notifyEvent("MQTTClient_OnNewStatusCurrentlyConnected", mqttClient_Model.isConnected)
   Script.notifyEvent("MQTTClient_OnNewStatusActivateConnection", mqttClient_Model.parameters.connect)
 
@@ -181,6 +190,8 @@ local function handleOnExpiredTmrMQTTClient()
 
   Script.notifyEvent("MQTTClient_OnNewStatusSubscriptionTopic", mqttClient_Model.tempSubscriptionTopic)
   Script.notifyEvent("MQTTClient_OnNewStatusSubscriptionQOS", mqttClient_Model.tempSubscriptionQOS)
+  Script.notifyEvent("MQTTClient_OnNewStatusTopicPrefix", mqttClient_Model.parameters.topicPrefix)
+
   Script.notifyEvent("MQTTClient_OnNewStatusSubscriptionList", mqttClient_Model.helperFuncs.createJsonListSubscriptions(mqttClient_Model.parameters.subscriptions))
   Script.notifyEvent("MQTTClient_OnNewStatusPublishEventList", mqttClient_Model.helperFuncs.createJsonListPublishEvents(mqttClient_Model.parameters.publishEvents))
 
@@ -195,9 +206,15 @@ local function handleOnExpiredTmrMQTTClient()
   Script.notifyEvent("MQTTClient_OnNewStatusWillMessageConfig", "Topic = '" .. mqttClient_Model.parameters.willMessageTopic ..
                                                                 "', Data = '" .. mqttClient_Model.parameters.willMessageData ..
                                                                 "', QoS = '" .. mqttClient_Model.parameters.willMessageQOS ..
-                                                                "', Retain = '" .. mqttClient_Model.parameters.willMessageRetain)
+                                                                "', Retain = '" .. mqttClient_Model.parameters.willMessageRetain .. "'")
 
   mqttClient_Model.sendLog()
+
+  Script.notifyEvent("MQTTClient_OnNewStatusBirthMessageActive", mqttClient_Model.parameters.useBirthMessage)
+  Script.notifyEvent("MQTTClient_OnNewStatusBirthMessageConfig", "Topic = '" .. mqttClient_Model.parameters.birthMessageTopic ..
+                                                                "', Data = '" .. mqttClient_Model.parameters.birthMessageData ..
+                                                                "', QoS = '" .. mqttClient_Model.parameters.birthMessageQOS ..
+                                                                "', Retain = '" .. mqttClient_Model.parameters.birthMessageRetain .. "'")
 
   Script.notifyEvent("MQTTClient_OnNewStatusFlowConfigPriority", mqttClient_Model.parameters.flowConfigPriority)
   Script.notifyEvent("MQTTClient_OnNewStatusLoadParameterOnReboot", mqttClient_Model.parameterLoadOnReboot)
@@ -219,6 +236,12 @@ local function getMQTTHandle()
   return mqttClient_Model.mqttClient
 end
 Script.serveFunction('CSK_MQTTClient.getMQTTHandle', getMQTTHandle)
+
+local function setLogAllMessages(status)
+  _G.logger:fine(nameOfModule .. ": Set status to log all MQTT messages to " .. tostring(status))
+  mqttClient_Model.parameters.logAllMessages = status
+end
+Script.serveFunction('CSK_MQTTClient.setLogAllMessages', setLogAllMessages)
 
 local function connectMQTT(status)
   _G.logger:fine(nameOfModule .. ": Set connection status to " .. tostring(status))
@@ -515,6 +538,13 @@ Script.serveFunction('CSK_MQTTClient.unsubscribeViaUI', unsubscribeViaUI)
 ------------------ Publish ------------------
 ---------------------------------------------
 
+local function setTopicPrefix(prefix)
+  _G.logger:info(nameOfModule .. ": Set topic prefix to " .. tostring(prefix))
+  mqttClient_Model.parameters.topicPrefix = prefix
+  Script.notifyEvent("MQTTClient_OnNewStatusTopicPrefix", mqttClient_Model.parameters.topicPrefix)
+end
+Script.serveFunction('CSK_MQTTClient.setTopicPrefix', setTopicPrefix)
+
 local function presetPublishTopic(topic)
   mqttClient_Model.tempPublishTopic = topic
 end
@@ -633,8 +663,17 @@ Script.serveFunction('CSK_MQTTClient.selectPublishEvent', selectPublishEvent)
 local function setWillMessageActivation(status)
   _G.logger:fine(nameOfModule .. ": Set WillMessage activation to " .. tostring(status))
   mqttClient_Model.parameters.useWillMessage = status
+  Script.notifyEvent("MQTTClient_OnNewStatusWillMessageActive", mqttClient_Model.parameters.useWillMessage)
 end
 Script.serveFunction('CSK_MQTTClient.setWillMessageActivation', setWillMessageActivation)
+
+local function setBirthMessageActivation(status)
+  _G.logger:fine(nameOfModule .. ": Set BirthMessage activation to " .. tostring(status))
+  mqttClient_Model.parameters.useBirthMessage = status
+  Script.notifyEvent("MQTTClient_OnNewStatusBirthMessageActive",mqttClient_Model.parameters.useBirthMessage)
+end
+
+Script.serveFunction('CSK_MQTTClient.setBirthMessageActivation', setBirthMessageActivation)
 
 local function setDisconnectWithWillMessage(status)
   _G.logger:info(nameOfModule .. ": Set DisconnectWithWillMessage to " .. tostring(status))
@@ -644,7 +683,7 @@ Script.serveFunction('CSK_MQTTClient.setDisconnectWithWillMessage', setDisconnec
 
 local function setWillMessageConfig(topic, data, qos, retain)
   _G.logger:fine(nameOfModule .. ": Set WillMessage config with data '" .. data .. "' to topic '" .. topic .. "' with QoS '" .. qos .. "' and '" .. retain .. "'")
-  mqttClient_Model.parameters.willMessageTopic = topic
+  mqttClient_Model.parameters.willMessageTopic = mqttClient_Model.parameters.topicPrefix .. topic
   mqttClient_Model.parameters.willMessageData = data
   mqttClient_Model.parameters.willMessageQOS = qos
   mqttClient_Model.parameters.willMessageRetain = retain
@@ -652,7 +691,7 @@ local function setWillMessageConfig(topic, data, qos, retain)
   Script.notifyEvent("MQTTClient_OnNewStatusWillMessageConfig", "Topic = '" .. mqttClient_Model.parameters.willMessageTopic ..
                                                              "', Data = '" .. mqttClient_Model.parameters.willMessageData ..
                                                              "', QoS = '" .. mqttClient_Model.parameters.willMessageQOS ..
-                                                             "', Retain = '" .. mqttClient_Model.parameters.willMessageRetain)
+                                                             "', Retain = '" .. mqttClient_Model.parameters.willMessageRetain .. "'")
 
 end
 Script.serveFunction('CSK_MQTTClient.setWillMessageConfig', setWillMessageConfig)
@@ -661,6 +700,26 @@ local function setWillMessageConfigViaUI()
   setWillMessageConfig(mqttClient_Model.tempPublishTopic, mqttClient_Model.tempPublishData, mqttClient_Model.tempPublishQOS, mqttClient_Model.tempPublishRetain)
 end
 Script.serveFunction('CSK_MQTTClient.setWillMessageConfigViaUI', setWillMessageConfigViaUI)
+
+local function setBirthMessageConfig(topic, data, qos, retain)
+  _G.logger:fine(nameOfModule .. ": Set BirthMessage config with data '" .. data .. "' to topic '" .. topic .. "' with QoS '" .. qos .. "' and '" .. retain .. "'")
+  mqttClient_Model.parameters.birthMessageTopic = topic
+  mqttClient_Model.parameters.birthMessageData = data
+  mqttClient_Model.parameters.birthMessageQOS = qos
+  mqttClient_Model.parameters.birthMessageRetain = retain
+
+  Script.notifyEvent("MQTTClient_OnNewStatusBirthMessageConfig", "Topic = '" .. mqttClient_Model.parameters.birthMessageTopic ..
+                                                             "', Data = '" .. mqttClient_Model.parameters.birthMessageData ..
+                                                             "', QoS = '" .. mqttClient_Model.parameters.birthMessageQOS ..
+                                                             "', Retain = '" .. mqttClient_Model.parameters.birthMessageRetain .. "'")
+
+end
+Script.serveFunction('CSK_MQTTClient.setBirthMessageConfig', setBirthMessageConfig)
+
+local function setBirthMessageConfigViaUI()
+  setBirthMessageConfig(mqttClient_Model.tempPublishTopic, mqttClient_Model.tempPublishData, mqttClient_Model.tempPublishQOS, mqttClient_Model.tempPublishRetain)
+end
+Script.serveFunction('CSK_MQTTClient.setBirthMessageConfigViaUI', setBirthMessageConfigViaUI)
 
 local function getStatusModuleActive()
   return _G.availableAPIs.default and _G.availableAPIs.specific
@@ -717,6 +776,8 @@ local function loadParameters()
 
       mqttClient_Model.parameters = mqttClient_Model.helperFuncs.convertContainer2Table(data)
       mqttClient_Model.publishEventsFunctions = {}
+
+      mqttClient_Model.parameters = mqttClient_Model.helperFuncs.checkParameters(mqttClient_Model.parameters, mqttClient_Model.helperFuncs.defaultParameters.getParameters())
 
       -- Configured/activated with new loaded data
       for key in pairs(mqttClient_Model.parameters.publishEvents.topic) do

@@ -6,13 +6,12 @@
         <layout-row id="RowLayout49" style="flex-grow: 0; flex-shrink: 0">
             <layout-column id="ColumnLayout41" style="align-items: stretch">
                 <layout-row id="RowLayout01" style="align-items: baseline">
-                    <davinci-value-display id="VD_Title" class="myCustomLabel_CSK_Module_MQTTClient"
-                        value="MQTT Client">
-                    </davinci-value-display>
+                    <h1 id="Heading_Title" class="myCustomLabel_CSK_Module_MQTTClient">
+                        MQTT Client
+                    </h1>
                     <davinci-value-display id="VD_Version">
-                        <crown-edpws-binding property="value" name="CSK_MQTTClient/OnNewStatusModuleVersion"
-                            update-on-resume>
-                        </crown-edpws-binding>
+                        <crown-on property="value" crown-event="CSK_MQTTClient/OnNewStatusModuleVersion">
+                        </crown-on>
                     </davinci-value-display>
                 </layout-row>
             </layout-column>
@@ -67,9 +66,10 @@
                                                                     style="justify-content: center; align-items: center">
                                                                     <davinci-button id="B_LoadConfig"
                                                                         class="myCustomButton_CSK_Module_MQTTClient"
-                                                                        type="outline" icon-position="append"
-                                                                        title="Load configured parameters from CSK_PersistentData module."
-                                                                        icon="action/history">
+                                                                        type="outline"
+                                                                        title="Load configured parameters from CSK_PersistentData module.">
+                                                                        <davinci-icon icon="action/history">
+                                                                        </davinci-icon>
                                                                         <span></span>
                                                                         <crown-binding event="submit"
                                                                             name="CSK_MQTTClient/loadParameters"
@@ -83,9 +83,10 @@
                                                                     </davinci-button>
                                                                     <davinci-button id="B_SaveConfig"
                                                                         class="myCustomButton_CSK_Module_MQTTClient"
-                                                                        type="outline" icon-position="append"
-                                                                        title="Save current configured parameters of this module within CSK_PersistentData module."
-                                                                        icon="content/save">
+                                                                        type="outline"
+                                                                        title="Save current configured parameters of this module within CSK_PersistentData module.">
+                                                                        <davinci-icon icon="content/save">
+                                                                        </davinci-icon>
                                                                         <span></span>
                                                                         <crown-binding event="submit"
                                                                             name="CSK_MQTTClient/sendParameters"
@@ -195,9 +196,23 @@
                                     <layout-column id="ColumnLayout3"
                                         class="myCustomMarginInline1Rem_CSK_Module_MQTTClient"
                                         style="align-items: stretch">
-                                        <davinci-value-display id="VD_LogMessages" value="Messages">
-                                        </davinci-value-display>
-                                        <davinci-text-area id="TA_Logs" style="height: 500px; flex-grow: 1">
+                                        <layout-row id="RowLayout63"
+                                            style="flex-grow: 0; flex-shrink: 0; justify-content: flex-end; align-items: center">
+                                            <davinci-value-display id="VD_Log" value="Log all messages:"
+                                                title="Activate to see messages for published and received data.">
+                                            </davinci-value-display>
+                                            <davinci-toggle-switch id="TS_Log"
+                                                title="Activate to see messages for published and received data.">
+                                                <crown-edpws-binding property="checked"
+                                                    name="CSK_MQTTClient/OnNewStatusLogAllMessages" update-on-resume>
+                                                </crown-edpws-binding>
+                                                <crown-binding event="change" name="CSK_MQTTClient/setLogAllMessages"
+                                                    path="param/args/status" auto-commit>
+                                                </crown-binding>
+                                            </davinci-toggle-switch>
+                                        </layout-row>
+                                        <davinci-text-area id="TA_Logs" label="Messages"
+                                            style="height: 500px; flex-grow: 1">
                                             <crown-edpws-binding property="value" name="CSK_MQTTClient/OnNewLog"
                                                 update-on-resume>
                                             </crown-edpws-binding>
@@ -350,13 +365,15 @@
                                                                             <layout-column id="ColumnLayout33"
                                                                                 style="align-items: stretch">
                                                                                 <davinci-value-display id="VD_ClientId"
-                                                                                    value="Client ID:">
+                                                                                    value="Client ID:"
+                                                                                    title="If empty, a random client identifier is generated and sent to the server instead.">
                                                                                 </davinci-value-display>
                                                                             </layout-column>
                                                                             <layout-column id="ColumnLayout34"
                                                                                 style="align-items: stretch">
                                                                                 <davinci-text-field id="TF_ClientId"
-                                                                                    type="text">
+                                                                                    type="text"
+                                                                                    title="If empty, a random client identifier is generated and sent to the server instead.">
                                                                                     <crown-edpws-binding
                                                                                         property="value"
                                                                                         name="CSK_MQTTClient/OnNewStatusClientID"
@@ -438,7 +455,8 @@
                                                                                 style="align-items: stretch">
                                                                                 <davinci-value-display
                                                                                     id="VD_CleanSession"
-                                                                                    value="Clean Session:">
+                                                                                    value="Clean Session:"
+                                                                                    title="If disabled, the session becomes persistent, which means that the server stores subscriptions and offline messages for this client (depending on QoS level). Using persistent sessions requires to set the Client identifier. The client itsself does not store anything persistent beyond the lifetime of the MQTTClient instance.">
                                                                                 </davinci-value-display>
                                                                             </layout-column>
                                                                             <layout-column id="ColumnLayout47"
@@ -446,7 +464,8 @@
                                                                                 <layout-row id="RowLayout347"
                                                                                     style="justify-content: flex-end">
                                                                                     <davinci-toggle-switch
-                                                                                        id="TS_CleanSession">
+                                                                                        id="TS_CleanSession"
+                                                                                        title="If disabled, the session becomes persistent, which means that the server stores subscriptions and offline messages for this client (depending on QoS level). Using persistent sessions requires to set the Client identifier. The client itsself does not store anything persistent beyond the lifetime of the MQTTClient instance.">
                                                                                         <crown-edpws-binding
                                                                                             property="checked"
                                                                                             name="CSK_MQTTClient/OnNewStatusCleanSession"
@@ -808,11 +827,31 @@
                                                             class="myCustomFrameLabel_CSK_Module_MQTTClient"
                                                             label="Publish" style="align-self: flex-start">
                                                         </davinci-value-display>
+                                                        <layout-row id="RowLayout58">
+                                                            <layout-column id="ColumnLayout56"
+                                                                style="align-items: stretch; flex-grow: 3">
+                                                                <davinci-text-field id="TF_TopicPrefix" type="text"
+                                                                    title="Optional prefix to use for all topics"
+                                                                    label="Topic prefix (optional)">
+                                                                    <crown-edpws-binding property="value"
+                                                                        name="CSK_MQTTClient/OnNewStatusTopicPrefix"
+                                                                        update-on-resume>
+                                                                    </crown-edpws-binding>
+                                                                    <crown-binding event="change"
+                                                                        name="CSK_MQTTClient/setTopicPrefix"
+                                                                        path="param/args/prefix" auto-commit>
+                                                                    </crown-binding>
+                                                                </davinci-text-field>
+                                                            </layout-column>
+                                                            <layout-column id="ColumnLayout58"
+                                                                style="align-items: stretch; flex-grow: 4">
+                                                            </layout-column>
+                                                        </layout-row>
                                                         <layout-row id="RowLayout13">
                                                             <layout-column id="ColumnLayout17"
                                                                 style="align-items: stretch; flex-grow: 3">
                                                                 <davinci-text-field id="TF_PublishTopic" type="text"
-                                                                    label="Topic">
+                                                                    label="Topic" title="Topic to publish to.">
                                                                     <crown-edpws-binding property="value"
                                                                         name="CSK_MQTTClient/OnNewStatusPublishTopic"
                                                                         update-on-resume>
@@ -822,7 +861,8 @@
                                                                         path="param/args/topic" auto-commit>
                                                                     </crown-binding>
                                                                 </davinci-text-field>
-                                                                <davinci-drop-down id="DD_PublishQos" label="QoS">
+                                                                <davinci-drop-down id="DD_PublishQos" label="QoS"
+                                                                    title="Quality of service level.">
                                                                     <davinci-option id="Option1" value="QOS0">
                                                                         <span>QOS0</span>
                                                                     </davinci-option>
@@ -845,7 +885,7 @@
                                                             <layout-column id="ColumnLayout20"
                                                                 style="align-items: stretch; flex-grow: 3">
                                                                 <davinci-text-field id="TF_PublishData" type="text"
-                                                                    label="Data">
+                                                                    label="Data" title="Data to publish">
                                                                     <crown-edpws-binding property="value"
                                                                         name="CSK_MQTTClient/OnNewStatusPublishData"
                                                                         update-on-resume>
@@ -855,7 +895,8 @@
                                                                         path="param/args/data" auto-commit>
                                                                     </crown-binding>
                                                                 </davinci-text-field>
-                                                                <davinci-drop-down id="DD_PublishRetain" label="Retain">
+                                                                <davinci-drop-down id="DD_PublishRetain" label="Retain"
+                                                                    title="Retain">
                                                                     <davinci-option id="Option4" value="NO_RETAIN">
                                                                         <span>NO_RETAIN</span>
                                                                     </davinci-option>
@@ -876,9 +917,9 @@
                                                                 style="align-items: center">
                                                                 <davinci-button id="Button_Publish"
                                                                     class="myCustomButton_CSK_Module_MQTTClient"
-                                                                    type="outline" icon-position="append"
-                                                                    title="Publish with preset values..."
-                                                                    icon="content/send">
+                                                                    type="outline"
+                                                                    title="Publish with preset values...">
+                                                                    <davinci-icon icon="content/send"></davinci-icon>
                                                                     <span></span>
                                                                     <crown-binding event="submit"
                                                                         name="CSK_MQTTClient/publishViaUI" auto-commit>
@@ -902,12 +943,14 @@
                                                                         <layout-column id="ColumnLayout65"
                                                                             style="align-items: stretch; flex-grow: 6">
                                                                             <davinci-value-display id="VD_WillMessage"
-                                                                                value="" label="WillMessage active">
+                                                                                value="" label="WillMessage active:"
+                                                                                title="Use WillMessage if connection to the client is interrupted.">
                                                                             </davinci-value-display>
                                                                         </layout-column>
                                                                         <layout-column id="ColumnLayout66"
                                                                             style="align-items: center">
-                                                                            <davinci-toggle-switch id="TS_WillMessage">
+                                                                            <davinci-toggle-switch id="TS_WillMessage"
+                                                                                title="Use WillMessage if connection to the client is interrupted.">
                                                                                 <crown-edpws-binding property="checked"
                                                                                     name="CSK_MQTTClient/OnNewStatusWillMessageActive"
                                                                                     update-on-resume>
@@ -929,13 +972,15 @@
                                                                             style="align-items: stretch; flex-grow: 6">
                                                                             <davinci-value-display
                                                                                 id="VD_SendWillMessageByClosing"
-                                                                                value="Disconnect with WillMessage:">
+                                                                                value="Clean disconnect with WillMessage:"
+                                                                                title="Additionally use WillMessage before clean disconnection.">
                                                                             </davinci-value-display>
                                                                         </layout-column>
                                                                         <layout-column id="ColumnLayout68"
                                                                             style="align-items: center">
                                                                             <davinci-toggle-switch
-                                                                                id="TS_WillMessageOnDisconnect">
+                                                                                id="TS_WillMessageOnDisconnect"
+                                                                                title="Additionally use WillMessage before clean disconnection.">
                                                                                 <crown-edpws-binding property="checked"
                                                                                     name="CSK_MQTTClient/OnNewStatusDisconnectWithWillMessage"
                                                                                     update-on-resume>
@@ -968,14 +1013,75 @@
                                                                             style="align-items: center">
                                                                             <davinci-button id="Button_SetWillMessage"
                                                                                 class="myCustomButton_CSK_Module_MQTTClient"
-                                                                                type="outline" icon-position="append"
-                                                                                icon="communication/message"
+                                                                                type="outline"
                                                                                 title="Set current setup as WillMessage">
+                                                                                <davinci-icon
+                                                                                    icon="communication/message">
+                                                                                </davinci-icon>
                                                                                 <span></span>
                                                                                 <crown-binding event="submit"
                                                                                     name="CSK_MQTTClient/setWillMessageConfigViaUI"
                                                                                     auto-commit>
                                                                                 </crown-binding>
+                                                                            </davinci-button>
+                                                                        </layout-column>
+                                                                    </layout-row>
+                                                                </layout-column>
+                                                            </layout-row>
+                                                        </davinci-collapse>
+                                                        <davinci-collapse id="Collapse_BirthMessage"
+                                                            collapsed-title="Show Birth Message" expanded-title="Hide">
+                                                            <layout-row id="RowLayout64">
+                                                                <layout-column id="ColumnLayout59"
+                                                                    style="align-items: stretch">
+                                                                    <layout-row id="RowLayout65"
+                                                                        style="align-items: center">
+                                                                        <layout-column id="ColumnLayout71"
+                                                                            style="align-items: stretch; flex-grow: 6">
+                                                                            <davinci-value-display id="VD_BirthMessage"
+                                                                                value="" label="BirthMessage active">
+                                                                            </davinci-value-display>
+                                                                        </layout-column>
+                                                                        <layout-column id="ColumnLayout64"
+                                                                            style="align-items: center">
+                                                                            <davinci-toggle-switch id="TS_BirthMessage">
+                                                                                <crown-on property="checked"
+                                                                                    crown-event="CSK_MQTTClient/OnNewStatusBirthMessageActive">
+                                                                                </crown-on>
+                                                                                <crown-set event="change"
+                                                                                    crown-function="CSK_MQTTClient/setBirthMessageActivation"
+                                                                                    protocol="crownMSGPACK"
+                                                                                    crown-path="status">
+                                                                                </crown-set>
+                                                                            </davinci-toggle-switch>
+                                                                        </layout-column>
+                                                                    </layout-row>
+                                                                    <layout-row id="RowLayout66"></layout-row>
+                                                                    <layout-row id="RowLayout68"
+                                                                        style="align-items: center">
+                                                                        <layout-column id="ColumnLayout78"
+                                                                            style="align-items: stretch; flex-grow: 6">
+                                                                            <davinci-value-display
+                                                                                id="VD_BirthMessageConfig">
+                                                                                <crown-on property="value"
+                                                                                    crown-event="CSK_MQTTClient/OnNewStatusBirthMessageConfig">
+                                                                                </crown-on>
+                                                                            </davinci-value-display>
+                                                                        </layout-column>
+                                                                        <layout-column id="ColumnLayout80"
+                                                                            style="align-items: center">
+                                                                            <davinci-button id="Button_SetBirthMessage"
+                                                                                class="myCustomButton_CSK_Module_MQTTClient"
+                                                                                type="outline"
+                                                                                title="Set current setup as BirthMessage">
+                                                                                <davinci-icon
+                                                                                    icon="communication/message">
+                                                                                </davinci-icon>
+                                                                                <span></span>
+                                                                                <crown-set event="submit"
+                                                                                    crown-function="CSK_MQTTClient/setBirthMessageConfigViaUI"
+                                                                                    protocol="crownMSGPACK">
+                                                                                </crown-set>
                                                                             </davinci-button>
                                                                         </layout-column>
                                                                     </layout-row>
@@ -1023,9 +1129,10 @@
                                                                         style="align-items: center">
                                                                         <davinci-button id="Button_AddEvent"
                                                                             class="myCustomButton_CSK_Module_MQTTClient"
-                                                                            type="outline" icon-position="append"
-                                                                            title="Add event with above preset configuration (topic, QoS, Retain) to listen to and to forward content via MQTT publish."
-                                                                            icon="content/add">
+                                                                            type="outline"
+                                                                            title="Add event with above preset configuration (topic, QoS, Retain) to listen to and to forward content via MQTT publish.">
+                                                                            <davinci-icon icon="content/add">
+                                                                            </davinci-icon>
                                                                             <span></span>
                                                                             <crown-binding event="submit"
                                                                                 name="CSK_MQTTClient/addPublishEventViaUI"
@@ -1068,9 +1175,10 @@
                                                                         style="align-items: center">
                                                                         <davinci-button id="Button_RemoveEvent"
                                                                             class="myCustomButton_CSK_Module_MQTTClient"
-                                                                            type="outline" icon-position="append"
-                                                                            title="Remove selected event"
-                                                                            icon="action/delete">
+                                                                            type="outline"
+                                                                            title="Remove selected event">
+                                                                            <davinci-icon icon="action/delete">
+                                                                            </davinci-icon>
                                                                             <span></span>
                                                                             <crown-binding event="submit"
                                                                                 name="CSK_MQTTClient/removePublishEventViaUI"
@@ -1106,7 +1214,8 @@
                                                                     <layout-column id="ColumnLayout9"
                                                                         style="align-items: stretch">
                                                                         <davinci-text-field id="TF_SubscribeTopic"
-                                                                            type="text" label="Topic">
+                                                                            type="text" label="Topic"
+                                                                            title="Topic to subscripe to.">
                                                                             <crown-edpws-binding property="value"
                                                                                 name="CSK_MQTTClient/OnNewStatusSubscriptionTopic"
                                                                                 update-on-resume>
@@ -1120,7 +1229,8 @@
                                                                     <layout-column id="ColumnLayout10"
                                                                         style="align-items: stretch">
                                                                         <davinci-drop-down id="DD_SubscripeQos"
-                                                                            label="QoS">
+                                                                            label="QoS"
+                                                                            title="Quality of service level.">
                                                                             <davinci-option id="Option_QOS0"
                                                                                 value="QOS0">
                                                                                 <span>QOS0</span>
@@ -1149,8 +1259,8 @@
                                                                 style="align-items: center">
                                                                 <davinci-button id="Button_AddSubscription"
                                                                     class="myCustomButton_CSK_Module_MQTTClient"
-                                                                    type="outline" icon-position="append"
-                                                                    title="Add Subscription" icon="content/add">
+                                                                    type="outline" title="Add Subscription">
+                                                                    <davinci-icon icon="content/add"></davinci-icon>
                                                                     <span></span>
                                                                     <crown-binding event="submit"
                                                                         name="CSK_MQTTClient/addSubscriptionViaUI"
@@ -1182,8 +1292,8 @@
                                                                 style="align-items: center">
                                                                 <davinci-button id="Button_UnSubscribe"
                                                                     class="myCustomButton_CSK_Module_MQTTClient"
-                                                                    type="outline" icon-position="append"
-                                                                    icon="action/delete" title="Unsubscribe">
+                                                                    type="outline" title="Unsubscribe">
+                                                                    <davinci-icon icon="action/delete"></davinci-icon>
                                                                     <span></span>
                                                                     <crown-binding event="submit"
                                                                         name="CSK_MQTTClient/unsubscribeViaUI"
