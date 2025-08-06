@@ -379,7 +379,7 @@ Script.serveFunction('CSK_MQTTClient.setUsername', setUsername)
 
 local function setPassword(password)
   _G.logger:fine(nameOfModule .. ": Set password.")
-  mqttClient_Model.parameters.passwords = Cipher.AES.encrypt(password, mqttClient_Model.key)
+  mqttClient_Model.parameters.password = Cipher.AES.encrypt(password, mqttClient_Model.key)
 end
 Script.serveFunction('CSK_MQTTClient.setPassword', setPassword)
 
@@ -387,7 +387,7 @@ local function setUseCredentials(status)
   _G.logger:fine(nameOfModule .. ": Set usage of credentials to " .. tostring(status))
   mqttClient_Model.parameters.useCredentials = status
   if status then
-    MQTTClient.setUserCredentials(mqttClient_Model.mqttClient, mqttClient_Model.parameters.username, Cipher.AES.decrypt(mqttClient_Model.parameters.passwords, mqttClient_Model.key))
+    MQTTClient.setUserCredentials(mqttClient_Model.mqttClient, mqttClient_Model.parameters.username, Cipher.AES.decrypt(mqttClient_Model.parameters.password, mqttClient_Model.key))
   end
 end
 Script.serveFunction('CSK_MQTTClient.setUseCredentials', setUseCredentials)
